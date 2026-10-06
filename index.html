@@ -47,6 +47,14 @@
     body.dark .owned-card .delete-btn, body.dark .owned-card .share-btn { background: #2a2a2a; }
     body.dark .share-preview { background: #2a2a2a; }
     body.dark .profile-edit-section { border-top-color: #2a2a2a; }
+    body.dark .detalhes-item { background: #2a2a2a; }
+    body.dark .detalhes-item .value { color: #eee; }
+    body.dark .ataque-item { background: #2a2a2a; }
+    body.dark .ataque-item .ataque-nome { color: #eee; }
+    body.dark .ataque-item .ataque-efeito { color: #aaa; }
+    body.dark .variante-tag.inativa { background: #333; color: #666; }
+    body.dark .btn-detalhes { background: #2a2a2a; color: #ccc; }
+
     #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(160deg, #ff1a1a 0%, #b30000 100%); }
     .login-box { background: white; color: #222; padding: 36px 28px; border-radius: 24px; width: 100%; max-width: 360px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); text-align: center; }
     .login-logo { display: flex; justify-content: center; font-size: 48px; margin-bottom: 8px; }
@@ -125,7 +133,8 @@
     .result-item .info .name { font-weight: 700; font-size: 14px; color: #222; }
     .result-item .info .set { font-size: 12px; color: #999; margin-top: 2px; }
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; margin-top: 8px; }
-    .owned-card { background: white; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px; text-align: center; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .owned-card { background: white; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px; text-align: center; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer; transition: transform 0.15s; }
+    .owned-card:active { transform: scale(0.97); }
     .owned-card img { width: 100%; max-width: 120px; border-radius: 10px; margin-bottom: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .owned-card .name { font-size: 13px; font-weight: 700; color: #222; }
     .owned-card .set { font-size: 11px; color: #999; margin-top: 2px; }
@@ -164,6 +173,28 @@
     .total-value .value { font-size: 22px; font-weight: 800; color: #e60000; margin-top: 2px; }
     .share-preview { text-align: center; padding: 16px; background: #fafafa; border-radius: 16px; margin-bottom: 14px; }
     .share-preview img { max-width: 160px; border-radius: 10px; margin-bottom: 12px; }
+
+    /* ===== DETALHES DA CARTA ===== */
+    .detalhes-img { text-align: center; margin-bottom: 16px; }
+    .detalhes-img img { max-width: 220px; border-radius: 14px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+    .detalhes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .detalhes-item { background: #fafafa; border-radius: 10px; padding: 10px 12px; }
+    .detalhes-item .label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .detalhes-item .value { font-size: 15px; font-weight: 700; color: #222; margin-top: 2px; }
+    .detalhes-ataques { margin-top: 16px; }
+    .detalhes-ataques h3 { font-size: 14px; color: #e60000; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ataque-item { background: #fafafa; border-left: 4px solid #e60000; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+    .ataque-item .ataque-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .ataque-item .ataque-nome { font-weight: 800; font-size: 14px; color: #222; }
+    .ataque-item .ataque-dano { font-weight: 800; font-size: 16px; color: #e60000; }
+    .ataque-item .ataque-efeito { font-size: 12px; color: #666; line-height: 1.4; }
+    .ataque-item .ataque-custo { font-size: 11px; color: #999; margin-top: 4px; }
+    .variantes-lista { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .variante-tag { background: #e60000; color: white; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .variante-tag.inativa { background: #ddd; color: #999; }
+    .btn-detalhes { width: 100%; padding: 10px; background: #f5f5f5; color: #444; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+    .btn-detalhes:active { background: #e60000; color: white; }
+
     @media (min-width: 600px) {
       #pokedex { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 20px 24px; max-width: 900px; margin: 0 auto; }
       .modal { border-radius: 24px; margin-bottom: 30px; }
@@ -294,6 +325,16 @@
         <button class="modal-close" onclick="fecharModal('modal-pokemon')">×</button>
       </div>
       <div id="pokemon-cards-list"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-detalhes">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="detalhes-titulo">Detalhes da Carta</h2>
+        <button class="modal-close" onclick="fecharModal('modal-detalhes')">×</button>
+      </div>
+      <div id="detalhes-content"></div>
     </div>
   </div>
 
@@ -566,23 +607,17 @@
       resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Buscando cartas...</div>';
       try {
         let url;
-        // Aceita formatos: 025, 25, 025/165, 25/165, TG11/TG30, etc.
         const numMatch = termo.match(/^(\d{1,4})(?:\s*[\/\-]\s*\d{1,4})?$/);
         const numComLetras = termo.match(/^([A-Za-z]{0,3}\d{1,4})(?:\s*[\/\-]\s*[A-Za-z0-9]+)?$/);
-
         if (numMatch) {
-          // Número puro ou tipo 025/165
           const num = numMatch[1].padStart(3, '0');
           url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${num}&pagination:itemsPerPage=50`;
         } else if (numComLetras) {
-          // Tipo TG11, SV01, etc.
           const localId = numComLetras[1].toUpperCase();
           url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${localId}&pagination:itemsPerPage=50`;
         } else {
-          // Busca por nome
           url = `https://api.tcgdex.net/v2/pt-br/cards?name=${encodeURIComponent(termo)}&pagination:itemsPerPage=30`;
         }
-
         const res = await fetch(url);
         const data = await res.json();
         if (!data || data.length === 0) {
@@ -693,7 +728,7 @@
           </p>
           <div class="cards-grid">
             ${cartas.map((c) => `
-              <div class="owned-card">
+              <div class="owned-card" onclick="verDetalhesCarta('${c.id}')">
                 <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')" title="Apagar carta">×</button>
                 <button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')" title="Compartilhar">📤</button>
                 <img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}">
@@ -709,6 +744,149 @@
         `;
       }
       document.getElementById('modal-pokemon').classList.add('active');
+    }
+
+    // ===================== DETALHES RICOS DA CARTA =====================
+    async function verDetalhesCarta(id) {
+      const carta = colecao.find(c => c.id === id);
+      if (!carta) return;
+
+      document.getElementById('detalhes-titulo').textContent = carta.name;
+      document.getElementById('detalhes-content').innerHTML =
+        '<div class="loading"><div class="spinner"></div>Carregando detalhes...</div>';
+      document.getElementById('modal-detalhes').classList.add('active');
+
+      try {
+        let url;
+        if (carta.tcgId) {
+          url = `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}`;
+        } else {
+          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
+        }
+        const res = await fetch(url);
+        let dados = await res.json();
+        if (Array.isArray(dados)) dados = dados[0];
+        renderizarDetalhes(carta, dados);
+      } catch (e) {
+        console.error(e);
+        document.getElementById('detalhes-content').innerHTML =
+          '<div class="empty-msg">Não consegui carregar os detalhes.<br>Tenta de novo.</div>';
+      }
+    }
+
+    function renderizarDetalhes(cartaLocal, dados) {
+      const preco = parseFloat(cartaLocal.preco) || 0;
+
+      const imgHtml = dados.image
+        ? `<div class="detalhes-img">
+             <img src="${dados.image}/high.webp" onerror="this.src='${dados.image}.webp'" alt="${dados.name}">
+           </div>`
+        : '';
+
+      const infoHtml = `
+        <div class="detalhes-grid">
+          ${dados.hp ? `<div class="detalhes-item"><div class="label">HP</div><div class="value">${dados.hp}</div></div>` : ''}
+          ${dados.rarity ? `<div class="detalhes-item"><div class="label">Raridade</div><div class="value">${dados.rarity}</div></div>` : ''}
+          ${dados.category ? `<div class="detalhes-item"><div class="label">Categoria</div><div class="value">${dados.category}</div></div>` : ''}
+          ${dados.stage ? `<div class="detalhes-item"><div class="label">Estágio</div><div class="value">${dados.stage}</div></div>` : ''}
+          ${dados.illustrator ? `<div class="detalhes-item"><div class="label">Ilustrador</div><div class="value">${dados.illustrator}</div></div>` : ''}
+          ${dados.set ? `<div class="detalhes-item"><div class="label">Set</div><div class="value">${dados.set.name || ''}</div></div>` : ''}
+          ${dados.types && dados.types.length ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
+          ${dados.regulationMark ? `<div class="detalhes-item"><div class="label">Regulação</div><div class="value">${dados.regulationMark}</div></div>` : ''}
+        </div>
+      `;
+
+      let ataquesHtml = '';
+      if (dados.attacks && dados.attacks.length > 0) {
+        ataquesHtml = `
+          <div class="detalhes-ataques">
+            <h3>⚔️ Ataques</h3>
+            ${dados.attacks.map(a => `
+              <div class="ataque-item">
+                <div class="ataque-header">
+                  <span class="ataque-nome">${a.name}</span>
+                  ${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}
+                </div>
+                ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
+                ${a.cost ? `<div class="ataque-custo">Custo: ${a.cost.join(' + ')}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      let abilitiesHtml = '';
+      if (dados.abilities && dados.abilities.length > 0) {
+        abilitiesHtml = `
+          <div class="detalhes-ataques">
+            <h3>✨ Habilidades</h3>
+            ${dados.abilities.map(a => `
+              <div class="ataque-item">
+                <div class="ataque-header">
+                  <span class="ataque-nome">${a.name}</span>
+                  ${a.type ? `<span class="ataque-dano" style="font-size:12px;color:#888;">${a.type}</span>` : ''}
+                </div>
+                ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      let variantesHtml = '';
+      if (dados.variants) {
+        const v = dados.variants;
+        const tags = [
+          { nome: 'Normal', ativo: v.normal },
+          { nome: 'Holo', ativo: v.holo },
+          { nome: 'Reverse', ativo: v.reverse },
+          { nome: '1ª Edição', ativo: v.firstEdition },
+          { nome: 'Jumbo', ativo: v.jumbo },
+        ].filter(t => t.ativo);
+
+        if (tags.length > 0) {
+          variantesHtml = `
+            <div class="detalhes-ataques">
+              <h3>🎨 Variantes disponíveis</h3>
+              <div class="variantes-lista">
+                ${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      let combateHtml = '';
+      if (dados.weaknesses || dados.resistances || dados.retreat !== undefined) {
+        combateHtml = `
+          <div class="detalhes-grid" style="margin-top:16px;">
+            ${dados.weaknesses && dados.weaknesses.length ? `<div class="detalhes-item"><div class="label">Fraqueza</div><div class="value">${dados.weaknesses.map(w => `${w.type} ${w.value}`).join(', ')}</div></div>` : ''}
+            ${dados.resistances && dados.resistances.length ? `<div class="detalhes-item"><div class="label">Resistência</div><div class="value">${dados.resistances.map(r => `${r.type} ${r.value}`).join(', ')}</div></div>` : ''}
+            ${dados.retreat !== undefined ? `<div class="detalhes-item"><div class="label">Retreat</div><div class="value">${dados.retreat}</div></div>` : ''}
+          </div>
+        `;
+      }
+
+      const precoHtml = preco > 0
+        ? `<div class="total-value" style="margin-top:16px;">
+             <div class="label">Você pagou</div>
+             <div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div>
+           </div>`
+        : `<div class="total-value" style="margin-top:16px;">
+             <div class="label">Preço não cadastrado</div>
+             <div class="value" style="font-size:14px;color:#aaa;">—</div>
+           </div>`;
+
+      document.getElementById('detalhes-content').innerHTML = `
+        ${imgHtml}
+        ${infoHtml}
+        ${ataquesHtml}
+        ${abilitiesHtml}
+        ${combateHtml}
+        ${variantesHtml}
+        ${precoHtml}
+        <button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>
+      `;
     }
 
     function apagarCarta(id) {
