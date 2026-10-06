@@ -7,7 +7,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="https://unpkg.com/@zxing/library@0.20.0"></script>
   <title>Minha Pokédex de Cartas</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; }
@@ -163,8 +162,6 @@
     .total-value { background: linear-gradient(135deg, #fff5f5, #ffebeb); border: 2px solid #ffcccc; border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; text-align: center; }
     .total-value .label { font-size: 12px; color: #888; font-weight: 600; }
     .total-value .value { font-size: 22px; font-weight: 800; color: #e60000; margin-top: 2px; }
-    #scanner-video { width: 100%; border-radius: 14px; background: #000; max-height: 320px; object-fit: cover; }
-    .scanner-hint { font-size: 13px; color: #777; margin: 10px 0; text-align: center; line-height: 1.5; }
     .share-preview { text-align: center; padding: 16px; background: #fafafa; border-radius: 16px; margin-bottom: 14px; }
     .share-preview img { max-width: 160px; border-radius: 10px; margin-bottom: 12px; }
     @media (min-width: 600px) {
@@ -279,41 +276,14 @@
         <h2>Adicionar Carta</h2>
         <button class="modal-close" onclick="fecharModal('modal-add')">×</button>
       </div>
-      <p style="font-size:14px;color:#777;margin-bottom:14px;line-height:1.4;">
-        Digite o <strong>número</strong> da carta (ex: 025) ou o nome do Pokémon. Ou use o scanner abaixo.
+      <p style="font-size:14px;color:#777;margin-bottom:14px;line-height:1.5;">
+        Digite o <strong>número</strong> da carta que aparece embaixo dela.<br>
+        Exemplos: <strong>025</strong> &nbsp;ou&nbsp; <strong>025/165</strong> &nbsp;ou&nbsp; o nome (ex: Pikachu)
       </p>
-      <input type="text" id="card-search-input" placeholder="Ex: 025 ou Pikachu" autocomplete="off">
+      <input type="text" id="card-search-input" placeholder="Ex: 025 ou 025/165 ou Pikachu" autocomplete="off" inputmode="text">
       <button class="primary" onclick="buscarCarta()" id="btn-buscar">Buscar Carta</button>
-      <button class="secondary" onclick="abrirScanner()" style="margin-top:8px;">
-        📷 Escanear número da carta
-      </button>
       <div id="search-results"></div>
       <div id="card-confirm" style="display:none;"></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modal-scanner">
-    <div class="modal">
-      <div class="modal-header">
-        <h2>📷 Escanear Carta</h2>
-        <button class="modal-close" onclick="fecharScanner()">×</button>
-      </div>
-      <p class="scanner-hint">
-        Aponte a câmera para o <strong>número</strong> da carta (canto inferior, ex: <code>025/165</code>).<br>
-        Assim que ler, a busca começa sozinha.
-      </p>
-      <video id="scanner-video" playsinline muted></video>
-      <div id="scanner-status" class="scanner-hint" style="margin-top:10px;">
-        Iniciando câmera...
-      </div>
-      <div id="scanner-resultado" style="margin-top:12px;"></div>
-      <div style="margin-top:16px; border-top:1px solid #eee; padding-top:14px;">
-        <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:6px;">
-          Não conseguiu ler? Digite o número (Plano B):
-        </label>
-        <input type="text" id="scanner-manual-input" placeholder="Ex: 025" inputmode="numeric" maxlength="4">
-        <button class="primary" onclick="buscarNumeroManual()">Buscar este número</button>
-      </div>
     </div>
   </div>
 
@@ -371,9 +341,6 @@
     let ordenacaoAtual = 'numero';
     let pokemonAbertoAtual = null;
     let tiposCache = {};
-    let zxingReader = null;
-    let scannerAtivo = false;
-    let scannerTimeout = null;
 
     function garantirPerfil() {
       if (!perfil) {
@@ -401,9 +368,6 @@
       });
       document.getElementById('card-search-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') buscarCarta();
-      });
-      document.getElementById('scanner-manual-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') buscarNumeroManual();
       });
     };
 
@@ -602,16 +566,27 @@
       resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Buscando cartas...</div>';
       try {
         let url;
-        if (/^\d+$/.test(termo)) {
-          const num = termo.padStart(3, '0');
-          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${num}&pagination:itemsPerPage=40`;
+        // Aceita formatos: 025, 25, 025/165, 25/165, TG11/TG30, etc.
+        const numMatch = termo.match(/^(\d{1,4})(?:\s*[\/\-]\s*\d{1,4})?$/);
+        const numComLetras = termo.match(/^([A-Za-z]{0,3}\d{1,4})(?:\s*[\/\-]\s*[A-Za-z0-9]+)?$/);
+
+        if (numMatch) {
+          // Número puro ou tipo 025/165
+          const num = numMatch[1].padStart(3, '0');
+          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${num}&pagination:itemsPerPage=50`;
+        } else if (numComLetras) {
+          // Tipo TG11, SV01, etc.
+          const localId = numComLetras[1].toUpperCase();
+          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${localId}&pagination:itemsPerPage=50`;
         } else {
-          url = `https://api.tcgdex.net/v2/pt-br/cards?name=${encodeURIComponent(termo)}&pagination:itemsPerPage=25`;
+          // Busca por nome
+          url = `https://api.tcgdex.net/v2/pt-br/cards?name=${encodeURIComponent(termo)}&pagination:itemsPerPage=30`;
         }
+
         const res = await fetch(url);
         const data = await res.json();
         if (!data || data.length === 0) {
-          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número ou nome.</div>';
+          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número ou nome.<br><br>Dica: use o número que aparece embaixo da carta (ex: <strong>025</strong> ou <strong>025/165</strong>).</div>';
           return;
         }
         if (data.length === 1) {
@@ -620,7 +595,7 @@
           return;
         }
         resultsDiv.innerHTML = `
-          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe uma:</p>
+          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe a certa:</p>
           <div class="results-list">
             ${data.map(c => `
               <div class="result-item" onclick='mostrarConfirmacao(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
@@ -696,87 +671,6 @@
       fecharModal('modal-add');
       aplicarFiltros();
       mostrarToast('Carta adicionada! 🎉');
-    }
-
-    // ===================== SCANNER (CORRIGIDO) =====================
-    async function abrirScanner() {
-      document.getElementById('modal-scanner').classList.add('active');
-      document.getElementById('scanner-status').textContent = 'Iniciando câmera...';
-      document.getElementById('scanner-resultado').innerHTML = '';
-      document.getElementById('scanner-manual-input').value = '';
-
-      if (typeof ZXing === 'undefined') {
-        document.getElementById('scanner-status').innerHTML =
-          '⚠️ Scanner não disponível.<br>Use o campo manual abaixo.';
-        return;
-      }
-
-      try {
-        zxingReader = new ZXing.BrowserMultiFormatReader();
-        scannerAtivo = true;
-        document.getElementById('scanner-status').textContent = 'Aponte para o número da carta...';
-
-        await zxingReader.decodeFromConstraints(
-          { video: { facingMode: { ideal: 'environment' } } },
-          document.getElementById('scanner-video'),
-          (result, error, controls) => {
-            if (result && scannerAtivo) {
-              const texto = result.getText();
-              scannerAtivo = false;
-              controls.stop();
-
-              document.getElementById('scanner-status').innerHTML =
-                `✅ Li: <strong>${texto}</strong><br>Buscando carta...`;
-
-              const numMatch = texto.match(/\d{1,4}/);
-              const termo = numMatch ? numMatch[0] : texto;
-
-              setTimeout(() => {
-                fecharScanner();
-                setTimeout(() => {
-                  document.getElementById('modal-add').classList.add('active');
-                  document.getElementById('card-search-input').value = termo;
-                  executarBuscaCarta(termo);
-                }, 250);
-              }, 700);
-            }
-          }
-        );
-
-        scannerTimeout = setTimeout(() => {
-          if (scannerAtivo) {
-            document.getElementById('scanner-status').innerHTML =
-              '⏱️ Não consegui ler ainda.<br>Tente mais perto ou use o campo manual abaixo.';
-          }
-        }, 30000);
-
-      } catch (e) {
-        console.error(e);
-        document.getElementById('scanner-status').innerHTML =
-          '⚠️ Não consegui acessar a câmera.<br>Verifique a permissão ou use o campo manual.';
-      }
-    }
-
-    function fecharScanner() {
-      scannerAtivo = false;
-      clearTimeout(scannerTimeout);
-      if (zxingReader) {
-        try { zxingReader.reset(); } catch (e) {}
-        zxingReader = null;
-      }
-      fecharModal('modal-scanner');
-    }
-
-    function buscarNumeroManual() {
-      const input = document.getElementById('scanner-manual-input');
-      const num = (input.value || '').trim();
-      if (!num) { mostrarToast('Digite um número primeiro!'); return; }
-      fecharScanner();
-      setTimeout(() => {
-        document.getElementById('modal-add').classList.add('active');
-        document.getElementById('card-search-input').value = num;
-        executarBuscaCarta(num);
-      }, 250);
     }
 
     function abrirPokemon(nome, id) {
@@ -1264,8 +1158,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
-          if (overlay.id === 'modal-scanner') { fecharScanner(); }
-          else { overlay.classList.remove('active'); }
+          overlay.classList.remove('active');
         }
       });
     });
