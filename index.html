@@ -10,22 +10,10 @@
   <script src="https://unpkg.com/@zxing/library@0.20.0"></script>
   <title>Minha Pokédex de Cartas</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; }
 
-    body {
-      background: #f7f7f7;
-      color: #222;
-      min-height: 100vh;
-      padding-bottom: 110px;
-      transition: background 0.3s, color 0.3s;
-    }
+    body { background: #f7f7f7; color: #222; min-height: 100vh; padding-bottom: 110px; transition: background 0.3s, color 0.3s; }
 
-    /* ===== MODO ESCURO ===== */
     body.dark { background: #121212; color: #eee; }
     body.dark header { background: linear-gradient(135deg, #8b0000, #5a0000); }
     body.dark .toolbar { background: #1e1e1e; border-bottom-color: #2a2a2a; }
@@ -63,750 +51,145 @@
     body.dark .share-preview { background: #2a2a2a; }
     body.dark .profile-edit-section { border-top-color: #2a2a2a; }
 
-    /* ===== LOGIN ===== */
-    #login-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-      background: linear-gradient(160deg, #ff1a1a 0%, #b30000 100%);
-    }
-
-    .login-box {
-      background: white;
-      color: #222;
-      padding: 36px 28px;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 360px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-      text-align: center;
-    }
-
+    #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(160deg, #ff1a1a 0%, #b30000 100%); }
+    .login-box { background: white; color: #222; padding: 36px 28px; border-radius: 24px; width: 100%; max-width: 360px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); text-align: center; }
     .login-logo { display: flex; justify-content: center; font-size: 48px; margin-bottom: 8px; }
-
     .login-box h1 { font-size: 26px; margin-bottom: 6px; color: #e60000; font-weight: 800; }
-
     .login-box p { font-size: 14px; color: #777; margin-bottom: 28px; line-height: 1.4; }
-
-    .login-box input {
-      width: 100%;
-      padding: 15px 18px;
-      border: 2px solid #eee;
-      border-radius: 14px;
-      font-size: 16px;
-      margin-bottom: 16px;
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s;
-      background: #fafafa;
-    }
-
+    .login-box input { width: 100%; padding: 15px 18px; border: 2px solid #eee; border-radius: 14px; font-size: 16px; margin-bottom: 16px; outline: none; transition: border 0.2s, box-shadow 0.2s; background: #fafafa; }
     .login-box input:focus { border-color: #e60000; box-shadow: 0 0 0 4px rgba(230,0,0,0.1); background: white; }
-
-    .login-box button {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #ff1a1a, #cc0000);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 6px 18px rgba(230,0,0,0.35);
-    }
-
+    .login-box button { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 18px rgba(230,0,0,0.35); }
     .login-box button:active { transform: scale(0.97); }
 
-    /* ===== HEADER ===== */
-    header {
-      background: linear-gradient(135deg, #e60000, #cc0000);
-      color: white;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(230,0,0,0.3);
-    }
-
+    header { background: linear-gradient(135deg, #e60000, #cc0000); color: white; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(230,0,0,0.3); }
     header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
-
-    header .user-info {
-      font-size: 13px;
-      background: rgba(255,255,255,0.2);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    header .user-info { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     header .user-info:active { background: rgba(255,255,255,0.35); }
-
     header .user-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #fff; }
-
     header .header-actions { display: flex; align-items: center; gap: 8px; }
-
-    header .friends-btn {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
+    header .friends-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
     header .friends-btn:active { background: rgba(255,255,255,0.35); }
-
-    header .theme-btn {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      font-size: 16px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    header .theme-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     header .theme-btn:active { background: rgba(255,255,255,0.35); }
 
-    /* ===== FRIENDS ===== */
     .friends-list { margin-top: 8px; }
-
-    .friend-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      background: #fafafa;
-      border: 2px solid #f0f0f0;
-      border-radius: 14px;
-      margin-bottom: 8px;
-    }
-
+    .friend-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; }
     .friend-item .friend-name { font-weight: 700; font-size: 15px; color: #222; }
-
     .friend-item .friend-date { font-size: 11px; color: #999; margin-top: 2px; }
+    .friend-item .remove-friend { background: #fff0f0; border: 1px solid #ffcccc; color: #e60000; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-    .friend-item .remove-friend {
-      background: #fff0f0;
-      border: 1px solid #ffcccc;
-      color: #e60000;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* ===== FILTERS & SEARCH ===== */
-    .toolbar {
-      padding: 12px 16px;
-      background: white;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 52px;
-      z-index: 90;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
+    .toolbar { padding: 12px 16px; background: white; border-bottom: 1px solid #eee; position: sticky; top: 52px; z-index: 90; display: flex; flex-direction: column; gap: 10px; }
     .search-row { display: flex; gap: 8px; }
-
-    .search-row input {
-      flex: 1;
-      padding: 11px 16px;
-      border: 2px solid #eee;
-      border-radius: 30px;
-      font-size: 15px;
-      outline: none;
-      background: #fafafa;
-      transition: border 0.2s;
-    }
-
+    .search-row input { flex: 1; padding: 11px 16px; border: 2px solid #eee; border-radius: 30px; font-size: 15px; outline: none; background: #fafafa; transition: border 0.2s; }
     .search-row input:focus { border-color: #e60000; background: white; }
-
-    .filter-row {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-      align-items: center;
-    }
-
-    .filter-btn {
-      flex-shrink: 0;
-      padding: 7px 14px;
-      border: 2px solid #eee;
-      border-radius: 20px;
-      background: white;
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
+    .filter-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; align-items: center; }
+    .filter-btn { flex-shrink: 0; padding: 7px 14px; border: 2px solid #eee; border-radius: 20px; background: white; font-size: 13px; font-weight: 600; color: #555; cursor: pointer; transition: all 0.2s; }
     .filter-btn.active { background: #e60000; color: white; border-color: #e60000; }
-
-    .copy-btn {
-      flex-shrink: 0;
-      margin-left: auto;
-      padding: 7px 14px;
-      border: 2px solid #e60000;
-      border-radius: 20px;
-      background: #fff5f5;
-      font-size: 13px;
-      font-weight: 700;
-      color: #e60000;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
+    .copy-btn { flex-shrink: 0; margin-left: auto; padding: 7px 14px; border: 2px solid #e60000; border-radius: 20px; background: #fff5f5; font-size: 13px; font-weight: 700; color: #e60000; cursor: pointer; transition: all 0.2s; }
     .copy-btn:active { background: #e60000; color: white; }
 
     .type-sort-row { display: flex; gap: 8px; align-items: center; }
-
-    .type-sort-row select {
-      flex: 1;
-      padding: 8px 12px;
-      border: 2px solid #eee;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      background: white;
-      cursor: pointer;
-      outline: none;
-    }
-
+    .type-sort-row select { flex: 1; padding: 8px 12px; border: 2px solid #eee; border-radius: 20px; font-size: 13px; font-weight: 600; color: #555; background: white; cursor: pointer; outline: none; }
     .type-sort-row select:focus { border-color: #e60000; }
 
-    .stats-bar {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: #888;
-      padding: 0 2px;
-    }
-
+    .stats-bar { display: flex; justify-content: space-between; font-size: 12px; color: #888; padding: 0 2px; }
     .stats-bar strong { color: #e60000; }
 
-    /* ===== POKEDEX GRID ===== */
-    #pokedex {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-      gap: 12px;
-      padding: 16px;
-    }
-
-    .poke-card {
-      background: white;
-      border: 2px solid #f0f0f0;
-      border-radius: 16px;
-      padding: 12px 8px 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
+    #pokedex { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; padding: 16px; }
+    .poke-card { background: white; border: 2px solid #f0f0f0; border-radius: 16px; padding: 12px 8px 10px; text-align: center; cursor: pointer; transition: all 0.2s ease; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .poke-card:active { transform: scale(0.96); }
-
-    .poke-card.has-cards {
-      border-color: #e60000;
-      background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%);
-      box-shadow: 0 4px 14px rgba(230,0,0,0.12);
-    }
-
-    .poke-card img {
-      width: 76px;
-      height: 76px;
-      object-fit: contain;
-      margin-bottom: 6px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-    }
-
-    .poke-card .name {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: capitalize;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: #333;
-    }
-
+    .poke-card.has-cards { border-color: #e60000; background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%); box-shadow: 0 4px 14px rgba(230,0,0,0.12); }
+    .poke-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+    .poke-card .name { font-size: 12px; font-weight: 700; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333; }
     .poke-card .number { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .poke-card .badge { position: absolute; top: 8px; right: 8px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; font-size: 11px; font-weight: 800; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(230,0,0,0.4); }
 
-    .poke-card .badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: linear-gradient(135deg, #ff1a1a, #cc0000);
-      color: white;
-      font-size: 11px;
-      font-weight: 800;
-      min-width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(230,0,0,0.4);
-    }
-
-    /* ===== FLOATING BUTTON ===== */
-    #add-btn {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, #ff1a1a, #cc0000);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 34px;
-      font-weight: 300;
-      box-shadow: 0 8px 25px rgba(230,0,0,0.45);
-      cursor: pointer;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
+    #add-btn { position: fixed; bottom: 28px; right: 28px; width: 64px; height: 64px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 50%; font-size: 34px; font-weight: 300; box-shadow: 0 8px 25px rgba(230,0,0,0.45); cursor: pointer; z-index: 200; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s; }
     #add-btn:active { transform: scale(0.92); }
 
-    /* ===== MODALS ===== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 300;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.25s;
-      backdrop-filter: blur(3px);
-    }
-
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: flex-end; justify-content: center; z-index: 300; opacity: 0; visibility: hidden; transition: all 0.25s; backdrop-filter: blur(3px); }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-
-    .modal {
-      background: white;
-      width: 100%;
-      max-width: 480px;
-      border-radius: 24px 24px 0 0;
-      padding: 22px 20px 32px;
-      max-height: 92vh;
-      overflow-y: auto;
-      transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-    }
-
+    .modal { background: white; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 22px 20px 32px; max-height: 92vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1); }
     .modal-overlay.active .modal { transform: translateY(0); }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .modal-header h2 { font-size: 20px; color: #e60000; font-weight: 800; }
-
-    .modal-close {
-      background: #f5f5f5;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 22px;
-      color: #666;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-
-    .modal input, .modal select {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #eee;
-      border-radius: 14px;
-      font-size: 16px;
-      margin-bottom: 12px;
-      outline: none;
-      background: #fafafa;
-      transition: border 0.2s;
-    }
-
+    .modal-close { background: #f5f5f5; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; color: #666; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
+    .modal input, .modal select { width: 100%; padding: 14px 16px; border: 2px solid #eee; border-radius: 14px; font-size: 16px; margin-bottom: 12px; outline: none; background: #fafafa; transition: border 0.2s; }
     .modal input:focus { border-color: #e60000; background: white; }
-
-    .modal button.primary {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #ff1a1a, #cc0000);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 6px;
-      box-shadow: 0 4px 14px rgba(230,0,0,0.3);
-    }
-
+    .modal button.primary { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 14px rgba(230,0,0,0.3); }
     .modal button.primary:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
+    .modal button.secondary { width: 100%; padding: 13px; background: #f5f5f5; color: #444; border: none; border-radius: 14px; font-size: 15px; font-weight: 600; margin-top: 8px; cursor: pointer; }
+    .modal button.danger { width: 100%; padding: 13px; background: #fff0f0; color: #e60000; border: 2px solid #ffcccc; border-radius: 14px; font-size: 15px; font-weight: 600; margin-top: 8px; cursor: pointer; }
 
-    .modal button.secondary {
-      width: 100%;
-      padding: 13px;
-      background: #f5f5f5;
-      color: #444;
-      border: none;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 600;
-      margin-top: 8px;
-      cursor: pointer;
-    }
-
-    .modal button.danger {
-      width: 100%;
-      padding: 13px;
-      background: #fff0f0;
-      color: #e60000;
-      border: 2px solid #ffcccc;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 600;
-      margin-top: 8px;
-      cursor: pointer;
-    }
-
-    .card-preview {
-      text-align: center;
-      margin: 12px 0 18px;
-      background: #fafafa;
-      border-radius: 16px;
-      padding: 16px;
-    }
-
-    .card-preview img {
-      max-width: 180px;
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-
+    .card-preview { text-align: center; margin: 12px 0 18px; background: #fafafa; border-radius: 16px; padding: 16px; }
+    .card-preview img { max-width: 180px; width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
     .card-preview .card-name { font-size: 18px; font-weight: 800; margin-top: 14px; color: #222; }
-
     .card-preview .card-set { font-size: 13px; color: #888; margin-top: 4px; }
 
     .price-input-group { margin: 12px 0; text-align: left; }
-
-    .price-input-group label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      display: block;
-      margin-bottom: 6px;
-    }
-
+    .price-input-group label { font-size: 13px; font-weight: 600; color: #555; display: block; margin-bottom: 6px; }
     .price-row { display: flex; align-items: center; gap: 8px; }
-
     .price-row span { font-weight: 700; color: #e60000; font-size: 16px; }
-
     .price-row input { margin-bottom: 0; flex: 1; }
 
     .results-list { max-height: 280px; overflow-y: auto; margin: 10px 0; }
-
-    .result-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border: 2px solid #f0f0f0;
-      border-radius: 14px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.15s;
-      background: white;
-    }
-
+    .result-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; background: white; }
     .result-item:active { border-color: #e60000; background: #fff5f5; }
-
-    .result-item img {
-      width: 48px;
-      height: 68px;
-      object-fit: contain;
-      border-radius: 6px;
-      background: #f9f9f9;
-    }
-
+    .result-item img { width: 48px; height: 68px; object-fit: contain; border-radius: 6px; background: #f9f9f9; }
     .result-item .info { flex: 1; }
-
     .result-item .info .name { font-weight: 700; font-size: 14px; color: #222; }
-
     .result-item .info .set { font-size: 12px; color: #999; margin-top: 2px; }
 
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .owned-card {
-      background: white;
-      border: 2px solid #f0f0f0;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
-    .owned-card img {
-      width: 100%;
-      max-width: 120px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; margin-top: 8px; }
+    .owned-card { background: white; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px; text-align: center; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .owned-card img { width: 100%; max-width: 120px; border-radius: 10px; margin-bottom: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .owned-card .name { font-size: 13px; font-weight: 700; color: #222; }
-
     .owned-card .set { font-size: 11px; color: #999; margin-top: 2px; }
-
     .owned-card .price { font-size: 13px; font-weight: 700; color: #e60000; margin-top: 6px; }
-
-    .owned-card .delete-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 28px;
-      height: 28px;
-      background: #fff;
-      border: 2px solid #ffcccc;
-      border-radius: 50%;
-      color: #e60000;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      line-height: 1;
-    }
-
-    .owned-card .share-btn {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      width: 28px;
-      height: 28px;
-      background: #fff;
-      border: 2px solid #cce5ff;
-      border-radius: 50%;
-      color: #007bff;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      line-height: 1;
-    }
-
+    .owned-card .delete-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; background: #fff; border: 2px solid #ffcccc; border-radius: 50%; color: #e60000; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); line-height: 1; }
+    .owned-card .share-btn { position: absolute; top: 8px; left: 8px; width: 28px; height: 28px; background: #fff; border: 2px solid #cce5ff; border-radius: 50%; color: #007bff; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); line-height: 1; }
     .owned-card .delete-btn:active { background: #ffe0e0; }
     .owned-card .share-btn:active { background: #e0f0ff; }
 
-    .empty-msg {
-      text-align: center;
-      color: #999;
-      padding: 40px 16px;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
+    .empty-msg { text-align: center; color: #999; padding: 40px 16px; font-size: 15px; line-height: 1.5; }
     .empty-msg strong { color: #e60000; }
-
     .loading { text-align: center; padding: 50px 20px; color: #999; }
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid #eee;
-      border-top-color: #e60000;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin: 0 auto 14px;
-    }
-
+    .spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #e60000; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 14px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ===== PROFILE ===== */
     .profile-header { text-align: center; margin-bottom: 20px; }
-
     .profile-avatar-wrap { position: relative; width: 100px; height: 100px; margin: 0 auto 12px; }
-
-    .profile-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #e60000;
-      background: #f5f5f5;
-      box-shadow: 0 4px 15px rgba(230,0,0,0.25);
-    }
-
-    .profile-avatar-edit {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 32px;
-      height: 32px;
-      background: #e60000;
-      color: white;
-      border: 2px solid white;
-      border-radius: 50%;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
+    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #e60000; background: #f5f5f5; box-shadow: 0 4px 15px rgba(230,0,0,0.25); }
+    .profile-avatar-edit { position: absolute; bottom: 0; right: 0; width: 32px; height: 32px; background: #e60000; color: white; border: 2px solid white; border-radius: 50%; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .profile-name { font-size: 22px; font-weight: 800; color: #222; margin-bottom: 4px; }
-
     .profile-bio { font-size: 14px; color: #777; margin-bottom: 6px; line-height: 1.4; }
-
     .profile-since { font-size: 12px; color: #aaa; }
-
     .profile-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 18px 0; }
-
-    .profile-stat {
-      background: #fafafa;
-      border: 2px solid #f0f0f0;
-      border-radius: 14px;
-      padding: 12px 8px;
-      text-align: center;
-    }
-
+    .profile-stat { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px 8px; text-align: center; }
     .profile-stat .num { font-size: 18px; font-weight: 800; color: #e60000; }
-
     .profile-stat .label { font-size: 11px; color: #888; margin-top: 2px; }
-
-    .profile-fav {
-      background: linear-gradient(135deg, #fff5f5, #ffebeb);
-      border: 2px solid #ffcccc;
-      border-radius: 14px;
-      padding: 14px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
+    .profile-fav { background: linear-gradient(135deg, #fff5f5, #ffebeb); border: 2px solid #ffcccc; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 16px; }
     .profile-fav img { width: 64px; height: 64px; margin-bottom: 6px; }
-
     .profile-fav .label { font-size: 12px; color: #888; }
-
     .profile-fav .name { font-size: 16px; font-weight: 700; text-transform: capitalize; color: #e60000; }
-
     .profile-edit-section { margin-top: 10px; border-top: 1px solid #eee; padding-top: 16px; }
-
-    .profile-edit-section label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      display: block;
-      margin-bottom: 6px;
-      margin-top: 12px;
-    }
-
+    .profile-edit-section label { font-size: 13px; font-weight: 600; color: #555; display: block; margin-bottom: 6px; margin-top: 12px; }
     .profile-edit-section label:first-child { margin-top: 0; }
 
-    #toast {
-      position: fixed;
-      bottom: 110px;
-      left: 50%;
-      transform: translateX(-50%) translateY(30px);
-      background: #222;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 40px;
-      font-size: 14px;
-      font-weight: 600;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-      z-index: 400;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      max-width: 90%;
-      text-align: center;
-    }
-
+    #toast { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%) translateY(30px); background: #222; color: white; padding: 14px 28px; border-radius: 40px; font-size: 14px; font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1); z-index: 400; box-shadow: 0 8px 25px rgba(0,0,0,0.25); max-width: 90%; text-align: center; }
     #toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-    .total-value {
-      background: linear-gradient(135deg, #fff5f5, #ffebeb);
-      border: 2px solid #ffcccc;
-      border-radius: 14px;
-      padding: 12px 16px;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
+    .total-value { background: linear-gradient(135deg, #fff5f5, #ffebeb); border: 2px solid #ffcccc; border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; text-align: center; }
     .total-value .label { font-size: 12px; color: #888; font-weight: 600; }
-
     .total-value .value { font-size: 22px; font-weight: 800; color: #e60000; margin-top: 2px; }
 
     #scanner-video { width: 100%; border-radius: 14px; background: #000; max-height: 320px; object-fit: cover; }
-
     .scanner-hint { font-size: 13px; color: #777; margin: 10px 0; text-align: center; line-height: 1.5; }
-
     .share-preview { text-align: center; padding: 16px; background: #fafafa; border-radius: 16px; margin-bottom: 14px; }
-
     .share-preview img { max-width: 160px; border-radius: 10px; margin-bottom: 12px; }
 
     @media (min-width: 600px) {
-      #pokedex {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        padding: 20px 24px;
-        max-width: 900px;
-        margin: 0 auto;
-      }
+      #pokedex { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 20px 24px; max-width: 900px; margin: 0 auto; }
       .modal { border-radius: 24px; margin-bottom: 30px; }
       .modal-overlay { align-items: center; }
       .toolbar { max-width: 900px; margin: 0 auto; }
@@ -815,11 +198,10 @@
 </head>
 <body>
 
-  <!-- TELA DE LOGIN -->
   <div id="login-screen">
     <div class="login-box">
       <div class="login-logo">
-        <svg width="64" height="64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Pokébola">
+        <svg width="64" height="64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="46" fill="#fff" stroke="#222" stroke-width="6"/>
           <path d="M4 50a46 46 0 0 1 92 0z" fill="#e60000" stroke="#222" stroke-width="6" stroke-linejoin="round"/>
           <line x1="4" y1="50" x2="96" y2="50" stroke="#222" stroke-width="6"/>
@@ -834,11 +216,10 @@
     </div>
   </div>
 
-  <!-- APP PRINCIPAL -->
   <div id="app" style="display:none;">
     <header>
       <h1 style="display:flex;align-items:center;gap:8px;">
-        <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Pokébola">
+        <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="46" fill="#fff" stroke="#222" stroke-width="6"/>
           <path d="M4 50a46 46 0 0 1 92 0z" fill="#e60000" stroke="#222" stroke-width="6" stroke-linejoin="round"/>
           <line x1="4" y1="50" x2="96" y2="50" stroke="#222" stroke-width="6"/>
@@ -913,7 +294,6 @@
 
   <button id="add-btn" onclick="abrirAddCarta()" title="Adicionar carta">+</button>
 
-  <!-- MODAL ADICIONAR CARTA -->
   <div class="modal-overlay" id="modal-add">
     <div class="modal">
       <div class="modal-header">
@@ -937,7 +317,6 @@
     </div>
   </div>
 
-  <!-- MODAL SCANNER -->
   <div class="modal-overlay" id="modal-scanner">
     <div class="modal">
       <div class="modal-header">
@@ -968,7 +347,6 @@
     </div>
   </div>
 
-  <!-- MODAL VER CARTAS DO POKÉMON -->
   <div class="modal-overlay" id="modal-pokemon">
     <div class="modal">
       <div class="modal-header">
@@ -979,7 +357,6 @@
     </div>
   </div>
 
-  <!-- MODAL COMPARTILHAR CARTA -->
   <div class="modal-overlay" id="modal-share">
     <div class="modal">
       <div class="modal-header">
@@ -990,7 +367,6 @@
     </div>
   </div>
 
-  <!-- MODAL PERFIL -->
   <div class="modal-overlay" id="modal-perfil">
     <div class="modal">
       <div class="modal-header">
@@ -1001,7 +377,6 @@
     </div>
   </div>
 
-  <!-- MODAL AMIGOS -->
   <div class="modal-overlay" id="modal-amigos">
     <div class="modal">
       <div class="modal-header">
@@ -1481,8 +856,11 @@
 
               setTimeout(() => {
                 fecharScanner();
-                document.getElementById('card-search-input').value = termo;
-                executarBuscaCarta(termo);
+                setTimeout(() => {
+                  document.getElementById('modal-add').classList.add('active');
+                  document.getElementById('card-search-input').value = termo;
+                  executarBuscaCarta(termo);
+                }, 250);
               }, 700);
             }
           }
@@ -1520,8 +898,11 @@
         return;
       }
       fecharScanner();
-      document.getElementById('card-search-input').value = num;
-      executarBuscaCarta(num);
+      setTimeout(() => {
+        document.getElementById('modal-add').classList.add('active');
+        document.getElementById('card-search-input').value = num;
+        executarBuscaCarta(num);
+      }, 250);
     }
 
     // ===================== VER CARTAS DO POKÉMON =====================
