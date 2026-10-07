@@ -561,7 +561,7 @@
         todosPokemon = data.results.map((p, i) => ({
           id: i + 1,
           name: p.name,
-          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i + 1}.png`
+          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${i + 1}.gif`
         }));
         aplicarFiltros();
       } catch (err) {
