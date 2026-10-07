@@ -54,6 +54,10 @@
     body.dark .ataque-item .ataque-efeito { color: #aaa; }
     body.dark .variante-tag.inativa { background: #333; color: #666; }
     body.dark .btn-detalhes { background: #2a2a2a; color: #ccc; }
+    body.dark .set-card { background: #1e1e1e; border-color: #2a2a2a; }
+    body.dark .set-card .set-nome { color: #eee; }
+    body.dark .filtros-avancados { background: #2a2a2a; }
+    body.dark .serie-grupo { background: #1e1e1e; border-color: #2a2a2a; }
 
     #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(160deg, #ff1a1a 0%, #b30000 100%); }
     .login-box { background: white; color: #222; padding: 36px 28px; border-radius: 24px; width: 100%; max-width: 360px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); text-align: center; }
@@ -74,6 +78,8 @@
     header .friends-btn:active { background: rgba(255,255,255,0.35); }
     header .theme-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     header .theme-btn:active { background: rgba(255,255,255,0.35); }
+    header .explore-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    header .explore-btn:active { background: rgba(255,255,255,0.35); }
     .friends-list { margin-top: 8px; }
     .friend-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; }
     .friend-item .friend-name { font-weight: 700; font-size: 15px; color: #222; }
@@ -174,7 +180,7 @@
     .share-preview { text-align: center; padding: 16px; background: #fafafa; border-radius: 16px; margin-bottom: 14px; }
     .share-preview img { max-width: 160px; border-radius: 10px; margin-bottom: 12px; }
 
-    /* ===== DETALHES DA CARTA ===== */
+    /* DETALHES DA CARTA */
     .detalhes-img { text-align: center; margin-bottom: 16px; }
     .detalhes-img img { max-width: 220px; border-radius: 14px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     .detalhes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
@@ -194,6 +200,23 @@
     .variante-tag.inativa { background: #ddd; color: #999; }
     .btn-detalhes { width: 100%; padding: 10px; background: #f5f5f5; color: #444; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; }
     .btn-detalhes:active { background: #e60000; color: white; }
+
+    /* FILTROS AVANÇADOS */
+    .filtros-avancados { background: #fafafa; border-radius: 14px; padding: 12px; margin: 10px 0; }
+    .filtros-avancados-titulo { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .filtros-avancados-titulo .btn-limpar { background: none; border: none; color: #e60000; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: underline; }
+    .filtros-avancados select { margin-bottom: 8px; font-size: 14px; padding: 10px 12px; }
+    .filtros-avancados select:last-child { margin-bottom: 0; }
+
+    /* EXPLORAR SETS */
+    .set-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 10px; cursor: pointer; transition: all 0.15s; }
+    .set-card:active { border-color: #e60000; background: #fff5f5; transform: scale(0.98); }
+    .set-card .set-logo { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
+    .set-card .set-info { flex: 1; min-width: 0; }
+    .set-card .set-nome { font-weight: 700; font-size: 14px; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .set-card .set-meta { font-size: 12px; color: #999; margin-top: 2px; }
+    .serie-grupo { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+    .serie-grupo h3 { font-size: 16px; color: #e60000; font-weight: 800; margin-bottom: 10px; }
 
     @media (min-width: 600px) {
       #pokedex { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 20px 24px; max-width: 900px; margin: 0 auto; }
@@ -237,7 +260,8 @@
       </h1>
       <div class="header-actions">
         <button class="theme-btn" id="theme-btn" onclick="toggleTema()" title="Alternar tema">🌙</button>
-        <button class="friends-btn" onclick="abrirAmigos()" title="Amigos">👥 Amigos</button>
+        <button class="explore-btn" onclick="abrirExplorar()" title="Explorar sets">🧭 Sets</button>
+        <button class="friends-btn" onclick="abrirAmigos()" title="Amigos">👥</button>
         <div class="user-info" id="user-display" onclick="abrirPerfil()" title="Meu perfil"></div>
       </div>
     </header>
@@ -281,7 +305,7 @@
       <div class="filter-row">
         <button class="filter-btn active" id="filter-todos" onclick="setFiltro('todos')">Todos</button>
         <button class="filter-btn" id="filter-tenho" onclick="setFiltro('tenho')">Só os que tenho</button>
-        <button class="copy-btn" onclick="copiarLista()" title="Copiar lista das suas cartas">📋 Copiar lista</button>
+        <button class="copy-btn" onclick="copiarLista()" title="Copiar lista das suas cartas">📋 Copiar</button>
       </div>
 
       <div class="stats-bar">
@@ -301,6 +325,7 @@
 
   <button id="add-btn" onclick="abrirAddCarta()" title="Adicionar carta">+</button>
 
+  <!-- MODAL ADICIONAR CARTA -->
   <div class="modal-overlay" id="modal-add">
     <div class="modal">
       <div class="modal-header">
@@ -312,12 +337,80 @@
         Exemplos: <strong>025</strong> &nbsp;ou&nbsp; <strong>025/165</strong> &nbsp;ou&nbsp; o nome (ex: Pikachu)
       </p>
       <input type="text" id="card-search-input" placeholder="Ex: 025 ou 025/165 ou Pikachu" autocomplete="off" inputmode="text">
+
+      <!-- FILTROS AVANÇADOS -->
+      <details class="filtros-avancados" style="margin-top:0;">
+        <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#e60000;list-style:none;">
+          ⚙️ Filtros avançados
+        </summary>
+        <div style="margin-top:10px;">
+          <select id="filtro-set">
+            <option value="">Todos os sets</option>
+          </select>
+          <select id="filtro-raridade">
+            <option value="">Todas as raridades</option>
+          </select>
+          <select id="filtro-categoria">
+            <option value="">Todas as categorias</option>
+          </select>
+          <select id="filtro-estagio">
+            <option value="">Todos os estágios</option>
+          </select>
+          <select id="filtro-tipo-carta">
+            <option value="">Todos os tipos de Pokémon</option>
+            <option value="Fire">🔥 Fire</option>
+            <option value="Water">💧 Water</option>
+            <option value="Grass">🌿 Grass</option>
+            <option value="Lightning">⚡ Lightning</option>
+            <option value="Psychic">🔮 Psychic</option>
+            <option value="Fighting">🥊 Fighting</option>
+            <option value="Darkness">🌑 Darkness</option>
+            <option value="Metal">⚙️ Metal</option>
+            <option value="Fairy">✨ Fairy</option>
+            <option value="Dragon">🐉 Dragon</option>
+            <option value="Colorless">⚪ Colorless</option>
+          </select>
+          <button class="secondary" onclick="limparFiltrosAvancados()" style="font-size:13px;">Limpar filtros</button>
+        </div>
+      </details>
+
       <button class="primary" onclick="buscarCarta()" id="btn-buscar">Buscar Carta</button>
       <div id="search-results"></div>
       <div id="card-confirm" style="display:none;"></div>
     </div>
   </div>
 
+  <!-- MODAL EXPLORAR -->
+  <div class="modal-overlay" id="modal-explorar">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="explorar-titulo">🧭 Explorar</h2>
+        <button class="modal-close" onclick="fecharModal('modal-explorar')">×</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button class="filter-btn active" id="explorar-tab-sets" onclick="setExplorarTab('sets')">Sets</button>
+        <button class="filter-btn" id="explorar-tab-series" onclick="setExplorarTab('series')">Séries</button>
+        <button class="filter-btn" id="explorar-tab-ilustradores" onclick="setExplorarTab('ilustradores')">Ilustradores</button>
+      </div>
+      <input type="text" id="explorar-busca" placeholder="Buscar..." oninput="filtrarExplorar()">
+      <div id="explorar-content">
+        <div class="loading"><div class="spinner"></div>Carregando...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CARTAS DO SET -->
+  <div class="modal-overlay" id="modal-set-cartas">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="set-cartas-titulo">Cartas do Set</h2>
+        <button class="modal-close" onclick="fecharModal('modal-set-cartas')">×</button>
+      </div>
+      <div id="set-cartas-content"></div>
+    </div>
+  </div>
+
+  <!-- MODAL VER CARTAS DO POKÉMON -->
   <div class="modal-overlay" id="modal-pokemon">
     <div class="modal">
       <div class="modal-header">
@@ -328,6 +421,7 @@
     </div>
   </div>
 
+  <!-- MODAL DETALHES -->
   <div class="modal-overlay" id="modal-detalhes">
     <div class="modal">
       <div class="modal-header">
@@ -338,6 +432,7 @@
     </div>
   </div>
 
+  <!-- MODAL COMPARTILHAR -->
   <div class="modal-overlay" id="modal-share">
     <div class="modal">
       <div class="modal-header">
@@ -348,6 +443,7 @@
     </div>
   </div>
 
+  <!-- MODAL PERFIL -->
   <div class="modal-overlay" id="modal-perfil">
     <div class="modal">
       <div class="modal-header">
@@ -358,6 +454,7 @@
     </div>
   </div>
 
+  <!-- MODAL AMIGOS -->
   <div class="modal-overlay" id="modal-amigos">
     <div class="modal">
       <div class="modal-header">
@@ -383,15 +480,16 @@
     let pokemonAbertoAtual = null;
     let tiposCache = {};
 
+    // Explorar
+    let explorarTab = 'sets';
+    let setsCache = null;
+    let seriesCache = null;
+    let ilustradoresCache = null;
+    let filtrosAvancadosCache = { sets: null, raridades: null, categorias: null, estagios: null };
+
     function garantirPerfil() {
       if (!perfil) {
-        perfil = {
-          nome: usuario || 'Treinador',
-          foto: null,
-          bio: '',
-          favorito: null,
-          criadoEm: new Date().toISOString()
-        };
+        perfil = { nome: usuario || 'Treinador', foto: null, bio: '', favorito: null, criadoEm: new Date().toISOString() };
         localStorage.setItem('pokedex_perfil', JSON.stringify(perfil));
         sincronizar();
       }
@@ -399,11 +497,7 @@
 
     window.onload = function() {
       aplicarTemaSalvo();
-      if (usuario) {
-        mostrarApp();
-      } else {
-        document.getElementById('username-input').focus();
-      }
+      if (usuario) { mostrarApp(); } else { document.getElementById('username-input').focus(); }
       document.getElementById('username-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') fazerLogin();
       });
@@ -503,10 +597,7 @@
       }
     }
 
-    function setOrdenacao(modo) {
-      ordenacaoAtual = modo;
-      aplicarFiltros();
-    }
+    function setOrdenacao(modo) { ordenacaoAtual = modo; aplicarFiltros(); }
 
     function ordenarLista(lista) {
       const copia = [...lista];
@@ -585,50 +676,140 @@
       document.getElementById('stat-valor').textContent = 'R$ ' + valorTotal.toFixed(2).replace('.', ',');
     }
 
-    function abrirAddCarta() {
+    // ===================== ADICIONAR CARTA =====================
+    async function abrirAddCarta() {
       document.getElementById('card-search-input').value = '';
       document.getElementById('search-results').innerHTML = '';
       document.getElementById('card-confirm').style.display = 'none';
       document.getElementById('card-confirm').innerHTML = '';
       document.getElementById('modal-add').classList.add('active');
+
+      // Carrega filtros avançados (só 1x)
+      carregarFiltrosAvancados();
+
       setTimeout(() => document.getElementById('card-search-input').focus(), 300);
+    }
+
+    async function carregarFiltrosAvancados() {
+      // Sets
+      if (!filtrosAvancadosCache.sets) {
+        try {
+          const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets');
+          const sets = await res.json();
+          filtrosAvancadosCache.sets = sets.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+          const sel = document.getElementById('filtro-set');
+          sel.innerHTML = '<option value="">Todos os sets</option>' +
+            sets.map(s => `<option value="${s.id}">${s.name} (${s.cardCount?.total || '?'})</option>`).join('');
+        } catch (e) { console.error('Erro ao carregar sets:', e); }
+      }
+
+      // Raridades
+      if (!filtrosAvancadosCache.raridades) {
+        try {
+          const res = await fetch('https://api.tcgdex.net/v2/pt-br/rarities');
+          const raridades = await res.json();
+          filtrosAvancadosCache.raridades = raridades;
+          const sel = document.getElementById('filtro-raridade');
+          sel.innerHTML = '<option value="">Todas as raridades</option>' +
+            raridades.map(r => `<option value="${r}">${r}</option>`).join('');
+        } catch (e) { console.error('Erro ao carregar raridades:', e); }
+      }
+
+      // Categorias
+      if (!filtrosAvancadosCache.categorias) {
+        try {
+          const res = await fetch('https://api.tcgdex.net/v2/pt-br/categories');
+          const cats = await res.json();
+          filtrosAvancadosCache.categorias = cats;
+          const sel = document.getElementById('filtro-categoria');
+          sel.innerHTML = '<option value="">Todas as categorias</option>' +
+            cats.map(c => `<option value="${c}">${c}</option>`).join('');
+        } catch (e) { console.error('Erro ao carregar categorias:', e); }
+      }
+
+      // Estágios
+      if (!filtrosAvancadosCache.estagios) {
+        try {
+          const res = await fetch('https://api.tcgdex.net/v2/pt-br/stages');
+          const estagios = await res.json();
+          filtrosAvancadosCache.estagios = estagios;
+          const sel = document.getElementById('filtro-estagio');
+          sel.innerHTML = '<option value="">Todos os estágios</option>' +
+            estagios.map(e => `<option value="${e}">${e}</option>`).join('');
+        } catch (e) { console.error('Erro ao carregar estágios:', e); }
+      }
+    }
+
+    function limparFiltrosAvancados() {
+      document.getElementById('filtro-set').value = '';
+      document.getElementById('filtro-raridade').value = '';
+      document.getElementById('filtro-categoria').value = '';
+      document.getElementById('filtro-estagio').value = '';
+      document.getElementById('filtro-tipo-carta').value = '';
+      mostrarToast('Filtros limpos');
     }
 
     async function buscarCarta() {
       const termo = document.getElementById('card-search-input').value.trim();
-      if (!termo) { mostrarToast('Digite algo pra buscar!'); return; }
-      await executarBuscaCarta(termo);
+      const filtros = {
+        set: document.getElementById('filtro-set').value,
+        rarity: document.getElementById('filtro-raridade').value,
+        category: document.getElementById('filtro-categoria').value,
+        stage: document.getElementById('filtro-estagio').value,
+        type: document.getElementById('filtro-tipo-carta').value
+      };
+      if (!termo && !filtros.set && !filtros.rarity && !filtros.category && !filtros.stage && !filtros.type) {
+        mostrarToast('Digite algo ou escolha um filtro!');
+        return;
+      }
+      await executarBuscaCarta(termo, filtros);
     }
 
-    async function executarBuscaCarta(termo) {
+    async function executarBuscaCarta(termo, filtros = {}) {
       const resultsDiv = document.getElementById('search-results');
       const confirmDiv = document.getElementById('card-confirm');
       confirmDiv.style.display = 'none';
       resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Buscando cartas...</div>';
+
       try {
-        let url;
-        const numMatch = termo.match(/^(\d{1,4})(?:\s*[\/\-]\s*\d{1,4})?$/);
-        const numComLetras = termo.match(/^([A-Za-z]{0,3}\d{1,4})(?:\s*[\/\-]\s*[A-Za-z0-9]+)?$/);
-        if (numMatch) {
-          const num = numMatch[1].padStart(3, '0');
-          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${num}&pagination:itemsPerPage=50`;
-        } else if (numComLetras) {
-          const localId = numComLetras[1].toUpperCase();
-          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${localId}&pagination:itemsPerPage=50`;
-        } else {
-          url = `https://api.tcgdex.net/v2/pt-br/cards?name=${encodeURIComponent(termo)}&pagination:itemsPerPage=30`;
+        const params = new URLSearchParams();
+        params.append('pagination:itemsPerPage', '50');
+
+        // Filtros
+        if (filtros.set) params.append('set', filtros.set);
+        if (filtros.rarity) params.append('rarity', filtros.rarity);
+        if (filtros.category) params.append('category', filtros.category);
+        if (filtros.stage) params.append('stage', filtros.stage);
+        if (filtros.type) params.append('types', filtros.type);
+
+        // Termo de busca
+        if (termo) {
+          const numMatch = termo.match(/^(\d{1,4})(?:\s*[\/\-]\s*\d{1,4})?$/);
+          const numComLetras = termo.match(/^([A-Za-z]{0,3}\d{1,4})(?:\s*[\/\-]\s*[A-Za-z0-9]+)?$/);
+          if (numMatch) {
+            params.append('localId', numMatch[1].padStart(3, '0'));
+          } else if (numComLetras) {
+            params.append('localId', numComLetras[1].toUpperCase());
+          } else {
+            params.append('name', termo);
+          }
         }
+
+        const url = `https://api.tcgdex.net/v2/pt-br/cards?${params.toString()}`;
         const res = await fetch(url);
         const data = await res.json();
+
         if (!data || data.length === 0) {
-          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número ou nome.<br><br>Dica: use o número que aparece embaixo da carta (ex: <strong>025</strong> ou <strong>025/165</strong>).</div>';
+          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número/nome ou filtros diferentes.<br><br>Dica: use o número que aparece embaixo da carta.</div>';
           return;
         }
+
         if (data.length === 1) {
           mostrarConfirmacao(data[0]);
           resultsDiv.innerHTML = '';
           return;
         }
+
         resultsDiv.innerHTML = `
           <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe a certa:</p>
           <div class="results-list">
@@ -708,6 +889,7 @@
       mostrarToast('Carta adicionada! 🎉');
     }
 
+    // ===================== ABRIR POKÉMON =====================
     function abrirPokemon(nome, id) {
       pokemonAbertoAtual = nome;
       const cartas = colecao.filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase());
@@ -746,11 +928,10 @@
       document.getElementById('modal-pokemon').classList.add('active');
     }
 
-    // ===================== DETALHES RICOS DA CARTA =====================
+    // ===================== DETALHES DA CARTA =====================
     async function verDetalhesCarta(id) {
       const carta = colecao.find(c => c.id === id);
       if (!carta) return;
-
       document.getElementById('detalhes-titulo').textContent = carta.name;
       document.getElementById('detalhes-content').innerHTML =
         '<div class="loading"><div class="spinner"></div>Carregando detalhes...</div>';
@@ -776,13 +957,9 @@
 
     function renderizarDetalhes(cartaLocal, dados) {
       const preco = parseFloat(cartaLocal.preco) || 0;
-
       const imgHtml = dados.image
-        ? `<div class="detalhes-img">
-             <img src="${dados.image}/high.webp" onerror="this.src='${dados.image}.webp'" alt="${dados.name}">
-           </div>`
+        ? `<div class="detalhes-img"><img src="${dados.image}/high.webp" onerror="this.src='${dados.image}.webp'" alt="${dados.name}"></div>`
         : '';
-
       const infoHtml = `
         <div class="detalhes-grid">
           ${dados.hp ? `<div class="detalhes-item"><div class="label">HP</div><div class="value">${dados.hp}</div></div>` : ''}
@@ -795,7 +972,6 @@
           ${dados.regulationMark ? `<div class="detalhes-item"><div class="label">Regulação</div><div class="value">${dados.regulationMark}</div></div>` : ''}
         </div>
       `;
-
       let ataquesHtml = '';
       if (dados.attacks && dados.attacks.length > 0) {
         ataquesHtml = `
@@ -814,7 +990,6 @@
           </div>
         `;
       }
-
       let abilitiesHtml = '';
       if (dados.abilities && dados.abilities.length > 0) {
         abilitiesHtml = `
@@ -832,7 +1007,6 @@
           </div>
         `;
       }
-
       let variantesHtml = '';
       if (dados.variants) {
         const v = dados.variants;
@@ -843,19 +1017,15 @@
           { nome: '1ª Edição', ativo: v.firstEdition },
           { nome: 'Jumbo', ativo: v.jumbo },
         ].filter(t => t.ativo);
-
         if (tags.length > 0) {
           variantesHtml = `
             <div class="detalhes-ataques">
               <h3>🎨 Variantes disponíveis</h3>
-              <div class="variantes-lista">
-                ${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}
-              </div>
+              <div class="variantes-lista">${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}</div>
             </div>
           `;
         }
       }
-
       let combateHtml = '';
       if (dados.weaknesses || dados.resistances || dados.retreat !== undefined) {
         combateHtml = `
@@ -866,25 +1036,11 @@
           </div>
         `;
       }
-
       const precoHtml = preco > 0
-        ? `<div class="total-value" style="margin-top:16px;">
-             <div class="label">Você pagou</div>
-             <div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div>
-           </div>`
-        : `<div class="total-value" style="margin-top:16px;">
-             <div class="label">Preço não cadastrado</div>
-             <div class="value" style="font-size:14px;color:#aaa;">—</div>
-           </div>`;
-
+        ? `<div class="total-value" style="margin-top:16px;"><div class="label">Você pagou</div><div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div></div>`
+        : `<div class="total-value" style="margin-top:16px;"><div class="label">Preço não cadastrado</div><div class="value" style="font-size:14px;color:#aaa;">—</div></div>`;
       document.getElementById('detalhes-content').innerHTML = `
-        ${imgHtml}
-        ${infoHtml}
-        ${ataquesHtml}
-        ${abilitiesHtml}
-        ${combateHtml}
-        ${variantesHtml}
-        ${precoHtml}
+        ${imgHtml}${infoHtml}${ataquesHtml}${abilitiesHtml}${combateHtml}${variantesHtml}${precoHtml}
         <button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>
       `;
     }
@@ -911,6 +1067,203 @@
       mostrarToast(`Todas as cartas de ${nome} foram removidas`);
     }
 
+    // ===================== EXPLORAR (SETS, SÉRIES, ILUSTRADORES) =====================
+    function abrirExplorar() {
+      document.getElementById('modal-explorar').classList.add('active');
+      setExplorarTab(explorarTab);
+    }
+
+    function setExplorarTab(tab) {
+      explorarTab = tab;
+      ['sets', 'series', 'ilustradores'].forEach(t => {
+        const btn = document.getElementById('explorar-tab-' + t);
+        if (btn) btn.classList.toggle('active', t === tab);
+      });
+      document.getElementById('explorar-busca').value = '';
+      carregarExplorar();
+    }
+
+    async function carregarExplorar() {
+      const content = document.getElementById('explorar-content');
+      content.innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
+
+      try {
+        if (explorarTab === 'sets') {
+          if (!setsCache) {
+            const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets');
+            setsCache = await res.json();
+          }
+          renderizarSets(setsCache);
+        } else if (explorarTab === 'series') {
+          if (!seriesCache) {
+            const res = await fetch('https://api.tcgdex.net/v2/pt-br/series');
+            seriesCache = await res.json();
+          }
+          renderizarSeries(seriesCache);
+        } else if (explorarTab === 'ilustradores') {
+          if (!ilustradoresCache) {
+            const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators');
+            ilustradoresCache = await res.json();
+          }
+          renderizarIlustradores(ilustradoresCache);
+        }
+      } catch (e) {
+        console.error(e);
+        content.innerHTML = '<div class="empty-msg">Erro ao carregar.<br>Tenta de novo.</div>';
+      }
+    }
+
+    function renderizarSets(sets) {
+      const content = document.getElementById('explorar-content');
+      const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
+      const filtrados = busca ? sets.filter(s => (s.name || '').toLowerCase().includes(busca)) : sets;
+
+      if (filtrados.length === 0) {
+        content.innerHTML = '<div class="empty-msg">Nenhum set encontrado.</div>';
+        return;
+      }
+      content.innerHTML = filtrados.map(s => `
+        <div class="set-card" onclick="abrirCartasDoSet('${s.id}', '${(s.name || '').replace(/'/g, "&#39;")}')">
+          ${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null" alt="${s.name}">` : '<div class="set-logo" style="background:#eee;border-radius:8px;"></div>'}
+          <div class="set-info">
+            <div class="set-nome">${s.name || s.id}</div>
+            <div class="set-meta">${s.cardCount?.total || '?'} cartas${s.releaseDate ? ' • ' + s.releaseDate : ''}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderizarSeries(series) {
+      const content = document.getElementById('explorar-content');
+      const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
+      const filtradas = busca ? series.filter(s => (s.name || '').toLowerCase().includes(busca)) : series;
+
+      if (filtradas.length === 0) {
+        content.innerHTML = '<div class="empty-msg">Nenhuma série encontrada.</div>';
+        return;
+      }
+      content.innerHTML = filtradas.map(s => `
+        <div class="serie-grupo">
+          <h3>${s.name || s.id}</h3>
+          <div style="font-size:12px;color:#888;margin-bottom:8px;">${(s.sets || []).length} sets</div>
+          ${(s.sets || []).map(set => `
+            <div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')">
+              <div class="set-info">
+                <div class="set-nome">${set.name || set.id}</div>
+                <div class="set-meta">${set.cardCount?.total || '?'} cartas</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+    }
+
+    function renderizarIlustradores(ilustradores) {
+      const content = document.getElementById('explorar-content');
+      const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
+      const filtrados = busca ? ilustradores.filter(i => i.toLowerCase().includes(busca)) : ilustradores;
+
+      if (filtrados.length === 0) {
+        content.innerHTML = '<div class="empty-msg">Nenhum ilustrador encontrado.</div>';
+        return;
+      }
+      content.innerHTML = `
+        <p style="font-size:13px;color:#777;margin-bottom:10px;">${filtrados.length} ilustrador(es). Toque pra ver as cartas:</p>
+        ${filtrados.slice(0, 200).map(i => `
+          <div class="set-card" onclick="buscarPorIlustrador('${i.replace(/'/g, "&#39;")}')">
+            <div class="set-info">
+              <div class="set-nome">🎨 ${i}</div>
+            </div>
+          </div>
+        `).join('')}
+        ${filtrados.length > 200 ? '<p style="text-align:center;color:#999;font-size:12px;margin-top:10px;">Mostrando os primeiros 200. Refine a busca.</p>' : ''}
+      `;
+    }
+
+    function filtrarExplorar() {
+      if (explorarTab === 'sets' && setsCache) renderizarSets(setsCache);
+      else if (explorarTab === 'series' && seriesCache) renderizarSeries(seriesCache);
+      else if (explorarTab === 'ilustradores' && ilustradoresCache) renderizarIlustradores(ilustradoresCache);
+    }
+
+    async function abrirCartasDoSet(setId, setNome) {
+      document.getElementById('set-cartas-titulo').textContent = setNome;
+      document.getElementById('set-cartas-content').innerHTML =
+        '<div class="loading"><div class="spinner"></div>Carregando cartas...</div>';
+      document.getElementById('modal-set-cartas').classList.add('active');
+
+      try {
+        const res = await fetch(`https://api.tcgdex.net/v2/pt-br/sets/${setId}`);
+        const set = await res.json();
+        const cartas = set.cards || [];
+
+        if (cartas.length === 0) {
+          document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Esse set não tem cartas.</div>';
+          return;
+        }
+
+        document.getElementById('set-cartas-content').innerHTML = `
+          <p style="font-size:13px;color:#777;margin-bottom:10px;">${cartas.length} carta(s). Toque pra adicionar:</p>
+          <div class="cards-grid">
+            ${cartas.map(c => `
+              <div class="owned-card" onclick="adicionarDoSet('${c.id}', '${c.localId || ''}', '${c.image || ''}', '${(c.name || '').replace(/'/g, "&#39;")}')">
+                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
+                <div class="name">${c.name}</div>
+                <div class="set">Nº ${c.localId || ''}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } catch (e) {
+        console.error(e);
+        document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro ao carregar cartas do set.</div>';
+      }
+    }
+
+    async function adicionarDoSet(tcgId, localId, image, nome) {
+      // Busca a carta completa pra ter todos os dados
+      try {
+        const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards/${tcgId}`);
+        const carta = await res.json();
+        fecharModal('modal-set-cartas');
+        fecharModal('modal-explorar');
+        mostrarConfirmacao(carta);
+        document.getElementById('modal-add').classList.add('active');
+      } catch (e) {
+        console.error(e);
+        mostrarToast('Erro ao abrir a carta.');
+      }
+    }
+
+    async function buscarPorIlustrador(nome) {
+      document.getElementById('explorar-content').innerHTML =
+        '<div class="loading"><div class="spinner"></div>Buscando cartas do ilustrador...</div>';
+      try {
+        const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?illustrator=${encodeURIComponent(nome)}&pagination:itemsPerPage=50`);
+        const data = await res.json();
+        if (!data || data.length === 0) {
+          document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.</div>';
+          return;
+        }
+        document.getElementById('explorar-content').innerHTML = `
+          <p style="font-size:13px;color:#777;margin-bottom:10px;">Cartas de <strong>${nome}</strong> (${data.length}):</p>
+          <div class="cards-grid">
+            ${data.map(c => `
+              <div class="owned-card" onclick="adicionarDoSet('${c.id}', '${c.localId || ''}', '${c.image || ''}', '${(c.name || '').replace(/'/g, "&#39;")}')">
+                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
+                <div class="name">${c.name}</div>
+                <div class="set">Nº ${c.localId || ''}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } catch (e) {
+        console.error(e);
+        document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Erro ao buscar cartas.</div>';
+      }
+    }
+
+    // ===================== COMPARTILHAR =====================
     function abrirCompartilhar(id) {
       const carta = colecao.find(c => c.id === id);
       if (!carta) return;
@@ -1026,6 +1379,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
       document.body.removeChild(ta);
     }
 
+    // ===================== PERFIL =====================
     function abrirPerfil() {
       garantirPerfil();
       renderizarPerfil();
@@ -1150,6 +1504,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
       mostrarToast('Perfil salvo! 🎉');
     }
 
+    // ===================== AMIGOS (Firebase) =====================
     function abrirAmigos() {
       renderizarAmigos();
       document.getElementById('modal-amigos').classList.add('active');
@@ -1324,6 +1679,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
       mostrarToast('Amigo removido');
     }
 
+    // ===================== UTILS =====================
     function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
 
     function mostrarToast(msg) {
@@ -1335,9 +1691,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
 
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) {
-          overlay.classList.remove('active');
-        }
+        if (e.target === overlay) { overlay.classList.remove('active'); }
       });
     });
 
