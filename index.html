@@ -73,13 +73,13 @@
     header .user-info { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     header .user-info:active { background: rgba(255,255,255,0.35); }
     header .user-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #fff; }
-    header .header-actions { display: flex; align-items: center; gap: 8px; }
-    header .friends-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    header .header-actions { display: flex; align-items: center; gap: 6px; }
+    header .friends-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
     header .friends-btn:active { background: rgba(255,255,255,0.35); }
-    header .theme-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    header .theme-btn:active { background: rgba(255,255,255,0.35); }
-    header .explore-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    header .explore-btn:active { background: rgba(255,255,255,0.35); }
+    header .theme-btn, header .explore-btn, header .shiny-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    header .theme-btn:active, header .explore-btn:active, header .shiny-btn:active { background: rgba(255,255,255,0.35); }
+    header .shiny-btn.ativo { background: linear-gradient(135deg, #ffd700, #ff8c00); box-shadow: 0 0 12px rgba(255,215,0,0.6); }
+
     .friends-list { margin-top: 8px; }
     .friend-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; }
     .friend-item .friend-name { font-weight: 700; font-size: 15px; color: #222; }
@@ -100,10 +100,12 @@
     .stats-bar { display: flex; justify-content: space-between; font-size: 12px; color: #888; padding: 0 2px; }
     .stats-bar strong { color: #e60000; }
     #pokedex { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; padding: 16px; }
-    .poke-card { background: white; border: 2px solid #f0f0f0; border-radius: 16px; padding: 12px 8px 10px; text-align: center; cursor: pointer; transition: all 0.2s ease; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .poke-card { background: white; border: 2px solid #f0f0f0; border-radius: 16px; padding: 12px 8px 10px; text-align: center; cursor: pointer; transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.25s, border-color 0.2s; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .poke-card:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 25px rgba(230,0,0,0.2); border-color: #e60000; z-index: 5; }
     .poke-card:active { transform: scale(0.96); }
     .poke-card.has-cards { border-color: #e60000; background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%); box-shadow: 0 4px 14px rgba(230,0,0,0.12); }
-    .poke-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+    .poke-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); image-rendering: pixelated; transition: transform 0.25s; }
+    .poke-card:hover img { transform: scale(1.1); }
     .poke-card .name { font-size: 12px; font-weight: 700; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333; }
     .poke-card .number { font-size: 11px; color: #aaa; margin-top: 2px; }
     .poke-card .badge { position: absolute; top: 8px; right: 8px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; font-size: 11px; font-weight: 800; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(230,0,0,0.4); }
@@ -179,8 +181,6 @@
     .total-value .value { font-size: 22px; font-weight: 800; color: #e60000; margin-top: 2px; }
     .share-preview { text-align: center; padding: 16px; background: #fafafa; border-radius: 16px; margin-bottom: 14px; }
     .share-preview img { max-width: 160px; border-radius: 10px; margin-bottom: 12px; }
-
-    /* DETALHES DA CARTA */
     .detalhes-img { text-align: center; margin-bottom: 16px; }
     .detalhes-img img { max-width: 220px; border-radius: 14px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     .detalhes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
@@ -200,15 +200,9 @@
     .variante-tag.inativa { background: #ddd; color: #999; }
     .btn-detalhes { width: 100%; padding: 10px; background: #f5f5f5; color: #444; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; }
     .btn-detalhes:active { background: #e60000; color: white; }
-
-    /* FILTROS AVANÇADOS */
     .filtros-avancados { background: #fafafa; border-radius: 14px; padding: 12px; margin: 10px 0; }
-    .filtros-avancados-titulo { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .filtros-avancados-titulo .btn-limpar { background: none; border: none; color: #e60000; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: underline; }
     .filtros-avancados select { margin-bottom: 8px; font-size: 14px; padding: 10px 12px; }
     .filtros-avancados select:last-child { margin-bottom: 0; }
-
-    /* EXPLORAR SETS */
     .set-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 10px; cursor: pointer; transition: all 0.15s; }
     .set-card:active { border-color: #e60000; background: #fff5f5; transform: scale(0.98); }
     .set-card .set-logo { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
@@ -217,7 +211,6 @@
     .set-card .set-meta { font-size: 12px; color: #999; margin-top: 2px; }
     .serie-grupo { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
     .serie-grupo h3 { font-size: 16px; color: #e60000; font-weight: 800; margin-bottom: 10px; }
-
     @media (min-width: 600px) {
       #pokedex { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 20px 24px; max-width: 900px; margin: 0 auto; }
       .modal { border-radius: 24px; margin-bottom: 30px; }
@@ -259,8 +252,9 @@
         Pokédex
       </h1>
       <div class="header-actions">
+        <button class="shiny-btn" id="shiny-btn" onclick="toggleShiny()" title="Alternar shiny">✨</button>
         <button class="theme-btn" id="theme-btn" onclick="toggleTema()" title="Alternar tema">🌙</button>
-        <button class="explore-btn" onclick="abrirExplorar()" title="Explorar sets">🧭 Sets</button>
+        <button class="explore-btn" onclick="abrirExplorar()" title="Explorar sets">🧭</button>
         <button class="friends-btn" onclick="abrirAmigos()" title="Amigos">👥</button>
         <div class="user-info" id="user-display" onclick="abrirPerfil()" title="Meu perfil"></div>
       </div>
@@ -270,7 +264,6 @@
       <div class="search-row">
         <input type="text" id="search-pokemon" placeholder="Buscar Pokémon..." oninput="filtrarPokemon()">
       </div>
-
       <div class="type-sort-row">
         <select id="filtro-tipo" onchange="setFiltroTipo(this.value)">
           <option value="">Todos os tipos</option>
@@ -293,7 +286,6 @@
           <option value="steel">⚙️ Steel</option>
           <option value="fairy">✨ Fairy</option>
         </select>
-
         <select id="ordenacao" onchange="setOrdenacao(this.value)">
           <option value="numero">🔢 Número</option>
           <option value="nome">🔤 Nome A-Z</option>
@@ -301,13 +293,11 @@
           <option value="preco-menor">💸 Menor preço</option>
         </select>
       </div>
-
       <div class="filter-row">
         <button class="filter-btn active" id="filter-todos" onclick="setFiltro('todos')">Todos</button>
         <button class="filter-btn" id="filter-tenho" onclick="setFiltro('tenho')">Só os que tenho</button>
         <button class="copy-btn" onclick="copiarLista()" title="Copiar lista das suas cartas">📋 Copiar</button>
       </div>
-
       <div class="stats-bar">
         <span>Pokémon: <strong id="stat-pokemon">0</strong></span>
         <span>Cartas: <strong id="stat-cartas">0</strong></span>
@@ -316,46 +306,24 @@
     </div>
 
     <div id="pokedex">
-      <div class="loading">
-        <div class="spinner"></div>
-        Carregando Pokémon...
-      </div>
+      <div class="loading"><div class="spinner"></div>Carregando Pokémon...</div>
     </div>
   </div>
 
   <button id="add-btn" onclick="abrirAddCarta()" title="Adicionar carta">+</button>
 
-  <!-- MODAL ADICIONAR CARTA -->
   <div class="modal-overlay" id="modal-add">
     <div class="modal">
-      <div class="modal-header">
-        <h2>Adicionar Carta</h2>
-        <button class="modal-close" onclick="fecharModal('modal-add')">×</button>
-      </div>
-      <p style="font-size:14px;color:#777;margin-bottom:14px;line-height:1.5;">
-        Digite o <strong>número</strong> da carta que aparece embaixo dela.<br>
-        Exemplos: <strong>025</strong> &nbsp;ou&nbsp; <strong>025/165</strong> &nbsp;ou&nbsp; o nome (ex: Pikachu)
-      </p>
-      <input type="text" id="card-search-input" placeholder="Ex: 025 ou 025/165 ou Pikachu" autocomplete="off" inputmode="text">
-
-      <!-- FILTROS AVANÇADOS -->
+      <div class="modal-header"><h2>Adicionar Carta</h2><button class="modal-close" onclick="fecharModal('modal-add')">×</button></div>
+      <p style="font-size:14px;color:#777;margin-bottom:14px;line-height:1.5;">Digite o <strong>número</strong> da carta (ex: <strong>025</strong> ou <strong>025/165</strong>) ou o nome.</p>
+      <input type="text" id="card-search-input" placeholder="Ex: 025 ou 025/165 ou Pikachu" autocomplete="off">
       <details class="filtros-avancados" style="margin-top:0;">
-        <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#e60000;list-style:none;">
-          ⚙️ Filtros avançados
-        </summary>
+        <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#e60000;list-style:none;">⚙️ Filtros avançados</summary>
         <div style="margin-top:10px;">
-          <select id="filtro-set">
-            <option value="">Todos os sets</option>
-          </select>
-          <select id="filtro-raridade">
-            <option value="">Todas as raridades</option>
-          </select>
-          <select id="filtro-categoria">
-            <option value="">Todas as categorias</option>
-          </select>
-          <select id="filtro-estagio">
-            <option value="">Todos os estágios</option>
-          </select>
+          <select id="filtro-set"><option value="">Todos os sets</option></select>
+          <select id="filtro-raridade"><option value="">Todas as raridades</option></select>
+          <select id="filtro-categoria"><option value="">Todas as categorias</option></select>
+          <select id="filtro-estagio"><option value="">Todos os estágios</option></select>
           <select id="filtro-tipo-carta">
             <option value="">Todos os tipos de Pokémon</option>
             <option value="Fire">🔥 Fire</option>
@@ -373,94 +341,63 @@
           <button class="secondary" onclick="limparFiltrosAvancados()" style="font-size:13px;">Limpar filtros</button>
         </div>
       </details>
-
       <button class="primary" onclick="buscarCarta()" id="btn-buscar">Buscar Carta</button>
       <div id="search-results"></div>
       <div id="card-confirm" style="display:none;"></div>
     </div>
   </div>
 
-  <!-- MODAL EXPLORAR -->
   <div class="modal-overlay" id="modal-explorar">
     <div class="modal">
-      <div class="modal-header">
-        <h2 id="explorar-titulo">🧭 Explorar</h2>
-        <button class="modal-close" onclick="fecharModal('modal-explorar')">×</button>
-      </div>
+      <div class="modal-header"><h2 id="explorar-titulo">🧭 Explorar</h2><button class="modal-close" onclick="fecharModal('modal-explorar')">×</button></div>
       <div style="display:flex;gap:8px;margin-bottom:14px;">
         <button class="filter-btn active" id="explorar-tab-sets" onclick="setExplorarTab('sets')">Sets</button>
         <button class="filter-btn" id="explorar-tab-series" onclick="setExplorarTab('series')">Séries</button>
         <button class="filter-btn" id="explorar-tab-ilustradores" onclick="setExplorarTab('ilustradores')">Ilustradores</button>
       </div>
       <input type="text" id="explorar-busca" placeholder="Buscar..." oninput="filtrarExplorar()">
-      <div id="explorar-content">
-        <div class="loading"><div class="spinner"></div>Carregando...</div>
-      </div>
+      <div id="explorar-content"><div class="loading"><div class="spinner"></div>Carregando...</div></div>
     </div>
   </div>
 
-  <!-- MODAL CARTAS DO SET -->
   <div class="modal-overlay" id="modal-set-cartas">
     <div class="modal">
-      <div class="modal-header">
-        <h2 id="set-cartas-titulo">Cartas do Set</h2>
-        <button class="modal-close" onclick="fecharModal('modal-set-cartas')">×</button>
-      </div>
+      <div class="modal-header"><h2 id="set-cartas-titulo">Cartas do Set</h2><button class="modal-close" onclick="fecharModal('modal-set-cartas')">×</button></div>
       <div id="set-cartas-content"></div>
     </div>
   </div>
 
-  <!-- MODAL VER CARTAS DO POKÉMON -->
   <div class="modal-overlay" id="modal-pokemon">
     <div class="modal">
-      <div class="modal-header">
-        <h2 id="pokemon-modal-title">Cartas</h2>
-        <button class="modal-close" onclick="fecharModal('modal-pokemon')">×</button>
-      </div>
+      <div class="modal-header"><h2 id="pokemon-modal-title">Cartas</h2><button class="modal-close" onclick="fecharModal('modal-pokemon')">×</button></div>
       <div id="pokemon-cards-list"></div>
     </div>
   </div>
 
-  <!-- MODAL DETALHES -->
   <div class="modal-overlay" id="modal-detalhes">
     <div class="modal">
-      <div class="modal-header">
-        <h2 id="detalhes-titulo">Detalhes da Carta</h2>
-        <button class="modal-close" onclick="fecharModal('modal-detalhes')">×</button>
-      </div>
+      <div class="modal-header"><h2 id="detalhes-titulo">Detalhes da Carta</h2><button class="modal-close" onclick="fecharModal('modal-detalhes')">×</button></div>
       <div id="detalhes-content"></div>
     </div>
   </div>
 
-  <!-- MODAL COMPARTILHAR -->
   <div class="modal-overlay" id="modal-share">
     <div class="modal">
-      <div class="modal-header">
-        <h2>📤 Compartilhar Carta</h2>
-        <button class="modal-close" onclick="fecharModal('modal-share')">×</button>
-      </div>
+      <div class="modal-header"><h2>📤 Compartilhar Carta</h2><button class="modal-close" onclick="fecharModal('modal-share')">×</button></div>
       <div id="share-content"></div>
     </div>
   </div>
 
-  <!-- MODAL PERFIL -->
   <div class="modal-overlay" id="modal-perfil">
     <div class="modal">
-      <div class="modal-header">
-        <h2>Meu Perfil</h2>
-        <button class="modal-close" onclick="fecharModal('modal-perfil')">×</button>
-      </div>
+      <div class="modal-header"><h2>Meu Perfil</h2><button class="modal-close" onclick="fecharModal('modal-perfil')">×</button></div>
       <div id="perfil-content"></div>
     </div>
   </div>
 
-  <!-- MODAL AMIGOS -->
   <div class="modal-overlay" id="modal-amigos">
     <div class="modal">
-      <div class="modal-header">
-        <h2>👥 Meus Amigos</h2>
-        <button class="modal-close" onclick="fecharModal('modal-amigos')">×</button>
-      </div>
+      <div class="modal-header"><h2>👥 Meus Amigos</h2><button class="modal-close" onclick="fecharModal('modal-amigos')">×</button></div>
       <div id="amigos-content"></div>
     </div>
   </div>
@@ -479,13 +416,23 @@
     let ordenacaoAtual = 'numero';
     let pokemonAbertoAtual = null;
     let tiposCache = {};
+    let modoShiny = false;
 
-    // Explorar
     let explorarTab = 'sets';
-    let setsCache = null;
-    let seriesCache = null;
-    let ilustradoresCache = null;
+    let setsCache = null, seriesCache = null, ilustradoresCache = null;
     let filtrosAvancadosCache = { sets: null, raridades: null, categorias: null, estagios: null };
+
+    // URLs de sprites com fallback
+    function spriteAnimado(id) {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
+    }
+    function spriteNormal(id, shiny) {
+      const pasta = shiny ? 'shiny/' : '';
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pasta}${id}.png`;
+    }
+    function spriteGen9(id) {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ix/scarlet-violet/${id}.png`;
+    }
 
     function garantirPerfil() {
       if (!perfil) {
@@ -497,6 +444,7 @@
 
     window.onload = function() {
       aplicarTemaSalvo();
+      aplicarShinySalvo();
       if (usuario) { mostrarApp(); } else { document.getElementById('username-input').focus(); }
       document.getElementById('username-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') fazerLogin();
@@ -505,6 +453,21 @@
         if (e.key === 'Enter') buscarCarta();
       });
     };
+
+    function aplicarShinySalvo() {
+      modoShiny = localStorage.getItem('pokedex_shiny') === 'sim';
+      const btn = document.getElementById('shiny-btn');
+      if (btn && modoShiny) btn.classList.add('ativo');
+    }
+
+    function toggleShiny() {
+      modoShiny = !modoShiny;
+      localStorage.setItem('pokedex_shiny', modoShiny ? 'sim' : 'nao');
+      const btn = document.getElementById('shiny-btn');
+      if (btn) btn.classList.toggle('ativo', modoShiny);
+      mostrarToast(modoShiny ? '✨ Modo Shiny ativado!' : 'Modo normal');
+      renderizarPokedex();
+    }
 
     function fazerLogin() {
       const nome = document.getElementById('username-input').value.trim();
@@ -551,18 +514,14 @@
       localStorage.setItem('pokedex_tema', escuro ? 'escuro' : 'claro');
       const btn = document.getElementById('theme-btn');
       if (btn) btn.textContent = escuro ? '☀️' : '🌙';
-      mostrarToast(escuro ? 'Modo escuro ativado 🌙' : 'Modo claro ativado ☀️');
+      mostrarToast(escuro ? 'Modo escuro 🌙' : 'Modo claro ☀️');
     }
 
     async function carregarPokemon() {
       try {
         const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
         const data = await res.json();
-        todosPokemon = data.results.map((p, i) => ({
-          id: i + 1,
-          name: p.name,
-          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${i + 1}.gif`
-        }));
+        todosPokemon = data.results.map((p, i) => ({ id: i + 1, name: p.name }));
         aplicarFiltros();
       } catch (err) {
         document.getElementById('pokedex').innerHTML = '<div class="empty-msg">Erro ao carregar. Tenta de novo mais tarde.</div>';
@@ -580,8 +539,7 @@
       filtroTipoAtual = tipo;
       if (!tipo) { aplicarFiltros(); return; }
       if (tiposCache[tipo]) { aplicarFiltros(); return; }
-      document.getElementById('pokedex').innerHTML =
-        '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Buscando Pokémon do tipo ' + tipo + '...</div>';
+      document.getElementById('pokedex').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Buscando tipo ' + tipo + '...</div>';
       try {
         const res = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
         const data = await res.json();
@@ -590,7 +548,7 @@
         aplicarFiltros();
       } catch (e) {
         console.error(e);
-        mostrarToast('Erro ao buscar tipo. Tenta de novo.');
+        mostrarToast('Erro ao buscar tipo.');
         filtroTipoAtual = '';
         document.getElementById('filtro-tipo').value = '';
         aplicarFiltros();
@@ -612,9 +570,7 @@
     }
 
     function valorTotalDoPokemon(nome) {
-      return colecao
-        .filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase())
-        .reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
+      return colecao.filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase()).reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
     }
 
     function aplicarFiltros() {
@@ -628,9 +584,7 @@
         const nomesComCarta = new Set(colecao.map(c => (c.pokemon || '').toLowerCase()));
         lista = lista.filter(p => nomesComCarta.has(p.name.toLowerCase()));
       }
-      if (termo) {
-        lista = lista.filter(p => p.name.includes(termo) || String(p.id).includes(termo));
-      }
+      if (termo) lista = lista.filter(p => p.name.includes(termo) || String(p.id).includes(termo));
       lista = ordenarLista(lista);
       pokemonFiltrados = lista;
       renderizarPokedex();
@@ -651,11 +605,16 @@
       }
       container.innerHTML = pokemonFiltrados.map(p => {
         const qtd = contarCartasDoPokemon(p.name);
+        const gif = spriteAnimado(p.id);
+        const normal = spriteNormal(p.id, modoShiny);
+        const gen9 = spriteGen9(p.id);
+        // Fallback em cascata: gif -> normal -> gen9 -> 0.png
         return `
           <div class="poke-card ${qtd > 0 ? 'has-cards' : ''}" onclick="abrirPokemon('${p.name}', ${p.id})">
             ${qtd > 0 ? `<div class="badge">${qtd}</div>` : ''}
-            <img src="${p.sprite}" alt="${p.name}" loading="lazy"
-                 onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'">
+            <img src="${gif}"
+                 onerror="this.onerror=function(){this.onerror=function(){this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'};this.src='${gen9}'};this.src='${normal}'"
+                 alt="${p.name}" loading="lazy">
             <div class="name">${p.name}</div>
             <div class="number">#${String(p.id).padStart(3, '0')}</div>
           </div>
@@ -668,84 +627,66 @@
     }
 
     function atualizarStats() {
-      const totalCartas = colecao.length;
       const pokemonUnicos = new Set(colecao.map(c => (c.pokemon || '').toLowerCase())).size;
       const valorTotal = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
       document.getElementById('stat-pokemon').textContent = pokemonUnicos;
-      document.getElementById('stat-cartas').textContent = totalCartas;
+      document.getElementById('stat-cartas').textContent = colecao.length;
       document.getElementById('stat-valor').textContent = 'R$ ' + valorTotal.toFixed(2).replace('.', ',');
     }
 
-    // ===================== ADICIONAR CARTA =====================
     async function abrirAddCarta() {
       document.getElementById('card-search-input').value = '';
       document.getElementById('search-results').innerHTML = '';
       document.getElementById('card-confirm').style.display = 'none';
       document.getElementById('card-confirm').innerHTML = '';
       document.getElementById('modal-add').classList.add('active');
-
-      // Carrega filtros avançados (só 1x)
       carregarFiltrosAvancados();
-
       setTimeout(() => document.getElementById('card-search-input').focus(), 300);
     }
 
     async function carregarFiltrosAvancados() {
-      // Sets
       if (!filtrosAvancadosCache.sets) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets');
           const sets = await res.json();
-          filtrosAvancadosCache.sets = sets.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-          const sel = document.getElementById('filtro-set');
-          sel.innerHTML = '<option value="">Todos os sets</option>' +
+          filtrosAvancadosCache.sets = sets;
+          document.getElementById('filtro-set').innerHTML = '<option value="">Todos os sets</option>' +
             sets.map(s => `<option value="${s.id}">${s.name} (${s.cardCount?.total || '?'})</option>`).join('');
-        } catch (e) { console.error('Erro ao carregar sets:', e); }
+        } catch (e) { console.error(e); }
       }
-
-      // Raridades
       if (!filtrosAvancadosCache.raridades) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/rarities');
           const raridades = await res.json();
           filtrosAvancadosCache.raridades = raridades;
-          const sel = document.getElementById('filtro-raridade');
-          sel.innerHTML = '<option value="">Todas as raridades</option>' +
+          document.getElementById('filtro-raridade').innerHTML = '<option value="">Todas as raridades</option>' +
             raridades.map(r => `<option value="${r}">${r}</option>`).join('');
-        } catch (e) { console.error('Erro ao carregar raridades:', e); }
+        } catch (e) { console.error(e); }
       }
-
-      // Categorias
       if (!filtrosAvancadosCache.categorias) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/categories');
           const cats = await res.json();
           filtrosAvancadosCache.categorias = cats;
-          const sel = document.getElementById('filtro-categoria');
-          sel.innerHTML = '<option value="">Todas as categorias</option>' +
+          document.getElementById('filtro-categoria').innerHTML = '<option value="">Todas as categorias</option>' +
             cats.map(c => `<option value="${c}">${c}</option>`).join('');
-        } catch (e) { console.error('Erro ao carregar categorias:', e); }
+        } catch (e) { console.error(e); }
       }
-
-      // Estágios
       if (!filtrosAvancadosCache.estagios) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/stages');
           const estagios = await res.json();
           filtrosAvancadosCache.estagios = estagios;
-          const sel = document.getElementById('filtro-estagio');
-          sel.innerHTML = '<option value="">Todos os estágios</option>' +
+          document.getElementById('filtro-estagio').innerHTML = '<option value="">Todos os estágios</option>' +
             estagios.map(e => `<option value="${e}">${e}</option>`).join('');
-        } catch (e) { console.error('Erro ao carregar estágios:', e); }
+        } catch (e) { console.error(e); }
       }
     }
 
     function limparFiltrosAvancados() {
-      document.getElementById('filtro-set').value = '';
-      document.getElementById('filtro-raridade').value = '';
-      document.getElementById('filtro-categoria').value = '';
-      document.getElementById('filtro-estagio').value = '';
-      document.getElementById('filtro-tipo-carta').value = '';
+      ['filtro-set', 'filtro-raridade', 'filtro-categoria', 'filtro-estagio', 'filtro-tipo-carta'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
       mostrarToast('Filtros limpos');
     }
 
@@ -770,48 +711,30 @@
       const confirmDiv = document.getElementById('card-confirm');
       confirmDiv.style.display = 'none';
       resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Buscando cartas...</div>';
-
       try {
         const params = new URLSearchParams();
         params.append('pagination:itemsPerPage', '50');
-
-        // Filtros
         if (filtros.set) params.append('set', filtros.set);
         if (filtros.rarity) params.append('rarity', filtros.rarity);
         if (filtros.category) params.append('category', filtros.category);
         if (filtros.stage) params.append('stage', filtros.stage);
         if (filtros.type) params.append('types', filtros.type);
-
-        // Termo de busca
         if (termo) {
           const numMatch = termo.match(/^(\d{1,4})(?:\s*[\/\-]\s*\d{1,4})?$/);
           const numComLetras = termo.match(/^([A-Za-z]{0,3}\d{1,4})(?:\s*[\/\-]\s*[A-Za-z0-9]+)?$/);
-          if (numMatch) {
-            params.append('localId', numMatch[1].padStart(3, '0'));
-          } else if (numComLetras) {
-            params.append('localId', numComLetras[1].toUpperCase());
-          } else {
-            params.append('name', termo);
-          }
+          if (numMatch) params.append('localId', numMatch[1].padStart(3, '0'));
+          else if (numComLetras) params.append('localId', numComLetras[1].toUpperCase());
+          else params.append('name', termo);
         }
-
-        const url = `https://api.tcgdex.net/v2/pt-br/cards?${params.toString()}`;
-        const res = await fetch(url);
+        const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?${params.toString()}`);
         const data = await res.json();
-
         if (!data || data.length === 0) {
-          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número/nome ou filtros diferentes.<br><br>Dica: use o número que aparece embaixo da carta.</div>';
+          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número/nome ou filtros diferentes.</div>';
           return;
         }
-
-        if (data.length === 1) {
-          mostrarConfirmacao(data[0]);
-          resultsDiv.innerHTML = '';
-          return;
-        }
-
+        if (data.length === 1) { mostrarConfirmacao(data[0]); resultsDiv.innerHTML = ''; return; }
         resultsDiv.innerHTML = `
-          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe a certa:</p>
+          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe:</p>
           <div class="results-list">
             ${data.map(c => `
               <div class="result-item" onclick='mostrarConfirmacao(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
@@ -826,7 +749,7 @@
         `;
       } catch (err) {
         console.error(err);
-        resultsDiv.innerHTML = '<div class="empty-msg">Erro na busca.<br>Verifica sua internet e tenta de novo.</div>';
+        resultsDiv.innerHTML = '<div class="empty-msg">Erro na busca.</div>';
       }
     }
 
@@ -844,23 +767,12 @@
         </div>
         <div class="price-input-group">
           <label>Preço da carta (opcional)</label>
-          <div class="price-row">
-            <span>R$</span>
-            <input type="number" id="card-price-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
-          </div>
-          <p style="font-size:12px;color:#999;margin-top:6px;">Você pode colocar o valor que viu na Liga Pokémon ou em qualquer loja.</p>
+          <div class="price-row"><span>R$</span><input type="number" id="card-price-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
         </div>
-        <button class="primary" onclick='confirmarCarta(${JSON.stringify(carta).replace(/'/g, "&#39;")})'>
-          Sim, adicionar esta carta!
-        </button>
-        <button class="secondary" onclick="document.getElementById('card-confirm').style.display='none'">
-          Não, voltar
-        </button>
+        <button class="primary" onclick='confirmarCarta(${JSON.stringify(carta).replace(/'/g, "&#39;")})'>Sim, adicionar!</button>
+        <button class="secondary" onclick="document.getElementById('card-confirm').style.display='none'">Não, voltar</button>
       `;
-      setTimeout(() => {
-        const priceInput = document.getElementById('card-price-input');
-        if (priceInput) priceInput.focus();
-      }, 200);
+      setTimeout(() => { const p = document.getElementById('card-price-input'); if (p) p.focus(); }, 200);
     }
 
     function confirmarCarta(carta) {
@@ -868,20 +780,15 @@
         .replace(/\s+ex$/i, '').replace(/\s+v$/i, '').replace(/\s+vmax$/i, '')
         .replace(/\s+vstar$/i, '').replace(/\s+gx$/i, '').replace(/\s+lv\.?x$/i, '')
         .replace(/[△★☆]/g, '').trim();
-      const limpar = [' ex', ' v', ' vmax', ' vstar', ' gx', ' break', ' δ', ' star'];
-      limpar.forEach(s => { if (pokemonName.endsWith(s)) pokemonName = pokemonName.slice(0, -s.length).trim(); });
       const precoInput = document.getElementById('card-price-input');
       let preco = 0;
-      if (precoInput && precoInput.value) {
-        preco = parseFloat(precoInput.value.replace(',', '.')) || 0;
-      }
-      const novaCarta = {
+      if (precoInput && precoInput.value) preco = parseFloat(precoInput.value.replace(',', '.')) || 0;
+      colecao.push({
         id: carta.id + '_' + Date.now(),
         tcgId: carta.id, name: carta.name, localId: carta.localId,
         image: carta.image, pokemon: pokemonName, preco: preco,
         addedAt: new Date().toISOString()
-      };
-      colecao.push(novaCarta);
+      });
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
       fecharModal('modal-add');
@@ -889,29 +796,22 @@
       mostrarToast('Carta adicionada! 🎉');
     }
 
-    // ===================== ABRIR POKÉMON =====================
     function abrirPokemon(nome, id) {
       pokemonAbertoAtual = nome;
       const cartas = colecao.filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase());
-      document.getElementById('pokemon-modal-title').textContent =
-        nome.charAt(0).toUpperCase() + nome.slice(1);
+      document.getElementById('pokemon-modal-title').textContent = nome.charAt(0).toUpperCase() + nome.slice(1);
       const listDiv = document.getElementById('pokemon-cards-list');
       if (cartas.length === 0) {
         listDiv.innerHTML = `<div class="empty-msg">Você ainda não tem cartas de <strong>${nome}</strong>.<br><br>Clique no <strong>+</strong> pra adicionar!</div>`;
       } else {
         const valorTotal = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         listDiv.innerHTML = `
-          <div class="total-value">
-            <div class="label">Valor total destas cartas</div>
-            <div class="value">R$ ${valorTotal.toFixed(2).replace('.', ',')}</div>
-          </div>
-          <p style="font-size:14px;color:#777;margin-bottom:12px;">
-            Você tem <strong>${cartas.length}</strong> carta(s) de ${nome}:
-          </p>
+          <div class="total-value"><div class="label">Valor total destas cartas</div><div class="value">R$ ${valorTotal.toFixed(2).replace('.', ',')}</div></div>
+          <p style="font-size:14px;color:#777;margin-bottom:12px;">Você tem <strong>${cartas.length}</strong> carta(s) de ${nome}:</p>
           <div class="cards-grid">
             ${cartas.map((c) => `
               <div class="owned-card" onclick="verDetalhesCarta('${c.id}')">
-                <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')" title="Apagar carta">×</button>
+                <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')" title="Apagar">×</button>
                 <button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')" title="Compartilhar">📤</button>
                 <img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}">
                 <div class="name">${c.name}</div>
@@ -920,46 +820,35 @@
               </div>
             `).join('')}
           </div>
-          <button class="danger" style="margin-top:20px;" onclick="removerPokemon('${nome}')">
-            🗑️ Remover todas as cartas deste Pokémon
-          </button>
+          <button class="danger" style="margin-top:20px;" onclick="removerPokemon('${nome}')">🗑️ Remover todas as cartas deste Pokémon</button>
         `;
       }
       document.getElementById('modal-pokemon').classList.add('active');
     }
 
-    // ===================== DETALHES DA CARTA =====================
     async function verDetalhesCarta(id) {
       const carta = colecao.find(c => c.id === id);
       if (!carta) return;
       document.getElementById('detalhes-titulo').textContent = carta.name;
-      document.getElementById('detalhes-content').innerHTML =
-        '<div class="loading"><div class="spinner"></div>Carregando detalhes...</div>';
+      document.getElementById('detalhes-content').innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
       document.getElementById('modal-detalhes').classList.add('active');
-
       try {
-        let url;
-        if (carta.tcgId) {
-          url = `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}`;
-        } else {
-          url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
-        }
+        let url = carta.tcgId
+          ? `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}`
+          : `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
         const res = await fetch(url);
         let dados = await res.json();
         if (Array.isArray(dados)) dados = dados[0];
         renderizarDetalhes(carta, dados);
       } catch (e) {
         console.error(e);
-        document.getElementById('detalhes-content').innerHTML =
-          '<div class="empty-msg">Não consegui carregar os detalhes.<br>Tenta de novo.</div>';
+        document.getElementById('detalhes-content').innerHTML = '<div class="empty-msg">Não consegui carregar os detalhes.</div>';
       }
     }
 
     function renderizarDetalhes(cartaLocal, dados) {
       const preco = parseFloat(cartaLocal.preco) || 0;
-      const imgHtml = dados.image
-        ? `<div class="detalhes-img"><img src="${dados.image}/high.webp" onerror="this.src='${dados.image}.webp'" alt="${dados.name}"></div>`
-        : '';
+      const imgHtml = dados.image ? `<div class="detalhes-img"><img src="${dados.image}/high.webp" onerror="this.src='${dados.image}.webp'"></div>` : '';
       const infoHtml = `
         <div class="detalhes-grid">
           ${dados.hp ? `<div class="detalhes-item"><div class="label">HP</div><div class="value">${dados.hp}</div></div>` : ''}
@@ -970,79 +859,48 @@
           ${dados.set ? `<div class="detalhes-item"><div class="label">Set</div><div class="value">${dados.set.name || ''}</div></div>` : ''}
           ${dados.types && dados.types.length ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
           ${dados.regulationMark ? `<div class="detalhes-item"><div class="label">Regulação</div><div class="value">${dados.regulationMark}</div></div>` : ''}
-        </div>
-      `;
+        </div>`;
       let ataquesHtml = '';
       if (dados.attacks && dados.attacks.length > 0) {
-        ataquesHtml = `
-          <div class="detalhes-ataques">
-            <h3>⚔️ Ataques</h3>
-            ${dados.attacks.map(a => `
-              <div class="ataque-item">
-                <div class="ataque-header">
-                  <span class="ataque-nome">${a.name}</span>
-                  ${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}
-                </div>
-                ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
-                ${a.cost ? `<div class="ataque-custo">Custo: ${a.cost.join(' + ')}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        `;
+        ataquesHtml = `<div class="detalhes-ataques"><h3>⚔️ Ataques</h3>${dados.attacks.map(a => `
+          <div class="ataque-item">
+            <div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}</div>
+            ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
+            ${a.cost ? `<div class="ataque-custo">Custo: ${a.cost.join(' + ')}</div>` : ''}
+          </div>`).join('')}</div>`;
       }
       let abilitiesHtml = '';
       if (dados.abilities && dados.abilities.length > 0) {
-        abilitiesHtml = `
-          <div class="detalhes-ataques">
-            <h3>✨ Habilidades</h3>
-            ${dados.abilities.map(a => `
-              <div class="ataque-item">
-                <div class="ataque-header">
-                  <span class="ataque-nome">${a.name}</span>
-                  ${a.type ? `<span class="ataque-dano" style="font-size:12px;color:#888;">${a.type}</span>` : ''}
-                </div>
-                ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        `;
+        abilitiesHtml = `<div class="detalhes-ataques"><h3>✨ Habilidades</h3>${dados.abilities.map(a => `
+          <div class="ataque-item">
+            <div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.type ? `<span class="ataque-dano" style="font-size:12px;color:#888;">${a.type}</span>` : ''}</div>
+            ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
+          </div>`).join('')}</div>`;
       }
       let variantesHtml = '';
       if (dados.variants) {
         const v = dados.variants;
         const tags = [
-          { nome: 'Normal', ativo: v.normal },
-          { nome: 'Holo', ativo: v.holo },
-          { nome: 'Reverse', ativo: v.reverse },
-          { nome: '1ª Edição', ativo: v.firstEdition },
+          { nome: 'Normal', ativo: v.normal }, { nome: 'Holo', ativo: v.holo },
+          { nome: 'Reverse', ativo: v.reverse }, { nome: '1ª Edição', ativo: v.firstEdition },
           { nome: 'Jumbo', ativo: v.jumbo },
         ].filter(t => t.ativo);
         if (tags.length > 0) {
-          variantesHtml = `
-            <div class="detalhes-ataques">
-              <h3>🎨 Variantes disponíveis</h3>
-              <div class="variantes-lista">${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}</div>
-            </div>
-          `;
+          variantesHtml = `<div class="detalhes-ataques"><h3>🎨 Variantes</h3><div class="variantes-lista">${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}</div></div>`;
         }
       }
       let combateHtml = '';
       if (dados.weaknesses || dados.resistances || dados.retreat !== undefined) {
-        combateHtml = `
-          <div class="detalhes-grid" style="margin-top:16px;">
-            ${dados.weaknesses && dados.weaknesses.length ? `<div class="detalhes-item"><div class="label">Fraqueza</div><div class="value">${dados.weaknesses.map(w => `${w.type} ${w.value}`).join(', ')}</div></div>` : ''}
-            ${dados.resistances && dados.resistances.length ? `<div class="detalhes-item"><div class="label">Resistência</div><div class="value">${dados.resistances.map(r => `${r.type} ${r.value}`).join(', ')}</div></div>` : ''}
-            ${dados.retreat !== undefined ? `<div class="detalhes-item"><div class="label">Retreat</div><div class="value">${dados.retreat}</div></div>` : ''}
-          </div>
-        `;
+        combateHtml = `<div class="detalhes-grid" style="margin-top:16px;">
+          ${dados.weaknesses && dados.weaknesses.length ? `<div class="detalhes-item"><div class="label">Fraqueza</div><div class="value">${dados.weaknesses.map(w => `${w.type} ${w.value}`).join(', ')}</div></div>` : ''}
+          ${dados.resistances && dados.resistances.length ? `<div class="detalhes-item"><div class="label">Resistência</div><div class="value">${dados.resistances.map(r => `${r.type} ${r.value}`).join(', ')}</div></div>` : ''}
+          ${dados.retreat !== undefined ? `<div class="detalhes-item"><div class="label">Retreat</div><div class="value">${dados.retreat}</div></div>` : ''}
+        </div>`;
       }
       const precoHtml = preco > 0
         ? `<div class="total-value" style="margin-top:16px;"><div class="label">Você pagou</div><div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div></div>`
         : `<div class="total-value" style="margin-top:16px;"><div class="label">Preço não cadastrado</div><div class="value" style="font-size:14px;color:#aaa;">—</div></div>`;
-      document.getElementById('detalhes-content').innerHTML = `
-        ${imgHtml}${infoHtml}${ataquesHtml}${abilitiesHtml}${combateHtml}${variantesHtml}${precoHtml}
-        <button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>
-      `;
+      document.getElementById('detalhes-content').innerHTML = `${imgHtml}${infoHtml}${ataquesHtml}${abilitiesHtml}${combateHtml}${variantesHtml}${precoHtml}<button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>`;
     }
 
     function apagarCarta(id) {
@@ -1050,24 +908,23 @@
       colecao = colecao.filter(c => c.id !== id);
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
-      if (pokemonAbertoAtual) { abrirPokemon(pokemonAbertoAtual, 0); }
+      if (pokemonAbertoAtual) abrirPokemon(pokemonAbertoAtual, 0);
       aplicarFiltros();
       mostrarToast('Carta apagada');
     }
 
     function removerPokemon(nome) {
       const qtd = contarCartasDoPokemon(nome);
-      if (!confirm(`Tem certeza que quer remover TODAS as ${qtd} carta(s) de ${nome}?`)) return;
+      if (!confirm(`Remover TODAS as ${qtd} carta(s) de ${nome}?`)) return;
       colecao = colecao.filter(c => !(c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase()));
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
       fecharModal('modal-pokemon');
       pokemonAbertoAtual = null;
       aplicarFiltros();
-      mostrarToast(`Todas as cartas de ${nome} foram removidas`);
+      mostrarToast(`Cartas de ${nome} removidas`);
     }
 
-    // ===================== EXPLORAR (SETS, SÉRIES, ILUSTRADORES) =====================
     function abrirExplorar() {
       document.getElementById('modal-explorar').classList.add('active');
       setExplorarTab(explorarTab);
@@ -1086,98 +943,60 @@
     async function carregarExplorar() {
       const content = document.getElementById('explorar-content');
       content.innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
-
       try {
         if (explorarTab === 'sets') {
-          if (!setsCache) {
-            const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets');
-            setsCache = await res.json();
-          }
+          if (!setsCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets'); setsCache = await res.json(); }
           renderizarSets(setsCache);
         } else if (explorarTab === 'series') {
-          if (!seriesCache) {
-            const res = await fetch('https://api.tcgdex.net/v2/pt-br/series');
-            seriesCache = await res.json();
-          }
+          if (!seriesCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/series'); seriesCache = await res.json(); }
           renderizarSeries(seriesCache);
         } else if (explorarTab === 'ilustradores') {
-          if (!ilustradoresCache) {
-            const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators');
-            ilustradoresCache = await res.json();
-          }
+          if (!ilustradoresCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators'); ilustradoresCache = await res.json(); }
           renderizarIlustradores(ilustradoresCache);
         }
-      } catch (e) {
-        console.error(e);
-        content.innerHTML = '<div class="empty-msg">Erro ao carregar.<br>Tenta de novo.</div>';
-      }
+      } catch (e) { console.error(e); content.innerHTML = '<div class="empty-msg">Erro ao carregar.</div>'; }
     }
 
     function renderizarSets(sets) {
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? sets.filter(s => (s.name || '').toLowerCase().includes(busca)) : sets;
-
-      if (filtrados.length === 0) {
-        content.innerHTML = '<div class="empty-msg">Nenhum set encontrado.</div>';
-        return;
-      }
+      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum set encontrado.</div>'; return; }
       content.innerHTML = filtrados.map(s => `
         <div class="set-card" onclick="abrirCartasDoSet('${s.id}', '${(s.name || '').replace(/'/g, "&#39;")}')">
           ${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null" alt="${s.name}">` : '<div class="set-logo" style="background:#eee;border-radius:8px;"></div>'}
-          <div class="set-info">
-            <div class="set-nome">${s.name || s.id}</div>
-            <div class="set-meta">${s.cardCount?.total || '?'} cartas${s.releaseDate ? ' • ' + s.releaseDate : ''}</div>
-          </div>
-        </div>
-      `).join('');
+          <div class="set-info"><div class="set-nome">${s.name || s.id}</div><div class="set-meta">${s.cardCount?.total || '?'} cartas${s.releaseDate ? ' • ' + s.releaseDate : ''}</div></div>
+        </div>`).join('');
     }
 
     function renderizarSeries(series) {
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtradas = busca ? series.filter(s => (s.name || '').toLowerCase().includes(busca)) : series;
-
-      if (filtradas.length === 0) {
-        content.innerHTML = '<div class="empty-msg">Nenhuma série encontrada.</div>';
-        return;
-      }
+      if (filtradas.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhuma série encontrada.</div>'; return; }
       content.innerHTML = filtradas.map(s => `
         <div class="serie-grupo">
           <h3>${s.name || s.id}</h3>
           <div style="font-size:12px;color:#888;margin-bottom:8px;">${(s.sets || []).length} sets</div>
           ${(s.sets || []).map(set => `
             <div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')">
-              <div class="set-info">
-                <div class="set-nome">${set.name || set.id}</div>
-                <div class="set-meta">${set.cardCount?.total || '?'} cartas</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `).join('');
+              <div class="set-info"><div class="set-nome">${set.name || set.id}</div><div class="set-meta">${set.cardCount?.total || '?'} cartas</div></div>
+            </div>`).join('')}
+        </div>`).join('');
     }
 
     function renderizarIlustradores(ilustradores) {
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? ilustradores.filter(i => i.toLowerCase().includes(busca)) : ilustradores;
-
-      if (filtrados.length === 0) {
-        content.innerHTML = '<div class="empty-msg">Nenhum ilustrador encontrado.</div>';
-        return;
-      }
+      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum ilustrador encontrado.</div>'; return; }
       content.innerHTML = `
-        <p style="font-size:13px;color:#777;margin-bottom:10px;">${filtrados.length} ilustrador(es). Toque pra ver as cartas:</p>
+        <p style="font-size:13px;color:#777;margin-bottom:10px;">${filtrados.length} ilustrador(es):</p>
         ${filtrados.slice(0, 200).map(i => `
           <div class="set-card" onclick="buscarPorIlustrador('${i.replace(/'/g, "&#39;")}')">
-            <div class="set-info">
-              <div class="set-nome">🎨 ${i}</div>
-            </div>
-          </div>
-        `).join('')}
-        ${filtrados.length > 200 ? '<p style="text-align:center;color:#999;font-size:12px;margin-top:10px;">Mostrando os primeiros 200. Refine a busca.</p>' : ''}
-      `;
+            <div class="set-info"><div class="set-nome">🎨 ${i}</div></div>
+          </div>`).join('')}
+        ${filtrados.length > 200 ? '<p style="text-align:center;color:#999;font-size:12px;">Mostrando 200. Refine a busca.</p>' : ''}`;
     }
 
     function filtrarExplorar() {
@@ -1188,40 +1007,27 @@
 
     async function abrirCartasDoSet(setId, setNome) {
       document.getElementById('set-cartas-titulo').textContent = setNome;
-      document.getElementById('set-cartas-content').innerHTML =
-        '<div class="loading"><div class="spinner"></div>Carregando cartas...</div>';
+      document.getElementById('set-cartas-content').innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
       document.getElementById('modal-set-cartas').classList.add('active');
-
       try {
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/sets/${setId}`);
         const set = await res.json();
         const cartas = set.cards || [];
-
-        if (cartas.length === 0) {
-          document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Esse set não tem cartas.</div>';
-          return;
-        }
-
+        if (cartas.length === 0) { document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Esse set não tem cartas.</div>'; return; }
         document.getElementById('set-cartas-content').innerHTML = `
           <p style="font-size:13px;color:#777;margin-bottom:10px;">${cartas.length} carta(s). Toque pra adicionar:</p>
           <div class="cards-grid">
             ${cartas.map(c => `
-              <div class="owned-card" onclick="adicionarDoSet('${c.id}', '${c.localId || ''}', '${c.image || ''}', '${(c.name || '').replace(/'/g, "&#39;")}')">
+              <div class="owned-card" onclick="adicionarDoSet('${c.id}')">
                 <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
                 <div class="name">${c.name}</div>
                 <div class="set">Nº ${c.localId || ''}</div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } catch (e) {
-        console.error(e);
-        document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro ao carregar cartas do set.</div>';
-      }
+              </div>`).join('')}
+          </div>`;
+      } catch (e) { console.error(e); document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro ao carregar.</div>'; }
     }
 
-    async function adicionarDoSet(tcgId, localId, image, nome) {
-      // Busca a carta completa pra ter todos os dados
+    async function adicionarDoSet(tcgId) {
       try {
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards/${tcgId}`);
         const carta = await res.json();
@@ -1229,64 +1035,44 @@
         fecharModal('modal-explorar');
         mostrarConfirmacao(carta);
         document.getElementById('modal-add').classList.add('active');
-      } catch (e) {
-        console.error(e);
-        mostrarToast('Erro ao abrir a carta.');
-      }
+      } catch (e) { console.error(e); mostrarToast('Erro ao abrir a carta.'); }
     }
 
     async function buscarPorIlustrador(nome) {
-      document.getElementById('explorar-content').innerHTML =
-        '<div class="loading"><div class="spinner"></div>Buscando cartas do ilustrador...</div>';
+      document.getElementById('explorar-content').innerHTML = '<div class="loading"><div class="spinner"></div>Buscando...</div>';
       try {
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?illustrator=${encodeURIComponent(nome)}&pagination:itemsPerPage=50`);
         const data = await res.json();
-        if (!data || data.length === 0) {
-          document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.</div>';
-          return;
-        }
+        if (!data || data.length === 0) { document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Nenhuma carta.</div>'; return; }
         document.getElementById('explorar-content').innerHTML = `
-          <p style="font-size:13px;color:#777;margin-bottom:10px;">Cartas de <strong>${nome}</strong> (${data.length}):</p>
+          <p style="font-size:13px;color:#777;margin-bottom:10px;">Cartas de <strong>${nome}</strong>:</p>
           <div class="cards-grid">
             ${data.map(c => `
-              <div class="owned-card" onclick="adicionarDoSet('${c.id}', '${c.localId || ''}', '${c.image || ''}', '${(c.name || '').replace(/'/g, "&#39;")}')">
+              <div class="owned-card" onclick="adicionarDoSet('${c.id}')">
                 <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
                 <div class="name">${c.name}</div>
                 <div class="set">Nº ${c.localId || ''}</div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } catch (e) {
-        console.error(e);
-        document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Erro ao buscar cartas.</div>';
-      }
+              </div>`).join('')}
+          </div>`;
+      } catch (e) { console.error(e); document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
-    // ===================== COMPARTILHAR =====================
     function abrirCompartilhar(id) {
       const carta = colecao.find(c => c.id === id);
       if (!carta) return;
       const preco = parseFloat(carta.preco) || 0;
       const imgUrl = carta.image ? (carta.image + '/high.webp') : '';
       const imgFallback = carta.image ? (carta.image + '.webp') : '';
-      const texto =
-`🃏 Olha essa carta da minha coleção!
-${carta.name}
-Set: ${carta.tcgId || '—'} • Nº ${carta.localId || '—'}
-${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
-— Coleção de ${usuario} na Pokédex de Cartas`;
+      const texto = `🃏 Olha essa carta da minha coleção!\n${carta.name}\nSet: ${carta.tcgId || '—'} • Nº ${carta.localId || '—'}\n${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}\n— Coleção de ${usuario}`;
       document.getElementById('share-content').innerHTML = `
         <div class="share-preview">
           <img src="${imgUrl}" onerror="this.src='${imgFallback}'" alt="${carta.name}">
           <div style="font-weight:700;font-size:16px;">${carta.name}</div>
-          <div style="font-size:12px;color:#888;margin-top:4px;">${carta.tcgId || ''} • Nº ${carta.localId || ''}</div>
           ${preco > 0 ? `<div style="color:#e60000;font-weight:700;margin-top:6px;">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : ''}
         </div>
         <button class="primary" onclick="compartilharNativo('${carta.id}')">📤 Compartilhar</button>
         <button class="secondary" onclick="copiarTextoCompartilhar('${carta.id}')">📋 Copiar texto</button>
-        ${carta.image ? `<button class="secondary" onclick="copiarLinkImagem('${carta.id}')">🔗 Copiar link da imagem</button>` : ''}
-      `;
+        ${carta.image ? `<button class="secondary" onclick="copiarLinkImagem('${carta.id}')">🔗 Copiar link</button>` : ''}`;
       window._shareTextoAtual = texto;
       document.getElementById('modal-share').classList.add('active');
     }
@@ -1303,83 +1089,51 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
               const resp = await fetch(carta.image + '/high.webp');
               const blob = await resp.blob();
               const file = new File([blob], 'carta.png', { type: blob.type });
-              if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                dados.files = [file];
-              }
+              if (navigator.canShare && navigator.canShare({ files: [file] })) dados.files = [file];
             } catch (e) {}
           }
           await navigator.share(dados);
           fecharModal('modal-share');
-        } catch (e) {
-          if (e.name !== 'AbortError') copiarTextoCompartilhar(id);
-        }
-      } else {
-        copiarTextoCompartilhar(id);
-      }
+        } catch (e) { if (e.name !== 'AbortError') copiarTextoCompartilhar(id); }
+      } else copiarTextoCompartilhar(id);
     }
 
     function copiarTextoCompartilhar(id) {
       const texto = window._shareTextoAtual || '';
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(texto).then(() => {
-          mostrarToast('Texto copiado! 📋');
-          fecharModal('modal-share');
-        }).catch(() => fallbackCopy(texto));
-      } else { fallbackCopy(texto); }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto).then(() => { mostrarToast('Copiado! 📋'); fecharModal('modal-share'); }).catch(() => fallbackCopy(texto));
+      } else fallbackCopy(texto);
     }
 
     function copiarLinkImagem(id) {
       const carta = colecao.find(c => c.id === id);
       if (!carta || !carta.image) return;
       const link = carta.image + '/high.webp';
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(link).then(() => {
-          mostrarToast('Link copiado! 🔗');
-        }).catch(() => fallbackCopy(link));
-      } else { fallbackCopy(link); }
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(() => mostrarToast('Link copiado!')).catch(() => fallbackCopy(link));
+      else fallbackCopy(link);
     }
 
     function copiarLista() {
-      if (colecao.length === 0) { mostrarToast('Você ainda não tem nenhuma carta!'); return; }
-      const ordenada = [...colecao].sort((a, b) => {
-        const pa = (a.pokemon || a.name || '').toLowerCase();
-        const pb = (b.pokemon || b.name || '').toLowerCase();
-        if (pa < pb) return -1;
-        if (pa > pb) return 1;
-        return 0;
-      });
-      let texto = `📋 Minha Coleção de Cartas Pokémon\n`;
-      texto += `Usuário: ${usuario}\n`;
-      texto += `Total de cartas: ${colecao.length}\n`;
+      if (colecao.length === 0) { mostrarToast('Nenhuma carta ainda!'); return; }
+      const ordenada = [...colecao].sort((a, b) => (a.pokemon || a.name || '').localeCompare(b.pokemon || b.name || ''));
+      let texto = `📋 Minha Coleção\nUsuário: ${usuario}\nTotal: ${colecao.length}\n`;
       const valorTotal = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
-      texto += `Valor total: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n`;
-      texto += `----------------------------------------\n\n`;
+      texto += `Valor: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n----\n\n`;
       ordenada.forEach((c, i) => {
-        const precoStr = c.preco > 0 ? ` — R$ ${parseFloat(c.preco).toFixed(2).replace('.', ',')}` : '';
-        texto += `${i + 1}. ${c.name} (${c.tcgId || c.localId || ''})${precoStr}\n`;
+        texto += `${i + 1}. ${c.name} (${c.tcgId || c.localId || ''})${c.preco > 0 ? ' — R$ ' + parseFloat(c.preco).toFixed(2).replace('.', ',') : ''}\n`;
       });
-      texto += `\n----------------------------------------\n`;
-      texto += `Gerado pela Pokédex de Cartas`;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(texto).then(() => {
-          mostrarToast('Lista copiada! 📋');
-        }).catch(() => fallbackCopy(texto));
-      } else { fallbackCopy(texto); }
+      if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => mostrarToast('Copiado! 📋')).catch(() => fallbackCopy(texto));
+      else fallbackCopy(texto);
     }
 
     function fallbackCopy(texto) {
       const ta = document.createElement('textarea');
-      ta.value = texto;
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); mostrarToast('Copiado! 📋'); }
-      catch (e) { mostrarToast('Não consegui copiar. Tenta de novo.'); }
+      ta.value = texto; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); mostrarToast('Copiado!'); } catch (e) { mostrarToast('Erro ao copiar'); }
       document.body.removeChild(ta);
     }
 
-    // ===================== PERFIL =====================
     function abrirPerfil() {
       garantirPerfil();
       renderizarPerfil();
@@ -1395,25 +1149,12 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
       if (perfil.favorito) {
         const favId = perfil.favorito.id || perfil.favorito;
         const favName = perfil.favorito.name || perfil.favorito;
-        favHtml = `
-          <div class="profile-fav">
-            <div class="label">Pokémon favorito</div>
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${favId}.png"
-                 onerror="this.style.display='none'" alt="${favName}">
-            <div class="name">${favName}</div>
-          </div>
-        `;
+        const favSprite = modoShiny ? spriteNormal(favId, true) : spriteNormal(favId, false);
+        favHtml = `<div class="profile-fav"><div class="label">Pokémon favorito</div><img src="${favSprite}" onerror="this.style.display='none'"><div class="name">${favName}</div></div>`;
       } else {
-        favHtml = `
-          <div class="profile-fav">
-            <div class="label">Pokémon favorito</div>
-            <div class="name" style="color:#aaa;font-size:14px;">Nenhum escolhido ainda</div>
-          </div>
-        `;
+        favHtml = `<div class="profile-fav"><div class="label">Pokémon favorito</div><div class="name" style="color:#aaa;font-size:14px;">Nenhum</div></div>`;
       }
-      const avatarSrc = perfil.foto
-        ? perfil.foto
-        : 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#eee"/><circle cx="50" cy="40" r="18" fill="#ccc"/><ellipse cx="50" cy="75" rx="28" ry="20" fill="#ccc"/></svg>');
+      const avatarSrc = perfil.foto || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#eee"/><circle cx="50" cy="40" r="18" fill="#ccc"/><ellipse cx="50" cy="75" rx="28" ry="20" fill="#ccc"/></svg>');
       document.getElementById('perfil-content').innerHTML = `
         <div class="profile-header">
           <div class="profile-avatar-wrap">
@@ -1421,7 +1162,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
             <label class="profile-avatar-edit" for="avatar-input" title="Mudar foto">📷</label>
             <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="mudarFoto(event)">
           </div>
-          <div class="profile-name" id="profile-name-display">${perfil.nome || usuario}</div>
+          <div class="profile-name">${perfil.nome || usuario}</div>
           <div class="profile-bio">${perfil.bio || 'Nenhuma bio ainda'}</div>
           <div class="profile-since">Membro desde ${dataInicio}</div>
         </div>
@@ -1433,23 +1174,19 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
         ${favHtml}
         <div class="profile-edit-section">
           <label>Nome do perfil</label>
-          <input type="text" id="edit-nome" value="${perfil.nome || ''}" maxlength="20" placeholder="Seu nome">
-          <label>Bio / Sobre mim</label>
-          <input type="text" id="edit-bio" value="${perfil.bio || ''}" maxlength="80" placeholder="Ex: Fã de Charizard desde sempre">
+          <input type="text" id="edit-nome" value="${perfil.nome || ''}" maxlength="20">
+          <label>Bio</label>
+          <input type="text" id="edit-bio" value="${perfil.bio || ''}" maxlength="80">
           <label>Pokémon favorito (nome ou número)</label>
-          <input type="text" id="edit-favorito" value="${perfil.favorito ? (perfil.favorito.name || '') : ''}" placeholder="Ex: pikachu ou 25">
-          <button class="primary" onclick="salvarPerfil()" style="margin-top:16px;">Salvar alterações</button>
-        </div>
-      `;
+          <input type="text" id="edit-favorito" value="${perfil.favorito ? (perfil.favorito.name || '') : ''}">
+          <button class="primary" onclick="salvarPerfil()" style="margin-top:16px;">Salvar</button>
+        </div>`;
     }
 
     function mudarFoto(event) {
       const file = event.target.files[0];
       if (!file) return;
-      if (file.size > 1.5 * 1024 * 1024) {
-        mostrarToast('Foto muito grande! Escolhe uma menor.');
-        return;
-      }
+      if (file.size > 1.5 * 1024 * 1024) { mostrarToast('Foto muito grande!'); return; }
       const reader = new FileReader();
       reader.onload = function(e) {
         perfil.foto = e.target.result;
@@ -1466,37 +1203,25 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
       const novoNome = document.getElementById('edit-nome').value.trim();
       const novaBio = document.getElementById('edit-bio').value.trim();
       const favInput = document.getElementById('edit-favorito').value.trim().toLowerCase();
-      if (!novoNome) { mostrarToast('O nome não pode ficar vazio!'); return; }
-      perfil.nome = novoNome;
-      perfil.bio = novaBio;
+      if (!novoNome) { mostrarToast('Nome vazio!'); return; }
+      perfil.nome = novoNome; perfil.bio = novaBio;
       usuario = novoNome;
       localStorage.setItem('pokedex_user', usuario);
       if (favInput) {
         try {
-          let favId = null;
-          let favName = favInput;
+          let favId = null, favName = favInput;
           if (/^\d+$/.test(favInput)) {
             favId = parseInt(favInput);
             const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${favId}`);
-            if (res.ok) {
-              const data = await res.json();
-              favName = data.name;
-            }
+            if (res.ok) { const data = await res.json(); favName = data.name; }
           } else {
             const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${favInput}`);
-            if (res.ok) {
-              const data = await res.json();
-              favId = data.id;
-              favName = data.name;
-            }
+            if (res.ok) { const data = await res.json(); favId = data.id; favName = data.name; }
           }
-          if (favId) { perfil.favorito = { id: favId, name: favName }; }
-          else { mostrarToast('Pokémon não encontrado. Tenta outro nome.'); return; }
-        } catch (e) {
-          mostrarToast('Erro ao buscar Pokémon favorito.');
-          return;
-        }
-      } else { perfil.favorito = null; }
+          if (favId) perfil.favorito = { id: favId, name: favName };
+          else { mostrarToast('Pokémon não encontrado.'); return; }
+        } catch (e) { mostrarToast('Erro ao buscar favorito.'); return; }
+      } else perfil.favorito = null;
       localStorage.setItem('pokedex_perfil', JSON.stringify(perfil));
       sincronizar();
       atualizarHeaderUser();
@@ -1511,10 +1236,12 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
     }
 
     const FIREBASE_CONFIG = {
-      apiKey: "COLE_AQUI",
-      authDomain: "COLE_AQUI",
-      projectId: "COLE_AQUI",
-      appId: "COLE_AQUI"
+      apiKey: "AIzaSyAsJXcox9sZ4xbqjCGp9c46THtXDUn1O70",
+      authDomain: "pokedex-de-cartas.firebaseapp.com",
+      projectId: "pokedex-de-cartas",
+      storageBucket: "pokedex-de-cartas.firebasestorage.app",
+      messagingSenderId: "861460275966",
+      appId: "1:861460275966:web:27efcf929cba01ad283baf"
     };
     let fbDb = null, meuId = null, meuCodigo = null, nuvemEstado = 'off', sincTimer = null;
 
@@ -1545,8 +1272,9 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
         }
         nuvemEstado = 'ok';
         sincronizar();
+        console.log('✅ Firebase conectado. Código:', meuCodigo);
       } catch (e) {
-        console.error('Firebase:', e);
+        console.error('❌ Firebase:', e);
         nuvemEstado = 'erro';
       }
       if (document.getElementById('modal-amigos').classList.contains('active')) renderizarAmigos();
@@ -1567,58 +1295,47 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
             pokemon: c.pokemon || '', preco: parseFloat(c.preco) || 0
           })),
           atualizado: new Date().toISOString()
-        }).catch(e => console.error('Sincronização falhou:', e));
+        }).catch(e => console.error('Sync falhou:', e));
       }, 800);
     }
 
     function renderizarAmigos() {
       const el = document.getElementById('amigos-content');
       const msg = t => { el.innerHTML = `<div class="empty-msg" style="padding:20px 10px;">${t}</div>`; };
-      if (nuvemEstado === 'off') return msg('Os amigos ainda não estão ativados.<br>Falta colar a configuração do Firebase no código (<strong>FIREBASE_CONFIG</strong>).');
+      if (nuvemEstado === 'off') return msg('Firebase não configurado.');
       if (nuvemEstado === 'conectando') return msg('Conectando…');
-      if (nuvemEstado === 'erro') return msg('Não consegui conectar ao servidor.<br>Confere a configuração do Firebase e se o login anônimo está ativado.');
+      if (nuvemEstado === 'erro') return msg('Erro ao conectar. Confere as regras do Firestore e o login anônimo.');
       const btnStyle = 'background:#e60000;color:#fff;border:none;border-radius:20px;padding:7px 14px;font-weight:700;font-size:13px;cursor:pointer;';
       const lista = amigos.map((a, i) => `
         <div class="friend-item">
-          <div>
-            <div class="friend-name">👤 ${esc(a.nome)}</div>
-            <div class="friend-date">${a.codigo ? 'Código ' + esc(a.codigo) : 'Sem código (adicionado antes)'}</div>
-          </div>
+          <div><div class="friend-name">👤 ${esc(a.nome)}</div><div class="friend-date">${a.codigo ? 'Código ' + esc(a.codigo) : ''}</div></div>
           <div style="display:flex;gap:6px;align-items:center;">
             ${a.id ? `<button onclick="verColecaoAmigo(${i})" style="${btnStyle}">Ver</button>` : ''}
-            <button class="remove-friend" onclick="removerAmigo(${i})" title="Remover amigo">×</button>
+            <button class="remove-friend" onclick="removerAmigo(${i})">×</button>
           </div>
         </div>`).join('');
       el.innerHTML = `
-        <div class="total-value">
-          <div class="label">Seu código de amigo</div>
-          <div class="value" style="letter-spacing:3px;">${esc(meuCodigo)}</div>
-        </div>
+        <div class="total-value"><div class="label">Seu código de amigo</div><div class="value" style="letter-spacing:3px;">${esc(meuCodigo)}</div></div>
         <button class="primary" onclick="copiarCodigo()">Copiar meu código</button>
-        ${amigos.length
-          ? `<div class="friends-list" style="margin-top:16px;">${lista}</div>`
-          : `<div class="empty-msg" style="padding:20px 10px;">Você ainda não tem amigos.<br>Peça o código de um amigo e adicione abaixo.</div>`}
+        ${amigos.length ? `<div class="friends-list" style="margin-top:16px;">${lista}</div>` : '<div class="empty-msg" style="padding:20px 10px;">Nenhum amigo ainda.</div>'}
         <div style="margin-top:20px; border-top:1px solid #eee; padding-top:16px;">
           <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:8px;">Adicionar amigo pelo código</label>
-          <input type="text" id="novo-amigo-codigo" placeholder="Ex: K7QM2X" maxlength="6" autocomplete="off" style="text-transform:uppercase;">
+          <input type="text" id="novo-amigo-codigo" placeholder="Ex: K7QM2X" maxlength="6" style="text-transform:uppercase;">
           <button class="primary" onclick="adicionarAmigo()">Adicionar amigo</button>
         </div>`;
     }
 
     function copiarCodigo() {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(meuCodigo).then(
-          () => mostrarToast('Código copiado!'),
-          () => fallbackCopy(meuCodigo));
-      } else { fallbackCopy(meuCodigo); }
+      if (navigator.clipboard) navigator.clipboard.writeText(meuCodigo).then(() => mostrarToast('Código copiado!'), () => fallbackCopy(meuCodigo));
+      else fallbackCopy(meuCodigo);
     }
 
     async function adicionarAmigo() {
       const input = document.getElementById('novo-amigo-codigo');
       const codigo = (input ? input.value : '').trim().toUpperCase();
-      if (!codigo) { mostrarToast('Digite o código do amigo!'); return; }
-      if (codigo === meuCodigo) { mostrarToast('Esse é o seu próprio código 😄'); return; }
-      if (amigos.some(a => a.codigo === codigo)) { mostrarToast('Esse amigo já está na lista!'); return; }
+      if (!codigo) { mostrarToast('Digite o código!'); return; }
+      if (codigo === meuCodigo) { mostrarToast('É o seu próprio código 😄'); return; }
+      if (amigos.some(a => a.codigo === codigo)) { mostrarToast('Já está na lista!'); return; }
       try {
         const snap = await fbDb.collection('treinadores').where('codigo', '==', codigo).limit(1).get();
         if (snap.empty) { mostrarToast('Código não encontrado.'); return; }
@@ -1627,10 +1344,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
         localStorage.setItem('pokedex_amigos', JSON.stringify(amigos));
         renderizarAmigos();
         mostrarToast(`${d.data().nome || 'Amigo'} adicionado! 👥`);
-      } catch (e) {
-        console.error(e);
-        mostrarToast('Erro ao buscar o amigo. Tenta de novo.');
-      }
+      } catch (e) { console.error(e); mostrarToast('Erro. Tenta de novo.'); }
     }
 
     async function verColecaoAmigo(i) {
@@ -1638,48 +1352,39 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
       if (!a || !a.id) return;
       try {
         const doc = await fbDb.collection('treinadores').doc(a.id).get();
-        if (!doc.exists) { mostrarToast('Esse amigo ainda não publicou a coleção.'); return; }
+        if (!doc.exists) { mostrarToast('Coleção não publicada.'); return; }
         const t = doc.data();
         const cartas = Array.isArray(t.cartas) ? t.cartas : [];
         const valor = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         document.getElementById('pokemon-modal-title').textContent = 'Coleção de ' + (t.nome || 'Treinador');
         document.getElementById('pokemon-cards-list').innerHTML = cartas.length === 0
           ? `<div class="empty-msg">${esc(t.nome)} ainda não tem cartas.</div>`
-          : `
-            <div class="total-value">
-              <div class="label">${cartas.length} carta(s) • valor total</div>
-              <div class="value">R$ ${valor.toFixed(2).replace('.', ',')}</div>
-            </div>
+          : `<div class="total-value"><div class="label">${cartas.length} carta(s)</div><div class="value">R$ ${valor.toFixed(2).replace('.', ',')}</div></div>
             <div class="cards-grid">
               ${cartas.map(c => {
                 const img = /^https:\/\//.test(c.image || '') ? c.image : '';
                 const preco = parseFloat(c.preco) || 0;
-                return `
-                <div class="owned-card">
-                  <img src="${esc(img)}/high.webp" data-img="${esc(img)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'" alt="${esc(c.name)}">
+                return `<div class="owned-card">
+                  <img src="${esc(img)}/high.webp" data-img="${esc(img)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'">
                   <div class="name">${esc(c.name)}</div>
                   <div class="set">${esc(c.tcgId)} • Nº ${esc(c.localId)}</div>
-                  ${preco > 0 ? `<div class="price">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : '<div class="price" style="color:#ccc">Sem preço</div>'}
+                  ${preco > 0 ? `<div class="price">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : ''}
                 </div>`;
               }).join('')}
             </div>`;
         document.getElementById('modal-pokemon').classList.add('active');
-      } catch (e) {
-        console.error(e);
-        mostrarToast('Não consegui carregar a coleção.');
-      }
+      } catch (e) { console.error(e); mostrarToast('Erro ao carregar.'); }
     }
 
     function removerAmigo(index) {
       const nome = amigos[index] ? amigos[index].nome : '';
-      if (!confirm(`Remover ${nome} dos amigos?`)) return;
+      if (!confirm(`Remover ${nome}?`)) return;
       amigos.splice(index, 1);
       localStorage.setItem('pokedex_amigos', JSON.stringify(amigos));
       renderizarAmigos();
-      mostrarToast('Amigo removido');
+      mostrarToast('Removido');
     }
 
-    // ===================== UTILS =====================
     function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
 
     function mostrarToast(msg) {
@@ -1691,7 +1396,7 @@ ${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}
 
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) { overlay.classList.remove('active'); }
+        if (e.target === overlay) overlay.classList.remove('active');
       });
     });
 
