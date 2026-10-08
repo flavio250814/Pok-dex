@@ -209,7 +209,6 @@
     .serie-grupo { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
     .serie-grupo h3 { font-size: 16px; color: #e60000; font-weight: 800; margin-bottom: 10px; }
 
-    /* ===== TELA DE BATALHA ===== */
     #tela-batalha { position: fixed; inset: 0; background: linear-gradient(160deg, #1a0000 0%, #0a0a0a 100%); color: white; z-index: 600; display: none; flex-direction: column; overflow-y: auto; }
     #tela-batalha.active { display: flex; }
     .batalha-topo { background: rgba(0,0,0,0.5); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e60000; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); }
@@ -518,8 +517,6 @@
     let explorarTab = 'sets';
     let setsCache = null, seriesCache = null, ilustradoresCache = null;
     let filtrosAvancadosCache = { sets: null, raridades: null, categorias: null, estagios: null };
-
-    // Convites/batalhas
     let heartbeatTimer = null;
     let convitesPendentes = [];
     let conviteAtual = null;
@@ -582,6 +579,7 @@
       atualizarStats();
       sincronizar();
       if (nuvemEstado === 'ok') { iniciarHeartbeat(); ouvirConvitesRecebidos(); }
+      setTimeout(verificarBatalhaPendente, 1500);
     }
 
     function atualizarHeaderUser() {
@@ -761,13 +759,7 @@
 
     async function buscarCarta() {
       const termo = document.getElementById('card-search-input').value.trim();
-      const filtros = {
-        set: document.getElementById('filtro-set').value,
-        rarity: document.getElementById('filtro-raridade').value,
-        category: document.getElementById('filtro-categoria').value,
-        stage: document.getElementById('filtro-estagio').value,
-        type: document.getElementById('filtro-tipo-carta').value
-      };
+      const filtros = { set: document.getElementById('filtro-set').value, rarity: document.getElementById('filtro-raridade').value, category: document.getElementById('filtro-categoria').value, stage: document.getElementById('filtro-estagio').value, type: document.getElementById('filtro-tipo-carta').value };
       if (!termo && !filtros.set && !filtros.rarity && !filtros.category && !filtros.stage && !filtros.type) { mostrarToast('Digite algo!'); return; }
       await executarBuscaCarta(termo, filtros);
     }
@@ -796,15 +788,8 @@
         const data = await res.json();
         if (!data || data.length === 0) { resultsDiv.innerHTML = '<div class="empty-msg">Nada encontrado.</div>'; return; }
         if (data.length === 1) { mostrarConfirmacao(data[0]); resultsDiv.innerHTML = ''; return; }
-        resultsDiv.innerHTML = `
-          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas:</p>
-          <div class="results-list">
-            ${data.map(c => `
-              <div class="result-item" onclick='mostrarConfirmacao(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
-                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'">
-                <div class="info"><div class="name">${c.name}</div><div class="set">${c.id || ''} • Nº ${c.localId || ''}</div></div>
-              </div>`).join('')}
-          </div>`;
+        resultsDiv.innerHTML = `<p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas:</p>
+          <div class="results-list">${data.map(c => `<div class="result-item" onclick='mostrarConfirmacao(${JSON.stringify(c).replace(/'/g, "&#39;")})'><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'"><div class="info"><div class="name">${c.name}</div><div class="set">${c.id || ''} • Nº ${c.localId || ''}</div></div></div>`).join('')}</div>`;
       } catch (err) { resultsDiv.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
@@ -820,10 +805,7 @@
           <div class="card-name">${carta.name}</div>
           <div class="card-set">${carta.id || ''} • Nº ${carta.localId || ''}</div>
         </div>
-        <div class="price-input-group">
-          <label>Preço (opcional)</label>
-          <div class="price-row"><span>R$</span><input type="number" id="card-price-input" placeholder="0,00" step="0.01"></div>
-        </div>
+        <div class="price-input-group"><label>Preço (opcional)</label><div class="price-row"><span>R$</span><input type="number" id="card-price-input" placeholder="0,00" step="0.01"></div></div>
         <button class="primary" onclick='confirmarCarta(${JSON.stringify(carta).replace(/'/g, "&#39;")})'>Adicionar!</button>
         <button class="secondary" onclick="document.getElementById('card-confirm').style.display='none'">Voltar</button>`;
       setTimeout(() => { const p = document.getElementById('card-price-input'); if (p) p.focus(); }, 200);
@@ -847,23 +829,12 @@
       const cartas = colecao.filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase());
       document.getElementById('pokemon-modal-title').textContent = nome.charAt(0).toUpperCase() + nome.slice(1);
       const listDiv = document.getElementById('pokemon-cards-list');
-      if (cartas.length === 0) {
-        listDiv.innerHTML = `<div class="empty-msg">Sem cartas de <strong>${nome}</strong>.</div>`;
-      } else {
+      if (cartas.length === 0) { listDiv.innerHTML = `<div class="empty-msg">Sem cartas de <strong>${nome}</strong>.</div>`; }
+      else {
         const valorTotal = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         listDiv.innerHTML = `
           <div class="total-value"><div class="label">Valor total</div><div class="value">R$ ${valorTotal.toFixed(2).replace('.', ',')}</div></div>
-          <div class="cards-grid">
-            ${cartas.map((c) => `
-              <div class="owned-card" onclick="verDetalhesCarta('${c.id}')">
-                <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')">×</button>
-                <button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')">📤</button>
-                <img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'">
-                <div class="name">${c.name}</div>
-                <div class="set">${c.tcgId || c.id} • Nº ${c.localId || ''}</div>
-                ${c.preco > 0 ? `<div class="price">R$ ${parseFloat(c.preco).toFixed(2).replace('.', ',')}</div>` : ''}
-              </div>`).join('')}
-          </div>
+          <div class="cards-grid">${cartas.map((c) => `<div class="owned-card" onclick="verDetalhesCarta('${c.id}')"><button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')">×</button><button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')">📤</button><img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'"><div class="name">${c.name}</div><div class="set">${c.tcgId || c.id} • Nº ${c.localId || ''}</div>${c.preco > 0 ? `<div class="price">R$ ${parseFloat(c.preco).toFixed(2).replace('.', ',')}</div>` : ''}</div>`).join('')}</div>
           <button class="danger" style="margin-top:20px;" onclick="removerPokemon('${nome}')">🗑️ Remover todas</button>`;
       }
       document.getElementById('modal-pokemon').classList.add('active');
@@ -930,10 +901,7 @@
 
     function setExplorarTab(tab) {
       explorarTab = tab;
-      ['sets', 'series', 'ilustradores'].forEach(t => {
-        const btn = document.getElementById('explorar-tab-' + t);
-        if (btn) btn.classList.toggle('active', t === tab);
-      });
+      ['sets', 'series', 'ilustradores'].forEach(t => { const btn = document.getElementById('explorar-tab-' + t); if (btn) btn.classList.toggle('active', t === tab); });
       document.getElementById('explorar-busca').value = '';
       carregarExplorar();
     }
@@ -942,16 +910,9 @@
       const content = document.getElementById('explorar-content');
       content.innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
       try {
-        if (explorarTab === 'sets') {
-          if (!setsCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets'); setsCache = await res.json(); }
-          renderizarSets(setsCache);
-        } else if (explorarTab === 'series') {
-          if (!seriesCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/series'); seriesCache = await res.json(); }
-          renderizarSeries(seriesCache);
-        } else {
-          if (!ilustradoresCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators'); ilustradoresCache = await res.json(); }
-          renderizarIlustradores(ilustradoresCache);
-        }
+        if (explorarTab === 'sets') { if (!setsCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets'); setsCache = await res.json(); } renderizarSets(setsCache); }
+        else if (explorarTab === 'series') { if (!seriesCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/series'); seriesCache = await res.json(); } renderizarSeries(seriesCache); }
+        else { if (!ilustradoresCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators'); ilustradoresCache = await res.json(); } renderizarIlustradores(ilustradoresCache); }
       } catch (e) { content.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
@@ -959,22 +920,14 @@
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? sets.filter(s => (s.name || '').toLowerCase().includes(busca)) : sets;
-      content.innerHTML = filtrados.map(s => `
-        <div class="set-card" onclick="abrirCartasDoSet('${s.id}', '${(s.name || '').replace(/'/g, "&#39;")}')">
-          ${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null">` : ''}
-          <div class="set-info"><div class="set-nome">${s.name || s.id}</div><div class="set-meta">${s.cardCount?.total || '?'} cartas</div></div>
-        </div>`).join('');
+      content.innerHTML = filtrados.map(s => `<div class="set-card" onclick="abrirCartasDoSet('${s.id}', '${(s.name || '').replace(/'/g, "&#39;")}')">${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null">` : ''}<div class="set-info"><div class="set-nome">${s.name || s.id}</div><div class="set-meta">${s.cardCount?.total || '?'} cartas</div></div></div>`).join('');
     }
 
     function renderizarSeries(series) {
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtradas = busca ? series.filter(s => (s.name || '').toLowerCase().includes(busca)) : series;
-      content.innerHTML = filtradas.map(s => `
-        <div class="serie-grupo">
-          <h3>${s.name || s.id}</h3>
-          ${(s.sets || []).map(set => `<div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">${set.name || set.id}</div></div></div>`).join('')}
-        </div>`).join('');
+      content.innerHTML = filtradas.map(s => `<div class="serie-grupo"><h3>${s.name || s.id}</h3>${(s.sets || []).map(set => `<div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">${set.name || set.id}</div></div></div>`).join('')}</div>`).join('');
     }
 
     function renderizarIlustradores(ilustradores) {
@@ -1028,10 +981,7 @@
       const preco = parseFloat(carta.preco) || 0;
       const imgUrl = carta.image ? (carta.image + '/high.webp') : '';
       const texto = `🃏 ${carta.name}\nSet: ${carta.tcgId || '—'}\n${preco > 0 ? 'R$ ' + preco.toFixed(2) : ''}\n— Coleção de ${usuario}`;
-      document.getElementById('share-content').innerHTML = `
-        <div class="share-preview"><img src="${imgUrl}" onerror="this.src='${carta.image}.webp'"><div style="font-weight:700;">${carta.name}</div></div>
-        <button class="primary" onclick="compartilharNativo()">📤 Compartilhar</button>
-        <button class="secondary" onclick="copiarTextoCompartilhar()">📋 Copiar texto</button>`;
+      document.getElementById('share-content').innerHTML = `<div class="share-preview"><img src="${imgUrl}" onerror="this.src='${carta.image}.webp'"><div style="font-weight:700;">${carta.name}</div></div><button class="primary" onclick="compartilharNativo()">📤 Compartilhar</button><button class="secondary" onclick="copiarTextoCompartilhar()">📋 Copiar texto</button>`;
       window._shareTextoAtual = texto;
       document.getElementById('modal-share').classList.add('active');
     }
@@ -1067,11 +1017,7 @@
       document.body.removeChild(ta);
     }
 
-    function abrirPerfil() {
-      garantirPerfil();
-      renderizarPerfil();
-      document.getElementById('modal-perfil').classList.add('active');
-    }
+    function abrirPerfil() { garantirPerfil(); renderizarPerfil(); document.getElementById('modal-perfil').classList.add('active'); }
 
     function renderizarPerfil() {
       const totalCartas = colecao.length;
@@ -1081,11 +1027,7 @@
       const avatarSrc = perfil.foto || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#eee"/><circle cx="50" cy="40" r="18" fill="#ccc"/><ellipse cx="50" cy="75" rx="28" ry="20" fill="#ccc"/></svg>');
       document.getElementById('perfil-content').innerHTML = `
         <div class="profile-header">
-          <div class="profile-avatar-wrap">
-            <img class="profile-avatar" id="profile-avatar-img" src="${avatarSrc}">
-            <label class="profile-avatar-edit" for="avatar-input">📷</label>
-            <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="mudarFoto(event)">
-          </div>
+          <div class="profile-avatar-wrap"><img class="profile-avatar" id="profile-avatar-img" src="${avatarSrc}"><label class="profile-avatar-edit" for="avatar-input">📷</label><input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="mudarFoto(event)"></div>
           <div class="profile-name">${perfil.nome || usuario}</div>
           <div class="profile-bio">${perfil.bio || 'Sem bio'}</div>
           <div class="profile-since">Membro desde ${dataInicio}</div>
@@ -1141,11 +1083,7 @@
       mostrarToast('Salvo! 🎉');
     }
 
-    // ===== AMIGOS =====
-    function abrirAmigos() {
-      renderizarAmigos();
-      document.getElementById('modal-amigos').classList.add('active');
-    }
+    function abrirAmigos() { renderizarAmigos(); document.getElementById('modal-amigos').classList.add('active'); }
 
     const FIREBASE_CONFIG = {
       apiKey: "AIzaSyAsJXcox9sZ4xbqjCGp9c46THtXDUn1O70",
@@ -1207,22 +1145,12 @@
       if (nuvemEstado === 'conectando') return msg('Conectando…');
       if (nuvemEstado === 'erro') return msg('Erro ao conectar.');
       const btnStyle = 'background:#e60000;color:#fff;border:none;border-radius:20px;padding:7px 14px;font-weight:700;font-size:13px;cursor:pointer;';
-      const lista = amigos.map((a, i) => `
-        <div class="friend-item">
-          <div><div class="friend-name">👤 ${esc(a.nome)}</div><div class="friend-date">${a.codigo ? 'Código ' + esc(a.codigo) : ''}</div></div>
-          <div style="display:flex;gap:6px;align-items:center;">
-            ${a.id ? `<button onclick="verColecaoAmigo(${i})" style="${btnStyle}">Ver</button>` : ''}
-            <button class="remove-friend" onclick="removerAmigo(${i})">×</button>
-          </div>
-        </div>`).join('');
+      const lista = amigos.map((a, i) => `<div class="friend-item"><div><div class="friend-name">👤 ${esc(a.nome)}</div><div class="friend-date">${a.codigo ? 'Código ' + esc(a.codigo) : ''}</div></div><div style="display:flex;gap:6px;align-items:center;">${a.id ? `<button onclick="verColecaoAmigo(${i})" style="${btnStyle}">Ver</button>` : ''}<button class="remove-friend" onclick="removerAmigo(${i})">×</button></div></div>`).join('');
       el.innerHTML = `
         <div class="total-value"><div class="label">Seu código</div><div class="value" style="letter-spacing:3px;">${esc(meuCodigo)}</div></div>
         <button class="primary" onclick="copiarCodigo()">Copiar</button>
         ${amigos.length ? `<div style="margin-top:16px;">${lista}</div>` : '<div class="empty-msg" style="padding:20px 10px;">Nenhum amigo.</div>'}
-        <div style="margin-top:20px; border-top:1px solid #eee; padding-top:16px;">
-          <input type="text" id="novo-amigo-codigo" placeholder="Ex: K7QM2X" maxlength="6" style="text-transform:uppercase;">
-          <button class="primary" onclick="adicionarAmigo()">Adicionar</button>
-        </div>`;
+        <div style="margin-top:20px; border-top:1px solid #eee; padding-top:16px;"><input type="text" id="novo-amigo-codigo" placeholder="Ex: K7QM2X" maxlength="6" style="text-transform:uppercase;"><button class="primary" onclick="adicionarAmigo()">Adicionar</button></div>`;
     }
 
     function copiarCodigo() {
@@ -1257,9 +1185,7 @@
         const cartas = Array.isArray(t.cartas) ? t.cartas : [];
         const v = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         document.getElementById('pokemon-modal-title').textContent = 'Coleção de ' + t.nome;
-        document.getElementById('pokemon-cards-list').innerHTML = cartas.length === 0 ? '<div class="empty-msg">Vazia.</div>' : `
-          <div class="total-value"><div class="label">${cartas.length} cartas</div><div class="value">R$ ${v.toFixed(2).replace('.', ',')}</div></div>
-          <div class="cards-grid">${cartas.map(c => `<div class="owned-card"><img src="${esc(c.image)}/high.webp" data-img="${esc(c.image)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'"><div class="name">${esc(c.name)}</div><div class="set">${esc(c.tcgId)}</div></div>`).join('')}</div>`;
+        document.getElementById('pokemon-cards-list').innerHTML = cartas.length === 0 ? '<div class="empty-msg">Vazia.</div>' : `<div class="total-value"><div class="label">${cartas.length} cartas</div><div class="value">R$ ${v.toFixed(2).replace('.', ',')}</div></div><div class="cards-grid">${cartas.map(c => `<div class="owned-card"><img src="${esc(c.image)}/high.webp" data-img="${esc(c.image)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'"><div class="name">${esc(c.name)}</div><div class="set">${esc(c.tcgId)}</div></div>`).join('')}</div>`;
         document.getElementById('modal-pokemon').classList.add('active');
       } catch (e) { mostrarToast('Erro.'); }
     }
@@ -1272,7 +1198,6 @@
       mostrarToast('Removido');
     }
 
-    // ===== PRESENÇA + CONVITES =====
     function iniciarHeartbeat() {
       if (nuvemEstado !== 'ok') return;
       clearInterval(heartbeatTimer);
@@ -1311,10 +1236,7 @@
         el.innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:12px;">Escolhe um online:</p>
           ${resultados.map((a, i) => {
             const online = amigoEstaOnline(a.dados);
-            return `<div class="friend-item">
-              <div><div class="friend-name"><span class="friend-status ${online ? 'online' : ''}"></span>${esc(a.nome)}</div><div class="friend-date">${online ? '🟢 Online' : '⚫ Offline'}</div></div>
-              ${online ? `<button onclick="desafiarAmigo(${i})" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;">⚔️ Desafiar</button>` : `<button disabled style="background:#ccc;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;">Offline</button>`}
-            </div>`;
+            return `<div class="friend-item"><div><div class="friend-name"><span class="friend-status ${online ? 'online' : ''}"></span>${esc(a.nome)}</div><div class="friend-date">${online ? '🟢 Online' : '⚫ Offline'}</div></div>${online ? `<button onclick="desafiarAmigo(${i})" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;">⚔️ Desafiar</button>` : `<button disabled style="background:#ccc;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;">Offline</button>`}</div>`;
           }).join('')}`;
       } catch (e) { el.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
@@ -1323,22 +1245,10 @@
       const amigo = amigos[index];
       if (!amigo || !amigo.id) return;
       try {
-        const convite = {
-          de: meuId, deNome: (perfil && perfil.nome) || usuario,
-          para: amigo.id, paraNome: amigo.nome,
-          status: 'pendente',
-          criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
-          expiraEm: Date.now() + 120000
-        };
+        const convite = { de: meuId, deNome: (perfil && perfil.nome) || usuario, para: amigo.id, paraNome: amigo.nome, status: 'pendente', criadoEm: firebase.firestore.FieldValue.serverTimestamp(), expiraEm: Date.now() + 120000 };
         const ref = await fbDb.collection('convites').add(convite);
         conviteAtual = { id: ref.id, ...convite };
-        document.getElementById('batalhas-content').innerHTML = `
-          <div class="aguardando-info">
-            <div class="pulse"></div>
-            <p style="font-weight:700;font-size:16px;margin-bottom:6px;">Convite enviado!</p>
-            <p style="font-size:14px;">Aguardando <strong>${esc(amigo.nome)}</strong>...</p>
-            <button class="secondary" onclick="cancelarDesafio()" style="margin-top:20px;">Cancelar</button>
-          </div>`;
+        document.getElementById('batalhas-content').innerHTML = `<div class="aguardando-info"><div class="pulse"></div><p style="font-weight:700;font-size:16px;margin-bottom:6px;">Convite enviado!</p><p style="font-size:14px;">Aguardando <strong>${esc(amigo.nome)}</strong>...</p><button class="secondary" onclick="cancelarDesafio()" style="margin-top:20px;">Cancelar</button></div>`;
         ouvirRespostaConvite(ref.id);
       } catch (e) { mostrarToast('Erro.'); }
     }
@@ -1352,7 +1262,6 @@
           if (listenerConvites) { listenerConvites(); listenerConvites = null; }
           mostrarToast('🎉 Aceito!');
           fecharModal('modal-batalhas');
-          // === PARTE B: iniciarBatalha está na PARTE B ===
           if (typeof iniciarBatalha === 'function') iniciarBatalha(conviteId, d);
         } else if (d.status === 'recusado') {
           if (listenerConvites) { listenerConvites(); listenerConvites = null; }
@@ -1414,7 +1323,6 @@
         await fbDb.collection('convites').doc(conviteAtual.id).update({ status: 'aceito' });
         document.getElementById('popup-convite').classList.remove('active');
         mostrarToast('🎉 Aceitou!');
-        // === PARTE B: iniciarBatalha está na PARTE B ===
         if (typeof iniciarBatalha === 'function') iniciarBatalha(conviteAtual.id, { ...conviteAtual, status: 'aceito' });
       } catch (e) { mostrarToast('Erro.'); }
       conviteAtual = null;
@@ -1433,11 +1341,7 @@
       const el = document.getElementById('notificacoes-content');
       document.getElementById('modal-notificacoes').classList.add('active');
       if (convitesPendentes.length === 0) { el.innerHTML = '<div class="empty-msg">Nenhuma.</div>'; return; }
-      el.innerHTML = convitesPendentes.map(c => `
-        <div class="friend-item">
-          <div><div class="friend-name">⚔️ ${esc(c.deNome)}</div><div class="friend-date">Te desafiou</div></div>
-          <button onclick="verConvite('${c.id}')" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;">Ver</button>
-        </div>`).join('');
+      el.innerHTML = convitesPendentes.map(c => `<div class="friend-item"><div><div class="friend-name">⚔️ ${esc(c.deNome)}</div><div class="friend-date">Te desafiou</div></div><button onclick="verConvite('${c.id}')" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;">Ver</button></div>`).join('');
     }
 
     function verConvite(id) {
@@ -1447,74 +1351,42 @@
       mostrarPopupConvite(c);
     }
 
-    function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    function mostrarToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('active'); });
-    });
-
-    (function carregarCacheTipos() { try { const c = localStorage.getItem('pokedex_tipos_cache'); if (c) tiposCache = JSON.parse(c); } catch (e) {} })();
-
-        // =====================================================================
-    // === BATALHA: TELA, TURNOS, ATAQUES, CONDIÇÕES ===
-    // =====================================================================
+    // ==================== BATALHA: TELA, TURNOS, ATAQUES ====================
     let batalhaAtual = null;
     let listenerBatalha = null;
     let batalhaTimer = null;
     let segundosTurno = 300;
     let timeSelecionado = [];
     let batalhaSaindo = false;
+    let ataqueEscolhido = null;
 
-    // ===== INICIAR BATALHA (chamado pelo convite aceito) =====
     async function iniciarBatalha(conviteId, convite) {
       try {
         const souDesafiante = convite.de === meuId;
         const idAmigo = souDesafiante ? convite.para : convite.de;
         const nomeAmigo = souDesafiante ? convite.paraNome : convite.deNome;
 
-        // Cria batalha no Firestore
         const ref = await fbDb.collection('batalhas').add({
-          jogadorA: convite.de,
-          jogadorANome: convite.deNome,
-          jogadorB: convite.para,
-          jogadorBNome: convite.paraNome,
+          jogadorA: convite.de, jogadorANome: convite.deNome,
+          jogadorB: convite.para, jogadorBNome: convite.paraNome,
           criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
           status: 'escolhendo-time',
-          timeA: null,
-          timeB: null,
-          estadoA: null,
-          estadoB: null,
+          timeA: null, timeB: null, estadoA: null, estadoB: null,
           turno: null,
           log: [{ tipo: 'sistema', txt: '⚔️ Batalha criada. Escolham seus times!' }],
           vencedor: null,
           conviteId: conviteId
         });
 
-        batalhaAtual = {
-          id: ref.id,
-          _souA: souDesafiante,
-          _idAmigo: idAmigo,
-          _nomeAmigo: nomeAmigo,
-          status: 'escolhendo-time'
-        };
+        localStorage.setItem('pokedex_batalha_atual', ref.id);
 
+        batalhaAtual = { id: ref.id, _souA: souDesafiante, _idAmigo: idAmigo, _nomeAmigo: nomeAmigo, status: 'escolhendo-time' };
         document.getElementById('tela-batalha').classList.add('active');
         renderizarEscolhaTime();
         ouvirBatalha(ref.id);
-      } catch (e) {
-        console.error(e);
-        mostrarToast('Erro ao iniciar batalha.');
-      }
+      } catch (e) { console.error(e); mostrarToast('Erro ao iniciar batalha.'); }
     }
 
-    // ===== LISTENER DA BATALHA =====
     function ouvirBatalha(batalhaId) {
       if (listenerBatalha) listenerBatalha();
       listenerBatalha = fbDb.collection('batalhas').doc(batalhaId).onSnapshot(doc => {
@@ -1528,12 +1400,7 @@
           if (jaEscolhi) {
             document.getElementById('batalha-turno').textContent = 'Escolhendo times';
             document.getElementById('batalha-timer').textContent = '—';
-            tela.innerHTML = `
-              <div class="aguardando-info" style="padding-top:80px;">
-                <div class="pulse"></div>
-                <p style="font-weight:700;font-size:16px;color:white;margin-bottom:6px;">Time confirmado!</p>
-                <p style="font-size:14px;color:#aaa;">Aguardando <strong>${esc(batalhaAtual._nomeAmigo)}</strong> escolher o time dele...</p>
-              </div>`;
+            tela.innerHTML = `<div class="aguardando-info" style="padding-top:80px;"><div class="pulse"></div><p style="font-weight:700;font-size:16px;color:white;margin-bottom:6px;">Time confirmado!</p><p style="font-size:14px;color:#aaa;">Aguardando <strong>${esc(batalhaAtual._nomeAmigo)}</strong> escolher o time dele...</p></div>`;
           } else if (!tela.querySelector('.escolha-time')) {
             renderizarEscolhaTime();
           }
@@ -1545,43 +1412,23 @@
       }, e => console.error('Listener:', e));
     }
 
-    // ===== ESCOLHA DE TIME =====
     function renderizarEscolhaTime() {
       timeSelecionado = [];
       document.getElementById('batalha-turno').textContent = 'Escolha seu time';
       document.getElementById('batalha-timer').textContent = '—';
       document.getElementById('batalha-timer').classList.remove('urgente');
-
       const container = document.getElementById('batalha-corpo');
-
       if (colecao.length === 0) {
-        container.innerHTML = `
-          <div class="escolha-time" style="text-align:center;padding-top:60px;">
-            <h2>Sem cartas</h2>
-            <p>Você não tem cartas pra batalhar.</p>
-            <button class="btn-cancelar-time" onclick="sairBatalha()" style="margin-top:20px;padding:14px 24px;border-radius:12px;border:none;font-weight:800;cursor:pointer;">Voltar</button>
-          </div>`;
+        container.innerHTML = `<div class="escolha-time" style="text-align:center;padding-top:60px;"><h2>Sem cartas</h2><p>Você não tem cartas pra batalhar.</p><button class="btn-cancelar-time" onclick="sairBatalha()" style="margin-top:20px;padding:14px 24px;border-radius:12px;border:none;font-weight:800;cursor:pointer;">Voltar</button></div>`;
         return;
       }
-
       container.innerHTML = `
         <div class="escolha-time">
           <h2>Escolha seu time <span class="escolha-contador" id="contador-time">0/5</span></h2>
           <p>Escolha de 1 a 5 cartas. A <strong>1ª escolhida será a ativa</strong>.</p>
-          <div class="escolha-grid" id="escolha-grid">
-            ${colecao.map((c, i) => `
-              <div class="escolha-card" data-idx="${i}" onclick="toggleCartaTime(${i})">
-                <img src="${c.image}/low.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}">
-                <div class="nome-c">${c.name}</div>
-                <div class="num-c">Nº ${c.localId || ''}</div>
-              </div>
-            `).join('')}
-          </div>
+          <div class="escolha-grid" id="escolha-grid">${colecao.map((c, i) => `<div class="escolha-card" data-idx="${i}" onclick="toggleCartaTime(${i})"><img src="${c.image}/low.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}"><div class="nome-c">${c.name}</div><div class="num-c">Nº ${c.localId || ''}</div></div>`).join('')}</div>
         </div>
-        <div class="escolha-acoes">
-          <button class="btn-cancelar-time" onclick="sairBatalha()">Cancelar</button>
-          <button class="btn-confirmar-time" id="btn-confirmar-time" onclick="confirmarTime()" disabled>Confirmar time</button>
-        </div>`;
+        <div class="escolha-acoes"><button class="btn-cancelar-time" onclick="sairBatalha()">Cancelar</button><button class="btn-confirmar-time" id="btn-confirmar-time" onclick="confirmarTime()" disabled>Confirmar time</button></div>`;
     }
 
     function toggleCartaTime(idx) {
@@ -1601,8 +1448,7 @@
     async function confirmarTime() {
       if (timeSelecionado.length === 0 || !batalhaAtual) return;
       const cartasTime = timeSelecionado.map(i => colecao[i]);
-      document.getElementById('batalha-corpo').innerHTML = '<div class="loading" style="color:white;padding-top:80px;"><div class="spinner"></div>Carregando dados das cartas...</div>';
-
+      document.getElementById('batalha-corpo').innerHTML = '<div class="loading" style="color:white;padding-top:80px;"><div class="spinner"></div>Carregando...</div>';
       try {
         const cartasCompletas = await Promise.all(cartasTime.map(async c => {
           try {
@@ -1611,103 +1457,44 @@
             let dados = await res.json();
             if (Array.isArray(dados)) dados = dados[0];
             const hp = parseInt(dados.hp) || 100;
-            return {
-              tcgId: c.tcgId,
-              nome: dados.name || c.name,
-              hp: hp,
-              hpMax: hp,
-              tipos: dados.types || [],
-              ataques: (dados.attacks || []).map(a => ({
-                nome: a.name,
-                dano: parseInt(a.damage) || 0,
-                danoStr: a.damage || '',
-                custo: a.cost || [],
-                efeito: a.effect || ''
-              })),
-              fraquezas: dados.weaknesses || [],
-              resistencias: dados.resistances || [],
-              image: c.image,
-              condicoes: {},
-              defesaAtiva: false
-            };
+            return { tcgId: c.tcgId, nome: dados.name || c.name, hp: hp, hpMax: hp, tipos: dados.types || [], ataques: (dados.attacks || []).map(a => ({ nome: a.name, dano: parseInt(a.damage) || 0, danoStr: a.damage || '', custo: a.cost || [], efeito: a.effect || '' })), fraquezas: dados.weaknesses || [], resistencias: dados.resistances || [], image: c.image, condicoes: {}, defesaAtiva: false };
           } catch (e) {
             return { tcgId: c.tcgId, nome: c.name, hp: 100, hpMax: 100, tipos: [], ataques: [], fraquezas: [], resistencias: [], image: c.image, condicoes: {}, defesaAtiva: false };
           }
         }));
-
         const campoTime = batalhaAtual._souA ? 'timeA' : 'timeB';
         const campoEstado = batalhaAtual._souA ? 'estadoA' : 'estadoB';
-
         await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
           [campoTime]: cartasCompletas.map(c => ({ nome: c.nome, image: c.image })),
-          [campoEstado]: {
-            cartas: cartasCompletas,
-            ativa: 0,
-            acoes: { recuar: 5, curar: {}, defender: false }
-          }
+          [campoEstado]: { cartas: cartasCompletas, ativa: 0, acoes: { recuar: 5, curar: {}, defender: false } }
         });
-
-        // Verifica se os dois já confirmaram
         const doc = await fbDb.collection('batalhas').doc(batalhaAtual.id).get();
         const d = doc.data();
         if (d.timeA && d.timeB) {
-          await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
-            status: 'em-andamento',
-            turno: 'A',
-            turnoIniciadoEm: Date.now(),
-            log: [{ tipo: 'sistema', txt: `⚔️ Batalha começou! Vez de ${d.jogadorANome}` }]
-          });
+          await fbDb.collection('batalhas').doc(batalhaAtual.id).update({ status: 'em-andamento', turno: 'A', turnoIniciadoEm: Date.now(), log: [{ tipo: 'sistema', txt: `⚔️ Batalha começou! Vez de ${d.jogadorANome}` }] });
         }
-      } catch (e) {
-        console.error(e);
-        mostrarToast('Erro ao confirmar time.');
-      }
+      } catch (e) { console.error(e); mostrarToast('Erro ao confirmar time.'); }
     }
 
-    // ===== RENDERIZAR BATALHA =====
     function renderizarBatalha() {
       if (!batalhaAtual || batalhaAtual.status !== 'em-andamento') return;
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
       const estadoAmigo = souA ? batalhaAtual.estadoB : batalhaAtual.estadoA;
       if (!estadoMeu || !estadoAmigo) return;
-
       const turno = batalhaAtual.turno;
       const minhaVez = (turno === 'A' && souA) || (turno === 'B' && !souA);
-
-      // Inicia timer do turno
       const tempoRestante = Math.max(0, Math.floor((300000 - (Date.now() - (batalhaAtual.turnoIniciadoEm || Date.now()))) / 1000));
       iniciarTimerTurno(tempoRestante);
-
       document.getElementById('batalha-turno').textContent = minhaVez ? 'Sua vez!' : 'Vez do ' + batalhaAtual._nomeAmigo;
       document.getElementById('batalha-turno').className = 'batalha-turno' + (minhaVez ? '' : ' amigo');
-
       const container = document.getElementById('batalha-corpo');
       container.innerHTML = `
-        <div class="time-lado">
-          <div class="time-titulo amigo">👤 ${esc(batalhaAtual._nomeAmigo)}</div>
-          <div class="time-cartas">
-            ${estadoAmigo.cartas.map((c, i) => renderizarCartaBatalha(c, i, estadoAmigo.ativa, minhaVez && !batalhaAtual._alvoEscolhido, true)).join('')}
-          </div>
-        </div>
-
-        <div class="batalha-log">
-          ${(batalhaAtual.log || []).slice(-15).map(l => `<p class="log-${l.tipo}">${esc(l.txt)}</p>`).join('')}
-        </div>
-
-        <div class="time-lado">
-          <div class="time-titulo">👤 Você</div>
-          <div class="time-cartas">
-            ${estadoMeu.cartas.map((c, i) => renderizarCartaBatalha(c, i, estadoMeu.ativa, false, false)).join('')}
-          </div>
-        </div>
-      `;
-
+        <div class="time-lado"><div class="time-titulo amigo">👤 ${esc(batalhaAtual._nomeAmigo)}</div><div class="time-cartas">${estadoAmigo.cartas.map((c, i) => renderizarCartaBatalha(c, i, estadoAmigo.ativa, minhaVez, true)).join('')}</div></div>
+        <div class="batalha-log">${(batalhaAtual.log || []).slice(-15).map(l => `<p class="log-${l.tipo}">${esc(l.txt)}</p>`).join('')}</div>
+        <div class="time-lado"><div class="time-titulo">👤 Você</div><div class="time-cartas">${estadoMeu.cartas.map((c, i) => renderizarCartaBatalha(c, i, estadoMeu.ativa, false, false)).join('')}</div></div>`;
       if (minhaVez) renderizarAcoes(estadoMeu);
-      else {
-        const acoes = document.querySelector('.batalha-acoes');
-        if (acoes) acoes.remove();
-      }
+      else { const a = document.querySelector('.batalha-acoes'); if (a) a.remove(); }
     }
 
     function renderizarCartaBatalha(carta, idx, ativa, atacavel, ehAmigo) {
@@ -1716,52 +1503,30 @@
       const isAtiva = idx === ativa;
       const nocauteada = carta.hp <= 0;
       const podeAtacar = atacavel && ehAmigo && !nocauteada;
-
       const condicoes = Object.keys(carta.condicoes || {}).filter(k => carta.condicoes[k]);
-      const condTags = condicoes.map(c => {
-        const emoji = { envenenado: '☠️', queimado: '🔥', adormecido: '💤', paralisado: '⚡' }[c] || '';
-        return `<span class="cond-tag ${c}">${emoji} ${c}</span>`;
-      }).join('');
-
+      const condTags = condicoes.map(c => { const e = { envenenado: '☠️', queimado: '🔥', adormecido: '💤', paralisado: '⚡' }[c] || ''; return `<span class="cond-tag ${c}">${e} ${c}</span>`; }).join('');
       const defesaTag = carta.defesaAtiva ? `<span class="cond-tag" style="background:#eab308;color:#000;">🛡️</span>` : '';
-
-      return `
-        <div class="carta-batalha ${isAtiva ? 'ativa' : ''} ${nocauteada ? 'nocauteada' : ''} ${podeAtacar ? 'atacavel' : ''}"
-             ${podeAtacar ? `onclick="escolherAlvo(${idx})"` : ''}>
-          <img src="${carta.image}/low.webp" onerror="this.src='${carta.image}.webp'">
-          <div class="carta-nome-b">${esc(carta.nome)}</div>
-          <div class="hp-bar">
-            <div class="hp-fill ${classe}" style="width:${pct}%"></div>
-            <div class="hp-txt">${carta.hp}/${carta.hpMax}</div>
-          </div>
-          <div class="condicoes">${condTags}${defesaTag}</div>
-        </div>`;
+      return `<div class="carta-batalha ${isAtiva ? 'ativa' : ''} ${nocauteada ? 'nocauteada' : ''} ${podeAtacar ? 'atacavel' : ''}" ${podeAtacar ? `onclick="escolherAlvo(${idx})"` : ''}><img src="${carta.image}/low.webp" onerror="this.src='${carta.image}.webp'"><div class="carta-nome-b">${esc(carta.nome)}</div><div class="hp-bar"><div class="hp-fill ${classe}" style="width:${pct}%"></div><div class="hp-txt">${carta.hp}/${carta.hpMax}</div></div><div class="condicoes">${condTags}${defesaTag}</div></div>`;
     }
 
     function renderizarAcoes(estadoMeu) {
       const existente = document.querySelector('.batalha-acoes');
       if (existente) existente.remove();
-
       const ativa = estadoMeu.cartas[estadoMeu.ativa];
       if (!ativa || ativa.hp <= 0) return;
-
       const acoes = estadoMeu.acoes || { recuar: 5, curar: {}, defender: false };
-
       const div = document.createElement('div');
       div.className = 'batalha-acoes';
-      div.innerHTML = `
-        <div class="acoes-titulo">Carta ativa: ${esc(ativa.nome)} • HP ${ativa.hp}/${ativa.hpMax}</div>
+      div.innerHTML = `<div class="acoes-titulo">Carta ativa: ${esc(ativa.nome)} • HP ${ativa.hp}/${ativa.hpMax}</div>
         <div class="acoes-grid">
           <button class="acao-btn atacar" onclick="acaoAtacar()"><span class="emoji">⚔️</span>Atacar</button>
           <button class="acao-btn recuar" onclick="acaoRecuar()" ${acoes.recuar <= 0 ? 'disabled' : ''}><span class="emoji">🔄</span>Recuar (${acoes.recuar})</button>
           <button class="acao-btn curar" onclick="acaoCurar()" ${(acoes.curar[estadoMeu.ativa]) ? 'disabled' : ''}><span class="emoji">💊</span>Curar</button>
           <button class="acao-btn defender" onclick="acaoDefender()" ${ativa.defesaAtiva ? 'disabled' : ''}><span class="emoji">🛡️</span>Defender</button>
-        </div>
-      `;
+        </div>`;
       document.getElementById('tela-batalha').appendChild(div);
     }
 
-    // ===== TIMER DO TURNO =====
     function iniciarTimerTurno(segundos) {
       clearInterval(batalhaTimer);
       segundosTurno = segundos;
@@ -1769,10 +1534,7 @@
       batalhaTimer = setInterval(() => {
         segundosTurno--;
         atualizarTimerTurno();
-        if (segundosTurno <= 0) {
-          clearInterval(batalhaTimer);
-          if (!batalhaSaindo) timeoutTurno();
-        }
+        if (segundosTurno <= 0) { clearInterval(batalhaTimer); if (!batalhaSaindo) timeoutTurno(); }
       }, 1000);
     }
 
@@ -1787,40 +1549,20 @@
 
     async function timeoutTurno() {
       if (!batalhaAtual) return;
-      // Quem não jogou no tempo perde
       const souA = batalhaAtual._souA;
       const vezDeA = batalhaAtual.turno === 'A';
       const euPerdi = (vezDeA && souA) || (!vezDeA && !souA);
       await finalizarBatalha(euPerdi ? 'perdedor-timeout' : 'vencedor-timeout');
     }
 
-    // ===== AÇÕES DO TURNO =====
     async function acaoAtacar() {
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
-      const estadoAmigo = souA ? batalhaAtual.estadoB : batalhaAtual.estadoA;
       const ativa = estadoMeu.cartas[estadoMeu.ativa];
-
-      if (!ativa.ataques || ativa.ataques.length === 0) {
-        mostrarToast('Esta carta não tem ataques.');
-        return;
-      }
-
-      // Renderiza lista de ataques
+      if (!ativa.ataques || ativa.ataques.length === 0) { mostrarToast('Sem ataques.'); return; }
       const acoes = document.querySelector('.batalha-acoes');
       if (!acoes) return;
-      acoes.innerHTML = `
-        <div class="acoes-titulo">Escolha um ataque de ${esc(ativa.nome)}</div>
-        <div class="ataques-lista">
-          ${ativa.ataques.map((a, i) => `
-            <button class="ataque-btn" onclick="usarAtaque(${i})">
-              <span class="nome-atk">${esc(a.nome)}</span>
-              <span class="dano-atk">${a.danoStr || a.dano || '—'}</span>
-            </button>
-          `).join('')}
-        </div>
-        <button class="secondary" onclick="cancelarAtaque()" style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Voltar</button>
-      `;
+      acoes.innerHTML = `<div class="acoes-titulo">Escolha um ataque de ${esc(ativa.nome)}</div><div class="ataques-lista">${ativa.ataques.map((a, i) => `<button class="ataque-btn" onclick="usarAtaque(${i})"><span class="nome-atk">${esc(a.nome)}</span><span class="dano-atk">${a.danoStr || a.dano || '—'}</span></button>`).join('')}</div><button class="secondary" onclick="cancelarAtaque()" style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Voltar</button>`;
     }
 
     function cancelarAtaque() {
@@ -1829,26 +1571,17 @@
       renderizarAcoes(estadoMeu);
     }
 
-    let ataqueEscolhido = null;
-
     function usarAtaque(idx) {
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
       const ativa = estadoMeu.cartas[estadoMeu.ativa];
       ataqueEscolhido = ativa.ataques[idx];
-
-      // Agora precisa escolher o alvo
       mostrarToast('Agora escolha o alvo!');
-      batalhaAtual._alvoEscolhido = false;
-      renderizarBatalha();
-      // Mostra aviso
       const acoes = document.querySelector('.batalha-acoes');
       if (acoes) {
-        acoes.innerHTML = `
-          <div class="acoes-titulo" style="color:#fbbf24;">🎯 Toque numa carta do oponente pra atacar!</div>
-          <button class="secondary" onclick="cancelarAtaque()" style="width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Cancelar</button>
-        `;
+        acoes.innerHTML = `<div class="acoes-titulo" style="color:#fbbf24;">🎯 Toque numa carta do oponente pra atacar!</div><button class="secondary" onclick="cancelarAtaque()" style="width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Cancelar</button>`;
       }
+      renderizarBatalha();
     }
 
     async function escolherAlvo(idx) {
@@ -1858,54 +1591,26 @@
       const estadoAmigo = souA ? batalhaAtual.estadoB : batalhaAtual.estadoA;
       const ativa = estadoMeu.cartas[estadoMeu.ativa];
       const alvo = estadoAmigo.cartas[idx];
-
-      // Calcula dano
       const danoFinal = calcularDano(ativa, ataqueEscolhido, alvo);
-
-      // Aplica dano
       estadoAmigo.cartas[idx].hp = Math.max(0, alvo.hp - danoFinal);
-
-      // Aplica defesa ativa (reduz)
-      if (alvo.defesaAtiva) {
-        estadoAmigo.cartas[idx].defesaAtiva = false;
-      }
-
-      // Aplica efeito do ataque (condições)
+      if (alvo.defesaAtiva) estadoAmigo.cartas[idx].defesaAtiva = false;
       const efeito = (ataqueEscolhido.efeito || '').toLowerCase();
       if (efeito.includes('envenenad') || efeito.includes('poison')) estadoAmigo.cartas[idx].condicoes.envenenado = true;
       if (efeito.includes('queimad') || efeito.includes('burn')) estadoAmigo.cartas[idx].condicoes.queimado = true;
       if (efeito.includes('adormecid') || efeito.includes('asleep')) estadoAmigo.cartas[idx].condicoes.adormecido = true;
       if (efeito.includes('paralisad') || efeito.includes('paralyz')) estadoAmigo.cartas[idx].condicoes.paralisado = true;
-
-      // Log
       const logAtual = batalhaAtual.log || [];
-      logAtual.push({
-        tipo: 'dano',
-        txt: `${ativa.nome} usou ${ataqueEscolhido.nome} em ${alvo.nome}: ${danoFinal} de dano!`
-      });
-
-      // Verifica se o alvo foi nocauteado
+      logAtual.push({ tipo: 'dano', txt: `${ativa.nome} usou ${ataqueEscolhido.nome} em ${alvo.nome}: ${danoFinal} de dano!` });
       if (estadoAmigo.cartas[idx].hp <= 0) {
         logAtual.push({ tipo: 'destaque', txt: `💀 ${alvo.nome} foi nocauteado!` });
-        // Verifica se o amigo ainda tem cartas vivas
         const temVivas = estadoAmigo.cartas.some(c => c.hp > 0);
-        if (!temVivas) {
-          await finalizarBatalha('vitoria');
-          return;
-        }
-        // Troca automática pra próxima viva
+        if (!temVivas) { await finalizarBatalha('vitoria'); return; }
         const proxIdx = estadoAmigo.cartas.findIndex(c => c.hp > 0);
         if (proxIdx >= 0) estadoAmigo.ativa = proxIdx;
       }
-
-      // Salva estado e passa o turno
       const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
       const campoEstadoAmigo = souA ? 'estadoB' : 'estadoA';
-
       ataqueEscolhido = null;
-      batalhaAtual._alvoEscolhido = true;
-
-      // Aplica condições especiais no INÍCIO do próximo turno do amigo (fica salvo)
       await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
         [campoEstadoMeu]: estadoMeu,
         [campoEstadoAmigo]: estadoAmigo,
@@ -1917,9 +1622,6 @@
 
     function calcularDano(atacante, ataque, defensor) {
       let dano = ataque.dano || 0;
-      // Se não tem dano, usa 0 (efeito)
-      // Aplica Fraqueza: dobra
-      const tiposAtaque = (ataque.custo || []).concat(atacante.tipos || []);
       const tipoPrincipal = (atacante.tipos && atacante.tipos[0]) || '';
       if (defensor.fraquezas) {
         for (const f of defensor.fraquezas) {
@@ -1930,213 +1632,165 @@
           }
         }
       }
-      // Resistência: -30
       if (defensor.resistencias) {
         for (const r of defensor.resistencias) {
-          if (r.type && tipoPrincipal && r.type.toLowerCase() === tipoPrincipal.toLowerCase()) {
-            dano -= 30;
-            break;
-          }
+          if (r.type && tipoPrincipal && r.type.toLowerCase() === tipoPrincipal.toLowerCase()) { dano -= 30; break; }
         }
       }
-      // Defesa: reduz 1/3
-      if (defensor.defesaAtiva) {
-        dano = Math.floor(dano * (2/3));
-      }
+      if (defensor.defesaAtiva) dano = Math.floor(dano * (2/3));
       return Math.max(0, dano);
     }
 
-    // ===== AÇÃO: RECUAR =====
     async function acaoRecuar() {
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
       const acoes = estadoMeu.acoes || {};
       if ((acoes.recuar || 0) <= 0) { mostrarToast('Sem recuos!'); return; }
-
-      // Lista cartas vivas pra escolher
       const vivas = estadoMeu.cartas.map((c, i) => ({ c, i })).filter(x => x.c.hp > 0 && x.i !== estadoMeu.ativa);
       if (vivas.length === 0) { mostrarToast('Só tem uma carta viva.'); return; }
-
       const acoesEl = document.querySelector('.batalha-acoes');
-      acoesEl.innerHTML = `
-        <div class="acoes-titulo">Escolha a carta pra entrar</div>
-        <div class="ataques-lista">
-          ${vivas.map(x => `<button class="ataque-btn" onclick="confirmarRecuar(${x.i})"><span class="nome-atk">${esc(x.c.nome)}</span><span class="dano-atk">${x.c.hp}/${x.c.hpMax}</span></button>`).join('')}
-        </div>
-        <button class="secondary" onclick="cancelarAtaque()" style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Voltar</button>
-      `;
+      acoesEl.innerHTML = `<div class="acoes-titulo">Escolha a carta pra entrar</div><div class="ataques-lista">${vivas.map(x => `<button class="ataque-btn" onclick="confirmarRecuar(${x.i})"><span class="nome-atk">${esc(x.c.nome)}</span><span class="dano-atk">${x.c.hp}/${x.c.hpMax}</span></button>`).join('')}</div><button class="secondary" onclick="cancelarAtaque()" style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Voltar</button>`;
     }
 
     async function confirmarRecuar(novoIdx) {
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
       const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
-      const campoEstadoAmigo = souA ? 'estadoB' : 'estadoA';
-
       estadoMeu.acoes.recuar = (estadoMeu.acoes.recuar || 0) - 1;
-      // Limpa condições da carta que saiu
       estadoMeu.cartas[estadoMeu.ativa].condicoes = {};
       estadoMeu.ativa = novoIdx;
-
       const logAtual = batalhaAtual.log || [];
       logAtual.push({ tipo: 'sistema', txt: `${usuario} recuou. ${estadoMeu.cartas[novoIdx].nome} entrou em campo!` });
-
-      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
-        [campoEstadoMeu]: estadoMeu,
-        turno: souA ? 'B' : 'A',
-        turnoIniciadoEm: Date.now(),
-        log: logAtual
-      });
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({ [campoEstadoMeu]: estadoMeu, turno: souA ? 'B' : 'A', turnoIniciadoEm: Date.now(), log: logAtual });
     }
 
-    // ===== AÇÃO: CURAR =====
     async function acaoCurar() {
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
       const acoes = estadoMeu.acoes || {};
       acoes.curar = acoes.curar || {};
       if (acoes.curar[estadoMeu.ativa]) { mostrarToast('Já curou essa carta.'); return; }
-
       const ativa = estadoMeu.cartas[estadoMeu.ativa];
       ativa.hp = Math.min(ativa.hpMax, ativa.hp + 20);
       acoes.curar[estadoMeu.ativa] = true;
       estadoMeu.acoes = acoes;
-
       const logAtual = batalhaAtual.log || [];
       logAtual.push({ tipo: 'cura', txt: `💊 ${usuario} curou ${ativa.nome} (+20 HP)` });
-
       const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
-      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
-        [campoEstadoMeu]: estadoMeu,
-        turno: souA ? 'B' : 'A',
-        turnoIniciadoEm: Date.now(),
-        log: logAtual
-      });
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({ [campoEstadoMeu]: estadoMeu, turno: souA ? 'B' : 'A', turnoIniciadoEm: Date.now(), log: logAtual });
     }
 
-    // ===== AÇÃO: DEFENDER =====
     async function acaoDefender() {
       const souA = batalhaAtual._souA;
       const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
       const ativa = estadoMeu.cartas[estadoMeu.ativa];
       ativa.defesaAtiva = true;
-
       const logAtual = batalhaAtual.log || [];
       logAtual.push({ tipo: 'sistema', txt: `🛡️ ${usuario} defendeu! Próximo dano reduzido em 1/3.` });
-
       const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
-      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
-        [campoEstadoMeu]: estadoMeu,
-        turno: souA ? 'B' : 'A',
-        turnoIniciadoEm: Date.now(),
-        log: logAtual
-      });
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({ [campoEstadoMeu]: estadoMeu, turno: souA ? 'B' : 'A', turnoIniciadoEm: Date.now(), log: logAtual });
     }
 
-    // ===== FINALIZAR BATALHA =====
     async function finalizarBatalha(motivo) {
       if (!batalhaAtual) return;
       batalhaSaindo = true;
       clearInterval(batalhaTimer);
-
       const souA = batalhaAtual._souA;
       const euSou = souA ? 'A' : 'B';
-      let vencedor = null;
-      let texto = '';
-
-      if (motivo === 'vitoria') {
-        vencedor = euSou;
-        texto = `${usuario} venceu!`;
-      } else if (motivo === 'perdedor-timeout') {
-        vencedor = souA ? 'B' : 'A';
-        texto = `${usuario} perdeu por tempo`;
-      } else if (motivo === 'vencedor-timeout') {
-        vencedor = euSou;
-        texto = `${usuario} venceu (oponente demorou)`;
-      }
-
+      let vencedor = null, texto = '';
+      if (motivo === 'vitoria') { vencedor = euSou; texto = `${usuario} venceu!`; }
+      else if (motivo === 'perdedor-timeout') { vencedor = souA ? 'B' : 'A'; texto = `${usuario} perdeu por tempo`; }
+      else if (motivo === 'vencedor-timeout') { vencedor = euSou; texto = `${usuario} venceu (oponente demorou)`; }
       const logAtual = batalhaAtual.log || [];
       logAtual.push({ tipo: 'sistema', txt: `🏆 ${texto}` });
-
       try {
-        await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
-          status: 'finalizada',
-          vencedor: vencedor,
-          log: logAtual,
-          finalizadaEm: Date.now()
-        });
-
-        // Registra vitória no perfil do vencedor (Firestore)
+        await fbDb.collection('batalhas').doc(batalhaAtual.id).update({ status: 'finalizada', vencedor: vencedor, log: logAtual, finalizadaEm: Date.now() });
         const idVencedor = vencedor === 'A' ? batalhaAtual.jogadorA : batalhaAtual.jogadorB;
         const docV = await fbDb.collection('treinadores').doc(idVencedor).get();
-        if (docV.exists) {
-          const d = docV.data();
-          const vitorias = (d.vitorias || 0) + 1;
-          await fbDb.collection('treinadores').doc(idVencedor).update({ vitorias });
-        } else {
-          await fbDb.collection('treinadores').doc(idVencedor).set({ vitorias: 1 }, { merge: true });
-        }
+        if (docV.exists) { const vitorias = (docV.data().vitorias || 0) + 1; await fbDb.collection('treinadores').doc(idVencedor).update({ vitorias }); }
+        else { await fbDb.collection('treinadores').doc(idVencedor).set({ vitorias: 1 }, { merge: true }); }
       } catch (e) { console.error(e); }
     }
 
-    // ===== RESULTADO =====
     function mostrarResultadoBatalha() {
       clearInterval(batalhaTimer);
       if (!batalhaAtual) return;
-
       const souA = batalhaAtual._souA;
       const euSou = souA ? 'A' : 'B';
       const venci = batalhaAtual.vencedor === euSou;
       const empate = !batalhaAtual.vencedor;
-
-      const container = document.getElementById('batalha-corpo');
       const classe = empate ? 'empate' : (venci ? 'vitoria' : 'derrota');
       const emoji = empate ? '🤝' : (venci ? '🏆' : '💀');
       const titulo = empate ? 'Empate!' : (venci ? 'Você venceu!' : 'Você perdeu');
-
       document.getElementById('batalha-turno').textContent = 'Finalizada';
       document.getElementById('batalha-timer').textContent = '—';
       document.getElementById('batalha-timer').classList.remove('urgente');
-
       const acoesExist = document.querySelector('.batalha-acoes');
       if (acoesExist) acoesExist.remove();
-
-      container.innerHTML = `
-        <div class="batalha-resultado ${classe}">
-          <div class="emoji-grande">${emoji}</div>
-          <h2>${titulo}</h2>
-          <p>${venci ? 'Vitória registrada! 🎉' : 'Boa sorte na próxima!'}</p>
-          <button onclick="sairBatalha()">Voltar</button>
-        </div>
-      `;
+      document.getElementById('batalha-corpo').innerHTML = `<div class="batalha-resultado ${classe}"><div class="emoji-grande">${emoji}</div><h2>${titulo}</h2><p>${venci ? 'Vitória registrada! 🎉' : 'Boa sorte na próxima!'}</p><button onclick="sairBatalha()">Voltar</button></div>`;
+      localStorage.removeItem('pokedex_batalha_atual');
     }
 
-    // ===== SAIR DA BATALHA =====
     async function sairBatalha() {
       batalhaSaindo = true;
       clearInterval(batalhaTimer);
       if (listenerBatalha) { listenerBatalha(); listenerBatalha = null; }
-
-      // Se a batalha ainda tá rolando, marca como derrota por desistência
-      if (batalhaAtual && batalhaAtual.status === 'em-andamento') {
-        await finalizarBatalha('perdedor-timeout');
-      }
-
+      if (batalhaAtual && batalhaAtual.status === 'em-andamento') await finalizarBatalha('perdedor-timeout');
       document.getElementById('tela-batalha').classList.remove('active');
       document.getElementById('batalha-corpo').innerHTML = '';
+      localStorage.removeItem('pokedex_batalha_atual');
       batalhaAtual = null;
       ataqueEscolhido = null;
       batalhaSaindo = false;
     }
 
-    // Aplica condições especiais no início de cada turno
-    // Chamado quando o turno muda
-    function aplicarCondicoesTurno() {
-      // Vai ser chamado indiretamente pelo listener quando o turno muda
-      // Aplica dano de envenenado/queimado na carta ativa do jogador que vai jogar agora
+    async function verificarBatalhaPendente() {
+      const idBatalha = localStorage.getItem('pokedex_batalha_atual');
+      if (!idBatalha) return;
+      if (typeof fbDb === 'undefined' || !fbDb) return;
+      try {
+        const doc = await fbDb.collection('batalhas').doc(idBatalha).get();
+        if (!doc.exists) { localStorage.removeItem('pokedex_batalha_atual'); return; }
+        const d = doc.data();
+        if (d.status === 'escolhendo-time' || d.status === 'em-andamento') {
+          const souDesafiante = d.jogadorA === meuId;
+          const idAmigo = souDesafiante ? d.jogadorB : d.jogadorA;
+          const nomeAmigo = souDesafiante ? d.jogadorBNome : d.jogadorANome;
+          batalhaAtual = { id: idBatalha, ...d, _souA: souDesafiante, _idAmigo: idAmigo, _nomeAmigo: nomeAmigo };
+          document.getElementById('tela-batalha').classList.add('active');
+          if (d.status === 'escolhendo-time') {
+            const jaEscolhi = (souDesafiante && d.timeA) || (!souDesafiante && d.timeB);
+            if (jaEscolhi) {
+              document.getElementById('batalha-corpo').innerHTML = `<div class="aguardando-info" style="padding-top:80px;"><div class="pulse"></div><p style="font-weight:700;font-size:16px;color:white;margin-bottom:6px;">Time confirmado!</p><p style="font-size:14px;color:#aaa;">Aguardando <strong>${esc(nomeAmigo)}</strong>...</p></div>`;
+              document.getElementById('batalha-turno').textContent = 'Escolhendo times';
+            } else {
+              renderizarEscolhaTime();
+            }
+          } else {
+            renderizarBatalha();
+          }
+          ouvirBatalha(idBatalha);
+          mostrarToast('⚔️ Voltando pra batalha...');
+        } else if (d.status === 'finalizada') {
+          localStorage.removeItem('pokedex_batalha_atual');
+        }
+      } catch (e) { console.error('Erro ao recuperar batalha:', e); }
     }
 
-    // =====================================================================
+    function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function mostrarToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('active'); });
+    });
+
+    (function carregarCacheTipos() { try { const c = localStorage.getItem('pokedex_tipos_cache'); if (c) tiposCache = JSON.parse(c); } catch (e) {} })();
 
     iniciarNuvem();
   </script>
