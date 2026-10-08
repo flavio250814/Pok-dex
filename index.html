@@ -38,24 +38,16 @@
     body.dark .profile-name { color: #eee; }
     body.dark .total-value { background: linear-gradient(135deg, #2a1414, #1e1e1e); border-color: #5a0000; }
     body.dark .card-preview { background: #2a2a2a; }
-    body.dark .card-preview .card-name { color: #eee; }
     body.dark .empty-msg { color: #888; }
     body.dark .stats-bar { color: #888; }
     body.dark .modal button.secondary { background: #2a2a2a; color: #ccc; }
     body.dark select option { background: #2a2a2a; color: #eee; }
     body.dark .type-sort-row select { background: #2a2a2a; border-color: #333; color: #ccc; }
     body.dark .owned-card .delete-btn, body.dark .owned-card .share-btn { background: #2a2a2a; }
-    body.dark .share-preview { background: #2a2a2a; }
-    body.dark .profile-edit-section { border-top-color: #2a2a2a; }
     body.dark .detalhes-item { background: #2a2a2a; }
-    body.dark .detalhes-item .value { color: #eee; }
     body.dark .ataque-item { background: #2a2a2a; }
-    body.dark .ataque-item .ataque-nome { color: #eee; }
-    body.dark .ataque-item .ataque-efeito { color: #aaa; }
-    body.dark .variante-tag.inativa { background: #333; color: #666; }
     body.dark .btn-detalhes { background: #2a2a2a; color: #ccc; }
     body.dark .set-card { background: #1e1e1e; border-color: #2a2a2a; }
-    body.dark .set-card .set-nome { color: #eee; }
     body.dark .filtros-avancados { background: #2a2a2a; }
     body.dark .serie-grupo { background: #1e1e1e; border-color: #2a2a2a; }
     body.dark #popup-convite .popup-box { background: #1e1e1e; color: #eee; }
@@ -67,18 +59,17 @@
     .login-logo { display: flex; justify-content: center; font-size: 48px; margin-bottom: 8px; }
     .login-box h1 { font-size: 26px; margin-bottom: 6px; color: #e60000; font-weight: 800; }
     .login-box p { font-size: 14px; color: #777; margin-bottom: 28px; line-height: 1.4; }
-    .login-box input { width: 100%; padding: 15px 18px; border: 2px solid #eee; border-radius: 14px; font-size: 16px; margin-bottom: 16px; outline: none; transition: border 0.2s, box-shadow 0.2s; background: #fafafa; }
+    .login-box input { width: 100%; padding: 15px 18px; border: 2px solid #eee; border-radius: 14px; font-size: 16px; margin-bottom: 16px; outline: none; background: #fafafa; }
     .login-box input:focus { border-color: #e60000; box-shadow: 0 0 0 4px rgba(230,0,0,0.1); background: white; }
-    .login-box button { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 18px rgba(230,0,0,0.35); }
+    .login-box button { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 18px rgba(230,0,0,0.35); }
     .login-box button:active { transform: scale(0.97); }
     header { background: linear-gradient(135deg, #e60000, #cc0000); color: white; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(230,0,0,0.3); }
-    header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+    header h1 { font-size: 20px; font-weight: 800; }
     header .user-info { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     header .user-info:active { background: rgba(255,255,255,0.35); }
     header .user-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #fff; }
     header .header-actions { display: flex; align-items: center; gap: 5px; }
-    header .friends-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    header .friends-btn:active { background: rgba(255,255,255,0.35); }
+    header .friends-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 20px; cursor: pointer; }
     header .theme-btn, header .explore-btn, header .shiny-btn, header .battle-btn, header .sino-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; }
     header .theme-btn:active, header .explore-btn:active, header .shiny-btn:active, header .battle-btn:active, header .sino-btn:active { background: rgba(255,255,255,0.35); }
     header .shiny-btn.ativo { background: linear-gradient(135deg, #ffd700, #ff8c00); box-shadow: 0 0 12px rgba(255,215,0,0.6); }
@@ -87,7 +78,6 @@
 
     .friend-status { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ccc; margin-right: 6px; }
     .friend-status.online { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
-    .friend-item.desafio .friend-name { color: #e60000; }
 
     #popup-convite { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 500; opacity: 0; visibility: hidden; transition: all 0.3s; backdrop-filter: blur(4px); }
     #popup-convite.active { opacity: 1; visibility: visible; }
@@ -97,61 +87,55 @@
     .popup-titulo { font-size: 22px; font-weight: 800; color: #e60000; margin-bottom: 6px; }
     .popup-sub { font-size: 14px; color: #777; margin-bottom: 20px; line-height: 1.5; }
     .popup-timer { font-size: 13px; color: #999; margin-bottom: 16px; font-weight: 600; }
-    .popup-btn { width: 100%; padding: 15px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 8px; transition: transform 0.15s; }
-    .popup-btn:active { transform: scale(0.97); }
-    .popup-btn.aceitar { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; box-shadow: 0 4px 14px rgba(34,197,94,0.4); }
+    .popup-btn { width: 100%; padding: 15px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+    .popup-btn.aceitar { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
     .popup-btn.recusar { background: #f5f5f5; color: #555; }
+
     .aguardando-info { text-align: center; padding: 30px 20px; color: #777; }
     .aguardando-info .pulse { display: inline-block; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #ff1a1a, #cc0000); animation: pulse 1.5s ease-in-out infinite; margin-bottom: 16px; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230,0,0,0.5); } 50% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(230,0,0,0); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
-    .friends-list { margin-top: 8px; }
     .friend-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; }
-    .friend-item .friend-name { font-weight: 700; font-size: 15px; color: #222; }
+    .friend-item .friend-name { font-weight: 700; font-size: 15px; }
     .friend-item .friend-date { font-size: 11px; color: #999; margin-top: 2px; }
-    .friend-item .remove-friend { background: #fff0f0; border: 1px solid #ffcccc; color: #e60000; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .friend-item .remove-friend { background: #fff0f0; border: 1px solid #ffcccc; color: #e60000; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; font-weight: 700; cursor: pointer; }
+
     .toolbar { padding: 12px 16px; background: white; border-bottom: 1px solid #eee; position: sticky; top: 52px; z-index: 90; display: flex; flex-direction: column; gap: 10px; }
     .search-row { display: flex; gap: 8px; }
-    .search-row input { flex: 1; padding: 11px 16px; border: 2px solid #eee; border-radius: 30px; font-size: 15px; outline: none; background: #fafafa; transition: border 0.2s; }
+    .search-row input { flex: 1; padding: 11px 16px; border: 2px solid #eee; border-radius: 30px; font-size: 15px; outline: none; background: #fafafa; }
     .search-row input:focus { border-color: #e60000; background: white; }
     .filter-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; align-items: center; }
-    .filter-btn { flex-shrink: 0; padding: 7px 14px; border: 2px solid #eee; border-radius: 20px; background: white; font-size: 13px; font-weight: 600; color: #555; cursor: pointer; transition: all 0.2s; }
+    .filter-btn { flex-shrink: 0; padding: 7px 14px; border: 2px solid #eee; border-radius: 20px; background: white; font-size: 13px; font-weight: 600; color: #555; cursor: pointer; }
     .filter-btn.active { background: #e60000; color: white; border-color: #e60000; }
-    .copy-btn { flex-shrink: 0; margin-left: auto; padding: 7px 14px; border: 2px solid #e60000; border-radius: 20px; background: #fff5f5; font-size: 13px; font-weight: 700; color: #e60000; cursor: pointer; transition: all 0.2s; }
-    .copy-btn:active { background: #e60000; color: white; }
+    .copy-btn { flex-shrink: 0; margin-left: auto; padding: 7px 14px; border: 2px solid #e60000; border-radius: 20px; background: #fff5f5; font-size: 13px; font-weight: 700; color: #e60000; cursor: pointer; }
     .type-sort-row { display: flex; gap: 8px; align-items: center; }
     .type-sort-row select { flex: 1; padding: 8px 12px; border: 2px solid #eee; border-radius: 20px; font-size: 13px; font-weight: 600; color: #555; background: white; cursor: pointer; outline: none; }
-    .type-sort-row select:focus { border-color: #e60000; }
     .stats-bar { display: flex; justify-content: space-between; font-size: 12px; color: #888; padding: 0 2px; }
     .stats-bar strong { color: #e60000; }
     #pokedex { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; padding: 16px; }
-    .poke-card { background: white; border: 2px solid #f0f0f0; border-radius: 16px; padding: 12px 8px 10px; text-align: center; cursor: pointer; transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.25s, border-color 0.2s; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .poke-card { background: white; border: 2px solid #f0f0f0; border-radius: 16px; padding: 12px 8px 10px; text-align: center; cursor: pointer; transition: transform 0.25s, box-shadow 0.25s, border-color 0.2s; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .poke-card:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 25px rgba(230,0,0,0.2); border-color: #e60000; z-index: 5; }
-    .poke-card:active { transform: scale(0.96); }
-    .poke-card.has-cards { border-color: #e60000; background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%); box-shadow: 0 4px 14px rgba(230,0,0,0.12); }
-    .poke-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); image-rendering: pixelated; transition: transform 0.25s; }
-    .poke-card:hover img { transform: scale(1.1); }
-    .poke-card .name { font-size: 12px; font-weight: 700; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333; }
+    .poke-card.has-cards { border-color: #e60000; background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%); }
+    .poke-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: 6px; image-rendering: pixelated; }
+    .poke-card .name { font-size: 12px; font-weight: 700; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .poke-card .number { font-size: 11px; color: #aaa; margin-top: 2px; }
-    .poke-card .badge { position: absolute; top: 8px; right: 8px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; font-size: 11px; font-weight: 800; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(230,0,0,0.4); }
-    #add-btn { position: fixed; bottom: 28px; right: 28px; width: 64px; height: 64px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 50%; font-size: 34px; font-weight: 300; box-shadow: 0 8px 25px rgba(230,0,0,0.45); cursor: pointer; z-index: 200; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s; }
-    #add-btn:active { transform: scale(0.92); }
+    .poke-card .badge { position: absolute; top: 8px; right: 8px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; font-size: 11px; font-weight: 800; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    #add-btn { position: fixed; bottom: 28px; right: 28px; width: 64px; height: 64px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 50%; font-size: 34px; font-weight: 300; box-shadow: 0 8px 25px rgba(230,0,0,0.45); cursor: pointer; z-index: 200; display: flex; align-items: center; justify-content: center; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: flex-end; justify-content: center; z-index: 300; opacity: 0; visibility: hidden; transition: all 0.25s; backdrop-filter: blur(3px); }
     .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal { background: white; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 22px 20px 32px; max-height: 92vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1); }
     .modal-overlay.active .modal { transform: translateY(0); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .modal-header h2 { font-size: 20px; color: #e60000; font-weight: 800; }
-    .modal-close { background: #f5f5f5; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; color: #666; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
-    .modal input, .modal select { width: 100%; padding: 14px 16px; border: 2px solid #eee; border-radius: 14px; font-size: 16px; margin-bottom: 12px; outline: none; background: #fafafa; transition: border 0.2s; }
+    .modal-close { background: #f5f5f5; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; color: #666; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .modal input, .modal select { width: 100%; padding: 14px 16px; border: 2px solid #eee; border-radius: 14px; font-size: 16px; margin-bottom: 12px; outline: none; background: #fafafa; }
     .modal input:focus { border-color: #e60000; background: white; }
-    .modal button.primary { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 14px rgba(230,0,0,0.3); }
-    .modal button.primary:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
+    .modal button.primary { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff1a1a, #cc0000); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 6px; }
     .modal button.secondary { width: 100%; padding: 13px; background: #f5f5f5; color: #444; border: none; border-radius: 14px; font-size: 15px; font-weight: 600; margin-top: 8px; cursor: pointer; }
     .modal button.danger { width: 100%; padding: 13px; background: #fff0f0; color: #e60000; border: 2px solid #ffcccc; border-radius: 14px; font-size: 15px; font-weight: 600; margin-top: 8px; cursor: pointer; }
     .card-preview { text-align: center; margin: 12px 0 18px; background: #fafafa; border-radius: 16px; padding: 16px; }
-    .card-preview img { max-width: 180px; width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-    .card-preview .card-name { font-size: 18px; font-weight: 800; margin-top: 14px; color: #222; }
+    .card-preview img { max-width: 180px; width: 100%; border-radius: 12px; }
+    .card-preview .card-name { font-size: 18px; font-weight: 800; margin-top: 14px; }
     .card-preview .card-set { font-size: 13px; color: #888; margin-top: 4px; }
     .price-input-group { margin: 12px 0; text-align: left; }
     .price-input-group label { font-size: 13px; font-weight: 600; color: #555; display: block; margin-bottom: 6px; }
@@ -159,23 +143,19 @@
     .price-row span { font-weight: 700; color: #e60000; font-size: 16px; }
     .price-row input { margin-bottom: 0; flex: 1; }
     .results-list { max-height: 280px; overflow-y: auto; margin: 10px 0; }
-    .result-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; background: white; }
-    .result-item:active { border-color: #e60000; background: #fff5f5; }
-    .result-item img { width: 48px; height: 68px; object-fit: contain; border-radius: 6px; background: #f9f9f9; }
+    .result-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; cursor: pointer; background: white; }
+    .result-item img { width: 48px; height: 68px; object-fit: contain; border-radius: 6px; }
     .result-item .info { flex: 1; }
-    .result-item .info .name { font-weight: 700; font-size: 14px; color: #222; }
+    .result-item .info .name { font-weight: 700; font-size: 14px; }
     .result-item .info .set { font-size: 12px; color: #999; margin-top: 2px; }
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; margin-top: 8px; }
-    .owned-card { background: white; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px; text-align: center; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer; transition: transform 0.15s; }
-    .owned-card:active { transform: scale(0.97); }
-    .owned-card img { width: 100%; max-width: 120px; border-radius: 10px; margin-bottom: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .owned-card .name { font-size: 13px; font-weight: 700; color: #222; }
+    .owned-card { background: white; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px; text-align: center; position: relative; cursor: pointer; }
+    .owned-card img { width: 100%; max-width: 120px; border-radius: 10px; margin-bottom: 8px; }
+    .owned-card .name { font-size: 13px; font-weight: 700; }
     .owned-card .set { font-size: 11px; color: #999; margin-top: 2px; }
     .owned-card .price { font-size: 13px; font-weight: 700; color: #e60000; margin-top: 6px; }
-    .owned-card .delete-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; background: #fff; border: 2px solid #ffcccc; border-radius: 50%; color: #e60000; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); line-height: 1; }
-    .owned-card .share-btn { position: absolute; top: 8px; left: 8px; width: 28px; height: 28px; background: #fff; border: 2px solid #cce5ff; border-radius: 50%; color: #007bff; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); line-height: 1; }
-    .owned-card .delete-btn:active { background: #ffe0e0; }
-    .owned-card .share-btn:active { background: #e0f0ff; }
+    .owned-card .delete-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; background: #fff; border: 2px solid #ffcccc; border-radius: 50%; color: #e60000; font-size: 16px; font-weight: 700; cursor: pointer; }
+    .owned-card .share-btn { position: absolute; top: 8px; left: 8px; width: 28px; height: 28px; background: #fff; border: 2px solid #cce5ff; border-radius: 50%; color: #007bff; font-size: 14px; cursor: pointer; }
     .empty-msg { text-align: center; color: #999; padding: 40px 16px; font-size: 15px; line-height: 1.5; }
     .empty-msg strong { color: #e60000; }
     .loading { text-align: center; padding: 50px 20px; color: #999; }
@@ -183,10 +163,10 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .profile-header { text-align: center; margin-bottom: 20px; }
     .profile-avatar-wrap { position: relative; width: 100px; height: 100px; margin: 0 auto 12px; }
-    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #e60000; background: #f5f5f5; box-shadow: 0 4px 15px rgba(230,0,0,0.25); }
+    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #e60000; background: #f5f5f5; }
     .profile-avatar-edit { position: absolute; bottom: 0; right: 0; width: 32px; height: 32px; background: #e60000; color: white; border: 2px solid white; border-radius: 50%; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    .profile-name { font-size: 22px; font-weight: 800; color: #222; margin-bottom: 4px; }
-    .profile-bio { font-size: 14px; color: #777; margin-bottom: 6px; line-height: 1.4; }
+    .profile-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .profile-bio { font-size: 14px; color: #777; margin-bottom: 6px; }
     .profile-since { font-size: 12px; color: #aaa; }
     .profile-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 18px 0; }
     .profile-stat { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 12px 8px; text-align: center; }
@@ -194,12 +174,9 @@
     .profile-stat .label { font-size: 11px; color: #888; margin-top: 2px; }
     .profile-fav { background: linear-gradient(135deg, #fff5f5, #ffebeb); border: 2px solid #ffcccc; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 16px; }
     .profile-fav img { width: 64px; height: 64px; margin-bottom: 6px; }
-    .profile-fav .label { font-size: 12px; color: #888; }
-    .profile-fav .name { font-size: 16px; font-weight: 700; text-transform: capitalize; color: #e60000; }
     .profile-edit-section { margin-top: 10px; border-top: 1px solid #eee; padding-top: 16px; }
     .profile-edit-section label { font-size: 13px; font-weight: 600; color: #555; display: block; margin-bottom: 6px; margin-top: 12px; }
-    .profile-edit-section label:first-child { margin-top: 0; }
-    #toast { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%) translateY(30px); background: #222; color: white; padding: 14px 28px; border-radius: 40px; font-size: 14px; font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1); z-index: 400; box-shadow: 0 8px 25px rgba(0,0,0,0.25); max-width: 90%; text-align: center; }
+    #toast { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%) translateY(30px); background: #222; color: white; padding: 14px 28px; border-radius: 40px; font-size: 14px; font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 400; max-width: 90%; text-align: center; }
     #toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     .total-value { background: linear-gradient(135deg, #fff5f5, #ffebeb); border: 2px solid #ffcccc; border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; text-align: center; }
     .total-value .label { font-size: 12px; color: #888; font-weight: 600; }
@@ -207,35 +184,108 @@
     .share-preview { text-align: center; padding: 16px; background: #fafafa; border-radius: 16px; margin-bottom: 14px; }
     .share-preview img { max-width: 160px; border-radius: 10px; margin-bottom: 12px; }
     .detalhes-img { text-align: center; margin-bottom: 16px; }
-    .detalhes-img img { max-width: 220px; border-radius: 14px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+    .detalhes-img img { max-width: 220px; border-radius: 14px; }
     .detalhes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
     .detalhes-item { background: #fafafa; border-radius: 10px; padding: 10px 12px; }
-    .detalhes-item .label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    .detalhes-item .value { font-size: 15px; font-weight: 700; color: #222; margin-top: 2px; }
+    .detalhes-item .label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; }
+    .detalhes-item .value { font-size: 15px; font-weight: 700; margin-top: 2px; }
     .detalhes-ataques { margin-top: 16px; }
-    .detalhes-ataques h3 { font-size: 14px; color: #e60000; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .detalhes-ataques h3 { font-size: 14px; color: #e60000; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
     .ataque-item { background: #fafafa; border-left: 4px solid #e60000; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
     .ataque-item .ataque-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-    .ataque-item .ataque-nome { font-weight: 800; font-size: 14px; color: #222; }
+    .ataque-item .ataque-nome { font-weight: 800; font-size: 14px; }
     .ataque-item .ataque-dano { font-weight: 800; font-size: 16px; color: #e60000; }
-    .ataque-item .ataque-efeito { font-size: 12px; color: #666; line-height: 1.4; }
-    .ataque-item .ataque-custo { font-size: 11px; color: #999; margin-top: 4px; }
+    .ataque-item .ataque-efeito { font-size: 12px; color: #666; }
     .variantes-lista { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-    .variante-tag { background: #e60000; color: white; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
-    .variante-tag.inativa { background: #ddd; color: #999; }
+    .variante-tag { background: #e60000; color: white; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; }
     .btn-detalhes { width: 100%; padding: 10px; background: #f5f5f5; color: #444; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; }
-    .btn-detalhes:active { background: #e60000; color: white; }
     .filtros-avancados { background: #fafafa; border-radius: 14px; padding: 12px; margin: 10px 0; }
     .filtros-avancados select { margin-bottom: 8px; font-size: 14px; padding: 10px 12px; }
-    .filtros-avancados select:last-child { margin-bottom: 0; }
-    .set-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 10px; cursor: pointer; transition: all 0.15s; }
-    .set-card:active { border-color: #e60000; background: #fff5f5; transform: scale(0.98); }
+    .set-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 10px; cursor: pointer; }
     .set-card .set-logo { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
     .set-card .set-info { flex: 1; min-width: 0; }
-    .set-card .set-nome { font-weight: 700; font-size: 14px; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .set-card .set-nome { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .set-card .set-meta { font-size: 12px; color: #999; margin-top: 2px; }
     .serie-grupo { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
     .serie-grupo h3 { font-size: 16px; color: #e60000; font-weight: 800; margin-bottom: 10px; }
+
+    /* ===== TELA DE BATALHA ===== */
+    #tela-batalha { position: fixed; inset: 0; background: linear-gradient(160deg, #1a0000 0%, #0a0a0a 100%); color: white; z-index: 600; display: none; flex-direction: column; overflow-y: auto; }
+    #tela-batalha.active { display: flex; }
+    .batalha-topo { background: rgba(0,0,0,0.5); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e60000; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); }
+    .batalha-timer { font-size: 22px; font-weight: 800; color: #22c55e; font-variant-numeric: tabular-nums; }
+    .batalha-timer.urgente { color: #ff0000; animation: pulse-timer 0.8s infinite; }
+    @keyframes pulse-timer { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .batalha-turno { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 6px 14px; border-radius: 20px; background: #e60000; }
+    .batalha-turno.amigo { background: #666; }
+    .batalha-sair { background: rgba(255,255,255,0.15); border: none; color: white; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 20px; cursor: pointer; }
+    .batalha-corpo { flex: 1; padding: 16px; max-width: 800px; width: 100%; margin: 0 auto; }
+    .time-lado { margin-bottom: 20px; }
+    .time-titulo { font-size: 14px; font-weight: 800; text-transform: uppercase; color: #ff8888; margin-bottom: 10px; }
+    .time-titulo.amigo { color: #88bbff; }
+    .time-cartas { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    .carta-batalha { background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 10px; text-align: center; transition: all 0.2s; }
+    .carta-batalha.ativa { border-color: #22c55e; box-shadow: 0 0 20px rgba(34,197,94,0.5); background: rgba(34,197,94,0.1); }
+    .carta-batalha.nocauteada { opacity: 0.35; filter: grayscale(1); }
+    .carta-batalha.atacavel { cursor: pointer; border-color: #e60000; box-shadow: 0 0 15px rgba(230,0,0,0.4); }
+    .carta-batalha img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 6px; image-rendering: pixelated; }
+    .carta-batalha .carta-nome-b { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+    .carta-batalha .hp-bar { background: rgba(0,0,0,0.5); border-radius: 10px; height: 14px; overflow: hidden; position: relative; margin-bottom: 4px; }
+    .carta-batalha .hp-fill { height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); transition: width 0.4s; border-radius: 10px; }
+    .carta-batalha .hp-fill.medio { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+    .carta-batalha .hp-fill.baixo { background: linear-gradient(90deg, #ef4444, #dc2626); }
+    .carta-batalha .hp-txt { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+    .carta-batalha .condicoes { display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; margin-top: 4px; min-height: 14px; }
+    .cond-tag { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; }
+    .cond-tag.envenenado { background: #7c2d12; color: #fed7aa; }
+    .cond-tag.queimado { background: #dc2626; }
+    .cond-tag.adormecido { background: #6b7280; }
+    .cond-tag.paralisado { background: #eab308; color: #000; }
+    .batalha-log { background: rgba(0,0,0,0.5); border-radius: 14px; padding: 14px; max-height: 180px; overflow-y: auto; margin: 16px 0; font-size: 13px; line-height: 1.6; }
+    .batalha-log p { margin-bottom: 4px; }
+    .log-destaque { color: #fbbf24; font-weight: 700; }
+    .log-dano { color: #ef4444; font-weight: 700; }
+    .log-cura { color: #22c55e; font-weight: 700; }
+    .log-sistema { color: #888; font-style: italic; }
+    .batalha-acoes { position: sticky; bottom: 0; background: rgba(0,0,0,0.7); padding: 14px 16px; border-top: 2px solid #e60000; backdrop-filter: blur(8px); max-width: 800px; width: 100%; margin: 0 auto; }
+    .acoes-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #ff8888; margin-bottom: 10px; }
+    .acoes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+    .acao-btn { padding: 12px 6px; border: none; border-radius: 12px; font-size: 12px; font-weight: 700; cursor: pointer; color: white; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .acao-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .acao-btn .emoji { font-size: 20px; }
+    .acao-btn.atacar { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .acao-btn.recuar { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .acao-btn.curar { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .acao-btn.defender { background: linear-gradient(135deg, #eab308, #ca8a04); }
+    .ataques-lista { display: grid; gap: 8px; }
+    .ataque-btn { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); color: white; padding: 12px 16px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .ataque-btn:hover { background: rgba(230,0,0,0.2); border-color: #e60000; }
+    .ataque-btn .nome-atk { font-weight: 700; }
+    .ataque-btn .dano-atk { font-weight: 800; font-size: 18px; color: #ff8888; }
+    .escolha-time { padding: 20px; max-width: 800px; width: 100%; margin: 0 auto; }
+    .escolha-time h2 { font-size: 22px; font-weight: 800; color: #e60000; margin-bottom: 8px; }
+    .escolha-time p { font-size: 14px; color: #aaa; margin-bottom: 16px; }
+    .escolha-contador { display: inline-block; background: #e60000; color: white; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 800; margin-left: 8px; }
+    .escolha-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+    .escolha-card { background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; }
+    .escolha-card.selecionada { border-color: #22c55e; background: rgba(34,197,94,0.2); }
+    .escolha-card img { width: 100%; max-width: 100px; border-radius: 8px; }
+    .escolha-card .nome-c { font-size: 11px; font-weight: 700; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .escolha-card .num-c { font-size: 10px; color: #888; }
+    .escolha-acoes { position: sticky; bottom: 0; background: rgba(0,0,0,0.7); padding: 14px 20px; backdrop-filter: blur(8px); display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+    .escolha-acoes button { padding: 14px 24px; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .btn-confirmar-time { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+    .btn-confirmar-time:disabled { background: #555; cursor: not-allowed; }
+    .btn-cancelar-time { background: rgba(255,255,255,0.15); color: white; }
+    .batalha-resultado { text-align: center; padding: 60px 20px; max-width: 500px; margin: 0 auto; }
+    .batalha-resultado .emoji-grande { font-size: 80px; margin-bottom: 16px; }
+    .batalha-resultado h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+    .batalha-resultado.vitoria h2 { color: #22c55e; }
+    .batalha-resultado.derrota h2 { color: #ef4444; }
+    .batalha-resultado.empate h2 { color: #fbbf24; }
+    .batalha-resultado p { font-size: 16px; color: #aaa; margin-bottom: 24px; line-height: 1.6; }
+    .batalha-resultado button { padding: 16px 32px; background: linear-gradient(135deg, #e60000, #cc0000); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; }
+
     @media (min-width: 600px) {
       #pokedex { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 20px 24px; max-width: 900px; margin: 0 auto; }
       .modal { border-radius: 24px; margin-bottom: 30px; }
@@ -278,10 +328,7 @@
       </h1>
       <div class="header-actions">
         <button class="battle-btn" onclick="abrirBatalhas()" title="Batalhas">⚔️</button>
-        <button class="sino-btn" id="sino-btn" onclick="abrirNotificacoes()" title="Notificações">
-          🔔
-          <span class="bolinha oculto" id="sino-bolinha">0</span>
-        </button>
+        <button class="sino-btn" id="sino-btn" onclick="abrirNotificacoes()" title="Notificações">🔔<span class="bolinha oculto" id="sino-bolinha">0</span></button>
         <button class="shiny-btn" id="shiny-btn" onclick="toggleShiny()" title="Alternar shiny">✨</button>
         <button class="theme-btn" id="theme-btn" onclick="toggleTema()" title="Alternar tema">🌙</button>
         <button class="explore-btn" onclick="abrirExplorar()" title="Explorar sets">🧭</button>
@@ -326,7 +373,7 @@
       <div class="filter-row">
         <button class="filter-btn active" id="filter-todos" onclick="setFiltro('todos')">Todos</button>
         <button class="filter-btn" id="filter-tenho" onclick="setFiltro('tenho')">Só os que tenho</button>
-        <button class="copy-btn" onclick="copiarLista()" title="Copiar lista das suas cartas">📋 Copiar</button>
+        <button class="copy-btn" onclick="copiarLista()">📋 Copiar</button>
       </div>
       <div class="stats-bar">
         <span>Pokémon: <strong id="stat-pokemon">0</strong></span>
@@ -340,38 +387,25 @@
     </div>
   </div>
 
-  <button id="add-btn" onclick="abrirAddCarta()" title="Adicionar carta">+</button>
+  <button id="add-btn" onclick="abrirAddCarta()">+</button>
 
   <div class="modal-overlay" id="modal-add">
     <div class="modal">
       <div class="modal-header"><h2>Adicionar Carta</h2><button class="modal-close" onclick="fecharModal('modal-add')">×</button></div>
-      <p style="font-size:14px;color:#777;margin-bottom:14px;line-height:1.5;">Digite o <strong>número</strong> da carta (ex: <strong>025</strong> ou <strong>025/165</strong>) ou o nome.</p>
+      <p style="font-size:14px;color:#777;margin-bottom:14px;">Digite o <strong>número</strong> (ex: 025) ou o nome.</p>
       <input type="text" id="card-search-input" placeholder="Ex: 025 ou 025/165 ou Pikachu" autocomplete="off">
-      <details class="filtros-avancados" style="margin-top:0;">
+      <details class="filtros-avancados">
         <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#e60000;list-style:none;">⚙️ Filtros avançados</summary>
         <div style="margin-top:10px;">
           <select id="filtro-set"><option value="">Todos os sets</option></select>
           <select id="filtro-raridade"><option value="">Todas as raridades</option></select>
           <select id="filtro-categoria"><option value="">Todas as categorias</option></select>
           <select id="filtro-estagio"><option value="">Todos os estágios</option></select>
-          <select id="filtro-tipo-carta">
-            <option value="">Todos os tipos de Pokémon</option>
-            <option value="Fire">🔥 Fire</option>
-            <option value="Water">💧 Water</option>
-            <option value="Grass">🌿 Grass</option>
-            <option value="Lightning">⚡ Lightning</option>
-            <option value="Psychic">🔮 Psychic</option>
-            <option value="Fighting">🥊 Fighting</option>
-            <option value="Darkness">🌑 Darkness</option>
-            <option value="Metal">⚙️ Metal</option>
-            <option value="Fairy">✨ Fairy</option>
-            <option value="Dragon">🐉 Dragon</option>
-            <option value="Colorless">⚪ Colorless</option>
-          </select>
-          <button class="secondary" onclick="limparFiltrosAvancados()" style="font-size:13px;">Limpar filtros</button>
+          <select id="filtro-tipo-carta"><option value="">Todos os tipos de Pokémon</option><option value="Fire">🔥 Fire</option><option value="Water">💧 Water</option><option value="Grass">🌿 Grass</option><option value="Lightning">⚡ Lightning</option><option value="Psychic">🔮 Psychic</option><option value="Fighting">🥊 Fighting</option><option value="Darkness">🌑 Darkness</option><option value="Metal">⚙️ Metal</option><option value="Fairy">✨ Fairy</option><option value="Dragon">🐉 Dragon</option><option value="Colorless">⚪ Colorless</option></select>
+          <button class="secondary" onclick="limparFiltrosAvancados()">Limpar filtros</button>
         </div>
       </details>
-      <button class="primary" onclick="buscarCarta()" id="btn-buscar">Buscar Carta</button>
+      <button class="primary" onclick="buscarCarta()">Buscar Carta</button>
       <div id="search-results"></div>
       <div id="card-confirm" style="display:none;"></div>
     </div>
@@ -379,7 +413,7 @@
 
   <div class="modal-overlay" id="modal-explorar">
     <div class="modal">
-      <div class="modal-header"><h2 id="explorar-titulo">🧭 Explorar</h2><button class="modal-close" onclick="fecharModal('modal-explorar')">×</button></div>
+      <div class="modal-header"><h2>🧭 Explorar</h2><button class="modal-close" onclick="fecharModal('modal-explorar')">×</button></div>
       <div style="display:flex;gap:8px;margin-bottom:14px;">
         <button class="filter-btn active" id="explorar-tab-sets" onclick="setExplorarTab('sets')">Sets</button>
         <button class="filter-btn" id="explorar-tab-series" onclick="setExplorarTab('series')">Séries</button>
@@ -406,14 +440,14 @@
 
   <div class="modal-overlay" id="modal-detalhes">
     <div class="modal">
-      <div class="modal-header"><h2 id="detalhes-titulo">Detalhes da Carta</h2><button class="modal-close" onclick="fecharModal('modal-detalhes')">×</button></div>
+      <div class="modal-header"><h2 id="detalhes-titulo">Detalhes</h2><button class="modal-close" onclick="fecharModal('modal-detalhes')">×</button></div>
       <div id="detalhes-content"></div>
     </div>
   </div>
 
   <div class="modal-overlay" id="modal-share">
     <div class="modal">
-      <div class="modal-header"><h2>📤 Compartilhar Carta</h2><button class="modal-close" onclick="fecharModal('modal-share')">×</button></div>
+      <div class="modal-header"><h2>📤 Compartilhar</h2><button class="modal-close" onclick="fecharModal('modal-share')">×</button></div>
       <div id="share-content"></div>
     </div>
   </div>
@@ -427,7 +461,7 @@
 
   <div class="modal-overlay" id="modal-amigos">
     <div class="modal">
-      <div class="modal-header"><h2>👥 Meus Amigos</h2><button class="modal-close" onclick="fecharModal('modal-amigos')">×</button></div>
+      <div class="modal-header"><h2>👥 Amigos</h2><button class="modal-close" onclick="fecharModal('modal-amigos')">×</button></div>
       <div id="amigos-content"></div>
     </div>
   </div>
@@ -457,6 +491,15 @@
     </div>
   </div>
 
+  <div id="tela-batalha">
+    <div class="batalha-topo">
+      <div class="batalha-timer" id="batalha-timer">05:00</div>
+      <div class="batalha-turno" id="batalha-turno">Aguardando...</div>
+      <button class="batalha-sair" onclick="sairBatalha()">Sair</button>
+    </div>
+    <div class="batalha-corpo" id="batalha-corpo"></div>
+  </div>
+
   <div id="toast"></div>
 
   <script>
@@ -472,7 +515,6 @@
     let pokemonAbertoAtual = null;
     let tiposCache = {};
     let modoShiny = false;
-
     let explorarTab = 'sets';
     let setsCache = null, seriesCache = null, ilustradoresCache = null;
     let filtrosAvancadosCache = { sets: null, raridades: null, categorias: null, estagios: null };
@@ -485,16 +527,9 @@
     let popupTimer = null;
     let popupSegundos = 120;
 
-    function spriteAnimado(id) {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
-    }
-    function spriteNormal(id, shiny) {
-      const pasta = shiny ? 'shiny/' : '';
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pasta}${id}.png`;
-    }
-    function spriteGen9(id) {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ix/scarlet-violet/${id}.png`;
-    }
+    function spriteAnimado(id) { return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`; }
+    function spriteNormal(id, shiny) { return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${shiny ? 'shiny/' : ''}${id}.png`; }
+    function spriteGen9(id) { return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ix/scarlet-violet/${id}.png`; }
 
     function garantirPerfil() {
       if (!perfil) {
@@ -523,7 +558,7 @@
       localStorage.setItem('pokedex_shiny', modoShiny ? 'sim' : 'nao');
       const btn = document.getElementById('shiny-btn');
       if (btn) btn.classList.toggle('ativo', modoShiny);
-      mostrarToast(modoShiny ? '✨ Modo Shiny ativado!' : 'Modo normal');
+      mostrarToast(modoShiny ? '✨ Shiny ativado!' : 'Modo normal');
       renderizarPokedex();
     }
 
@@ -546,22 +581,18 @@
       carregarPokemon();
       atualizarStats();
       sincronizar();
-      if (nuvemEstado === 'ok') {
-        iniciarHeartbeat();
-        ouvirConvitesRecebidos();
-      }
+      if (nuvemEstado === 'ok') { iniciarHeartbeat(); ouvirConvitesRecebidos(); }
     }
 
     function atualizarHeaderUser() {
       const el = document.getElementById('user-display');
       const nome = (perfil && perfil.nome) ? perfil.nome : usuario;
-      if (perfil && perfil.foto) el.innerHTML = `<img class="user-avatar" src="${perfil.foto}" alt=""> ${nome}`;
+      if (perfil && perfil.foto) el.innerHTML = `<img class="user-avatar" src="${perfil.foto}"> ${nome}`;
       else el.innerHTML = `👤 ${nome}`;
     }
 
     function aplicarTemaSalvo() {
-      const tema = localStorage.getItem('pokedex_tema') || 'claro';
-      if (tema === 'escuro') {
+      if (localStorage.getItem('pokedex_tema') === 'escuro') {
         document.body.classList.add('dark');
         const btn = document.getElementById('theme-btn');
         if (btn) btn.textContent = '☀️';
@@ -582,7 +613,7 @@
         const data = await res.json();
         todosPokemon = data.results.map((p, i) => ({ id: i + 1, name: p.name }));
         aplicarFiltros();
-      } catch (err) { document.getElementById('pokedex').innerHTML = '<div class="empty-msg">Erro ao carregar.</div>'; }
+      } catch (err) { document.getElementById('pokedex').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function setFiltro(tipo) {
@@ -596,7 +627,7 @@
       filtroTipoAtual = tipo;
       if (!tipo) { aplicarFiltros(); return; }
       if (tiposCache[tipo]) { aplicarFiltros(); return; }
-      document.getElementById('pokedex').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Buscando tipo...</div>';
+      document.getElementById('pokedex').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Buscando...</div>';
       try {
         const res = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
         const data = await res.json();
@@ -604,8 +635,7 @@
         localStorage.setItem('pokedex_tipos_cache', JSON.stringify(tiposCache));
         aplicarFiltros();
       } catch (e) {
-        console.error(e);
-        mostrarToast('Erro ao buscar tipo.');
+        mostrarToast('Erro.');
         filtroTipoAtual = ''; document.getElementById('filtro-tipo').value = '';
         aplicarFiltros();
       }
@@ -619,8 +649,7 @@
         case 'nome': copia.sort((a, b) => a.name.localeCompare(b.name)); break;
         case 'preco-maior': copia.sort((a, b) => valorTotalDoPokemon(b.name) - valorTotalDoPokemon(a.name)); break;
         case 'preco-menor': copia.sort((a, b) => valorTotalDoPokemon(a.name) - valorTotalDoPokemon(b.name)); break;
-        case 'numero':
-        default: copia.sort((a, b) => a.id - b.id); break;
+        case 'numero': default: copia.sort((a, b) => a.id - b.id); break;
       }
       return copia;
     }
@@ -641,8 +670,7 @@
         lista = lista.filter(p => nomesComCarta.has(p.name.toLowerCase()));
       }
       if (termo) lista = lista.filter(p => p.name.includes(termo) || String(p.id).includes(termo));
-      lista = ordenarLista(lista);
-      pokemonFiltrados = lista;
+      pokemonFiltrados = ordenarLista(lista);
       renderizarPokedex();
       atualizarStats();
     }
@@ -652,8 +680,8 @@
     function renderizarPokedex() {
       const container = document.getElementById('pokedex');
       if (pokemonFiltrados.length === 0) {
-        if (filtroAtual === 'tenho') container.innerHTML = `<div class="empty-msg" style="grid-column:1/-1">Você ainda não tem nenhuma carta.<br>Clique no <strong>+</strong> pra adicionar!</div>`;
-        else container.innerHTML = '<div class="empty-msg" style="grid-column:1/-1">Nenhum Pokémon encontrado.</div>';
+        if (filtroAtual === 'tenho') container.innerHTML = `<div class="empty-msg" style="grid-column:1/-1">Sem cartas. Clique no <strong>+</strong>!</div>`;
+        else container.innerHTML = '<div class="empty-msg" style="grid-column:1/-1">Nenhum Pokémon.</div>';
         return;
       }
       container.innerHTML = pokemonFiltrados.map(p => {
@@ -664,18 +692,14 @@
         return `
           <div class="poke-card ${qtd > 0 ? 'has-cards' : ''}" onclick="abrirPokemon('${p.name}', ${p.id})">
             ${qtd > 0 ? `<div class="badge">${qtd}</div>` : ''}
-            <img src="${gif}"
-                 onerror="this.onerror=function(){this.onerror=function(){this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'};this.src='${gen9}'};this.src='${normal}'"
-                 alt="${p.name}" loading="lazy">
+            <img src="${gif}" onerror="this.onerror=function(){this.onerror=function(){this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'};this.src='${gen9}'};this.src='${normal}'" alt="${p.name}" loading="lazy">
             <div class="name">${p.name}</div>
             <div class="number">#${String(p.id).padStart(3, '0')}</div>
           </div>`;
       }).join('');
     }
 
-    function contarCartasDoPokemon(nome) {
-      return colecao.filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase()).length;
-    }
+    function contarCartasDoPokemon(nome) { return colecao.filter(c => c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase()).length; }
 
     function atualizarStats() {
       const pokemonUnicos = new Set(colecao.map(c => (c.pokemon || '').toLowerCase())).size;
@@ -701,32 +725,32 @@
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets');
           const sets = await res.json();
           filtrosAvancadosCache.sets = sets;
-          document.getElementById('filtro-set').innerHTML = '<option value="">Todos os sets</option>' + sets.map(s => `<option value="${s.id}">${s.name} (${s.cardCount?.total || '?'})</option>`).join('');
-        } catch (e) { console.error(e); }
+          document.getElementById('filtro-set').innerHTML = '<option value="">Todos os sets</option>' + sets.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        } catch (e) {}
       }
       if (!filtrosAvancadosCache.raridades) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/rarities');
-          const raridades = await res.json();
-          filtrosAvancadosCache.raridades = raridades;
-          document.getElementById('filtro-raridade').innerHTML = '<option value="">Todas as raridades</option>' + raridades.map(r => `<option value="${r}">${r}</option>`).join('');
-        } catch (e) { console.error(e); }
+          const r = await res.json();
+          filtrosAvancadosCache.raridades = r;
+          document.getElementById('filtro-raridade').innerHTML = '<option value="">Todas as raridades</option>' + r.map(x => `<option value="${x}">${x}</option>`).join('');
+        } catch (e) {}
       }
       if (!filtrosAvancadosCache.categorias) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/categories');
-          const cats = await res.json();
-          filtrosAvancadosCache.categorias = cats;
-          document.getElementById('filtro-categoria').innerHTML = '<option value="">Todas as categorias</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
-        } catch (e) { console.error(e); }
+          const c = await res.json();
+          filtrosAvancadosCache.categorias = c;
+          document.getElementById('filtro-categoria').innerHTML = '<option value="">Todas as categorias</option>' + c.map(x => `<option value="${x}">${x}</option>`).join('');
+        } catch (e) {}
       }
       if (!filtrosAvancadosCache.estagios) {
         try {
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/stages');
-          const estagios = await res.json();
-          filtrosAvancadosCache.estagios = estagios;
-          document.getElementById('filtro-estagio').innerHTML = '<option value="">Todos os estágios</option>' + estagios.map(e => `<option value="${e}">${e}</option>`).join('');
-        } catch (e) { console.error(e); }
+          const e = await res.json();
+          filtrosAvancadosCache.estagios = e;
+          document.getElementById('filtro-estagio').innerHTML = '<option value="">Todos os estágios</option>' + e.map(x => `<option value="${x}">${x}</option>`).join('');
+        } catch (e) {}
       }
     }
 
@@ -744,7 +768,7 @@
         stage: document.getElementById('filtro-estagio').value,
         type: document.getElementById('filtro-tipo-carta').value
       };
-      if (!termo && !filtros.set && !filtros.rarity && !filtros.category && !filtros.stage && !filtros.type) { mostrarToast('Digite algo ou escolha um filtro!'); return; }
+      if (!termo && !filtros.set && !filtros.rarity && !filtros.category && !filtros.stage && !filtros.type) { mostrarToast('Digite algo!'); return; }
       await executarBuscaCarta(termo, filtros);
     }
 
@@ -752,7 +776,7 @@
       const resultsDiv = document.getElementById('search-results');
       const confirmDiv = document.getElementById('card-confirm');
       confirmDiv.style.display = 'none';
-      resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Buscando cartas...</div>';
+      resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Buscando...</div>';
       try {
         const params = new URLSearchParams();
         params.append('pagination:itemsPerPage', '50');
@@ -770,18 +794,18 @@
         }
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?${params.toString()}`);
         const data = await res.json();
-        if (!data || data.length === 0) { resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número/nome ou filtros diferentes.</div>'; return; }
+        if (!data || data.length === 0) { resultsDiv.innerHTML = '<div class="empty-msg">Nada encontrado.</div>'; return; }
         if (data.length === 1) { mostrarConfirmacao(data[0]); resultsDiv.innerHTML = ''; return; }
         resultsDiv.innerHTML = `
-          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe:</p>
+          <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas:</p>
           <div class="results-list">
             ${data.map(c => `
               <div class="result-item" onclick='mostrarConfirmacao(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
-                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
+                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'">
                 <div class="info"><div class="name">${c.name}</div><div class="set">${c.id || ''} • Nº ${c.localId || ''}</div></div>
               </div>`).join('')}
           </div>`;
-      } catch (err) { console.error(err); resultsDiv.innerHTML = '<div class="empty-msg">Erro na busca.</div>'; }
+      } catch (err) { resultsDiv.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function mostrarConfirmacao(carta) {
@@ -792,39 +816,30 @@
       const imgFallback = carta.image ? (carta.image + '.webp') : '';
       confirmDiv.innerHTML = `
         <div class="card-preview">
-          <img src="${imgUrl}" onerror="this.src='${imgFallback}'" alt="${carta.name}">
+          <img src="${imgUrl}" onerror="this.src='${imgFallback}'">
           <div class="card-name">${carta.name}</div>
           <div class="card-set">${carta.id || ''} • Nº ${carta.localId || ''}</div>
         </div>
         <div class="price-input-group">
-          <label>Preço da carta (opcional)</label>
-          <div class="price-row"><span>R$</span><input type="number" id="card-price-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
+          <label>Preço (opcional)</label>
+          <div class="price-row"><span>R$</span><input type="number" id="card-price-input" placeholder="0,00" step="0.01"></div>
         </div>
-        <button class="primary" onclick='confirmarCarta(${JSON.stringify(carta).replace(/'/g, "&#39;")})'>Sim, adicionar!</button>
-        <button class="secondary" onclick="document.getElementById('card-confirm').style.display='none'">Não, voltar</button>
-      `;
+        <button class="primary" onclick='confirmarCarta(${JSON.stringify(carta).replace(/'/g, "&#39;")})'>Adicionar!</button>
+        <button class="secondary" onclick="document.getElementById('card-confirm').style.display='none'">Voltar</button>`;
       setTimeout(() => { const p = document.getElementById('card-price-input'); if (p) p.focus(); }, 200);
     }
 
     function confirmarCarta(carta) {
-      let pokemonName = carta.name.toLowerCase()
-        .replace(/\s+ex$/i, '').replace(/\s+v$/i, '').replace(/\s+vmax$/i, '')
-        .replace(/\s+vstar$/i, '').replace(/\s+gx$/i, '').replace(/\s+lv\.?x$/i, '')
-        .replace(/[△★☆]/g, '').trim();
-      const precoInput = document.getElementById('card-price-input');
+      let pokemonName = carta.name.toLowerCase().replace(/\s+ex$/i, '').replace(/\s+v$/i, '').replace(/\s+vmax$/i, '').replace(/\s+vstar$/i, '').replace(/\s+gx$/i, '').trim();
+      const p = document.getElementById('card-price-input');
       let preco = 0;
-      if (precoInput && precoInput.value) preco = parseFloat(precoInput.value.replace(',', '.')) || 0;
-      colecao.push({
-        id: carta.id + '_' + Date.now(),
-        tcgId: carta.id, name: carta.name, localId: carta.localId,
-        image: carta.image, pokemon: pokemonName, preco: preco,
-        addedAt: new Date().toISOString()
-      });
+      if (p && p.value) preco = parseFloat(p.value.replace(',', '.')) || 0;
+      colecao.push({ id: carta.id + '_' + Date.now(), tcgId: carta.id, name: carta.name, localId: carta.localId, image: carta.image, pokemon: pokemonName, preco: preco, addedAt: new Date().toISOString() });
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
       fecharModal('modal-add');
       aplicarFiltros();
-      mostrarToast('Carta adicionada! 🎉');
+      mostrarToast('Adicionada! 🎉');
     }
 
     function abrirPokemon(nome, id) {
@@ -833,21 +848,20 @@
       document.getElementById('pokemon-modal-title').textContent = nome.charAt(0).toUpperCase() + nome.slice(1);
       const listDiv = document.getElementById('pokemon-cards-list');
       if (cartas.length === 0) {
-        listDiv.innerHTML = `<div class="empty-msg">Você ainda não tem cartas de <strong>${nome}</strong>.<br><br>Clique no <strong>+</strong> pra adicionar!</div>`;
+        listDiv.innerHTML = `<div class="empty-msg">Sem cartas de <strong>${nome}</strong>.</div>`;
       } else {
         const valorTotal = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         listDiv.innerHTML = `
           <div class="total-value"><div class="label">Valor total</div><div class="value">R$ ${valorTotal.toFixed(2).replace('.', ',')}</div></div>
-          <p style="font-size:14px;color:#777;margin-bottom:12px;">Você tem <strong>${cartas.length}</strong> carta(s) de ${nome}:</p>
           <div class="cards-grid">
             ${cartas.map((c) => `
               <div class="owned-card" onclick="verDetalhesCarta('${c.id}')">
                 <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')">×</button>
                 <button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')">📤</button>
-                <img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}">
+                <img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'">
                 <div class="name">${c.name}</div>
                 <div class="set">${c.tcgId || c.id} • Nº ${c.localId || ''}</div>
-                ${c.preco > 0 ? `<div class="price">R$ ${parseFloat(c.preco).toFixed(2).replace('.', ',')}</div>` : '<div class="price" style="color:#ccc">Sem preço</div>'}
+                ${c.preco > 0 ? `<div class="price">R$ ${parseFloat(c.preco).toFixed(2).replace('.', ',')}</div>` : ''}
               </div>`).join('')}
           </div>
           <button class="danger" style="margin-top:20px;" onclick="removerPokemon('${nome}')">🗑️ Remover todas</button>`;
@@ -862,12 +876,12 @@
       document.getElementById('detalhes-content').innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
       document.getElementById('modal-detalhes').classList.add('active');
       try {
-        let url = carta.tcgId ? `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}` : `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
+        const url = carta.tcgId ? `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}` : `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
         const res = await fetch(url);
         let dados = await res.json();
         if (Array.isArray(dados)) dados = dados[0];
         renderizarDetalhes(carta, dados);
-      } catch (e) { console.error(e); document.getElementById('detalhes-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
+      } catch (e) { document.getElementById('detalhes-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function renderizarDetalhes(cartaLocal, dados) {
@@ -880,56 +894,33 @@
         ${dados.stage ? `<div class="detalhes-item"><div class="label">Estágio</div><div class="value">${dados.stage}</div></div>` : ''}
         ${dados.illustrator ? `<div class="detalhes-item"><div class="label">Ilustrador</div><div class="value">${dados.illustrator}</div></div>` : ''}
         ${dados.set ? `<div class="detalhes-item"><div class="label">Set</div><div class="value">${dados.set.name || ''}</div></div>` : ''}
-        ${dados.types && dados.types.length ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
-        ${dados.regulationMark ? `<div class="detalhes-item"><div class="label">Regulação</div><div class="value">${dados.regulationMark}</div></div>` : ''}
+        ${dados.types ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
       </div>`;
       let ataquesHtml = '';
-      if (dados.attacks && dados.attacks.length > 0) {
-        ataquesHtml = `<div class="detalhes-ataques"><h3>⚔️ Ataques</h3>${dados.attacks.map(a => `
-          <div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}</div>${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}${a.cost ? `<div class="ataque-custo">Custo: ${a.cost.join(' + ')}</div>` : ''}</div>`).join('')}</div>`;
-      }
-      let abilitiesHtml = '';
-      if (dados.abilities && dados.abilities.length > 0) {
-        abilitiesHtml = `<div class="detalhes-ataques"><h3>✨ Habilidades</h3>${dados.abilities.map(a => `<div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.type ? `<span class="ataque-dano" style="font-size:12px;color:#888;">${a.type}</span>` : ''}</div>${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}</div>`).join('')}</div>`;
-      }
-      let variantesHtml = '';
-      if (dados.variants) {
-        const v = dados.variants;
-        const tags = [{ nome: 'Normal', ativo: v.normal }, { nome: 'Holo', ativo: v.holo }, { nome: 'Reverse', ativo: v.reverse }, { nome: '1ª Edição', ativo: v.firstEdition }, { nome: 'Jumbo', ativo: v.jumbo }].filter(t => t.ativo);
-        if (tags.length > 0) variantesHtml = `<div class="detalhes-ataques"><h3>🎨 Variantes</h3><div class="variantes-lista">${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}</div></div>`;
-      }
-      let combateHtml = '';
-      if (dados.weaknesses || dados.resistances || dados.retreat !== undefined) {
-        combateHtml = `<div class="detalhes-grid" style="margin-top:16px;">
-          ${dados.weaknesses && dados.weaknesses.length ? `<div class="detalhes-item"><div class="label">Fraqueza</div><div class="value">${dados.weaknesses.map(w => `${w.type} ${w.value}`).join(', ')}</div></div>` : ''}
-          ${dados.resistances && dados.resistances.length ? `<div class="detalhes-item"><div class="label">Resistência</div><div class="value">${dados.resistances.map(r => `${r.type} ${r.value}`).join(', ')}</div></div>` : ''}
-          ${dados.retreat !== undefined ? `<div class="detalhes-item"><div class="label">Retreat</div><div class="value">${dados.retreat}</div></div>` : ''}
-        </div>`;
-      }
+      if (dados.attacks && dados.attacks.length > 0) ataquesHtml = `<div class="detalhes-ataques"><h3>⚔️ Ataques</h3>${dados.attacks.map(a => `<div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}</div>${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}</div>`).join('')}</div>`;
       const precoHtml = preco > 0 ? `<div class="total-value" style="margin-top:16px;"><div class="label">Você pagou</div><div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div></div>` : '';
-      document.getElementById('detalhes-content').innerHTML = `${imgHtml}${infoHtml}${ataquesHtml}${abilitiesHtml}${combateHtml}${variantesHtml}${precoHtml}<button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>`;
+      document.getElementById('detalhes-content').innerHTML = `${imgHtml}${infoHtml}${ataquesHtml}${precoHtml}<button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>`;
     }
 
     function apagarCarta(id) {
-      if (!confirm('Apagar esta carta?')) return;
+      if (!confirm('Apagar?')) return;
       colecao = colecao.filter(c => c.id !== id);
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
       if (pokemonAbertoAtual) abrirPokemon(pokemonAbertoAtual, 0);
       aplicarFiltros();
-      mostrarToast('Carta apagada');
+      mostrarToast('Apagada');
     }
 
     function removerPokemon(nome) {
-      const qtd = contarCartasDoPokemon(nome);
-      if (!confirm(`Remover TODAS as ${qtd} carta(s) de ${nome}?`)) return;
+      if (!confirm(`Remover todas de ${nome}?`)) return;
       colecao = colecao.filter(c => !(c.pokemon && c.pokemon.toLowerCase() === nome.toLowerCase()));
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
       fecharModal('modal-pokemon');
       pokemonAbertoAtual = null;
       aplicarFiltros();
-      mostrarToast(`Cartas de ${nome} removidas`);
+      mostrarToast('Removidas');
     }
 
     function abrirExplorar() {
@@ -957,22 +948,21 @@
         } else if (explorarTab === 'series') {
           if (!seriesCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/series'); seriesCache = await res.json(); }
           renderizarSeries(seriesCache);
-        } else if (explorarTab === 'ilustradores') {
+        } else {
           if (!ilustradoresCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators'); ilustradoresCache = await res.json(); }
           renderizarIlustradores(ilustradoresCache);
         }
-      } catch (e) { console.error(e); content.innerHTML = '<div class="empty-msg">Erro.</div>'; }
+      } catch (e) { content.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function renderizarSets(sets) {
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? sets.filter(s => (s.name || '').toLowerCase().includes(busca)) : sets;
-      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum set.</div>'; return; }
       content.innerHTML = filtrados.map(s => `
         <div class="set-card" onclick="abrirCartasDoSet('${s.id}', '${(s.name || '').replace(/'/g, "&#39;")}')">
-          ${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null" alt="${s.name}">` : '<div class="set-logo" style="background:#eee;border-radius:8px;"></div>'}
-          <div class="set-info"><div class="set-nome">${s.name || s.id}</div><div class="set-meta">${s.cardCount?.total || '?'} cartas${s.releaseDate ? ' • ' + s.releaseDate : ''}</div></div>
+          ${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null">` : ''}
+          <div class="set-info"><div class="set-nome">${s.name || s.id}</div><div class="set-meta">${s.cardCount?.total || '?'} cartas</div></div>
         </div>`).join('');
     }
 
@@ -980,12 +970,10 @@
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtradas = busca ? series.filter(s => (s.name || '').toLowerCase().includes(busca)) : series;
-      if (filtradas.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhuma série.</div>'; return; }
       content.innerHTML = filtradas.map(s => `
         <div class="serie-grupo">
           <h3>${s.name || s.id}</h3>
-          <div style="font-size:12px;color:#888;margin-bottom:8px;">${(s.sets || []).length} sets</div>
-          ${(s.sets || []).map(set => `<div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">${set.name || set.id}</div><div class="set-meta">${set.cardCount?.total || '?'} cartas</div></div></div>`).join('')}
+          ${(s.sets || []).map(set => `<div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">${set.name || set.id}</div></div></div>`).join('')}
         </div>`).join('');
     }
 
@@ -993,8 +981,7 @@
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? ilustradores.filter(i => i.toLowerCase().includes(busca)) : ilustradores;
-      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum ilustrador.</div>'; return; }
-      content.innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:10px;">${filtrados.length} ilustrador(es):</p>${filtrados.slice(0, 200).map(i => `<div class="set-card" onclick="buscarPorIlustrador('${i.replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">🎨 ${i}</div></div></div>`).join('')}`;
+      content.innerHTML = filtrados.slice(0, 200).map(i => `<div class="set-card" onclick="buscarPorIlustrador('${i.replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">🎨 ${i}</div></div></div>`).join('');
     }
 
     function filtrarExplorar() {
@@ -1011,9 +998,8 @@
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/sets/${setId}`);
         const set = await res.json();
         const cartas = set.cards || [];
-        if (cartas.length === 0) { document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Sem cartas.</div>'; return; }
-        document.getElementById('set-cartas-content').innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:10px;">${cartas.length} carta(s):</p><div class="cards-grid">${cartas.map(c => `<div class="owned-card" onclick="adicionarDoSet('${c.id}')"><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}"><div class="name">${c.name}</div><div class="set">Nº ${c.localId || ''}</div></div>`).join('')}</div>`;
-      } catch (e) { console.error(e); document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
+        document.getElementById('set-cartas-content').innerHTML = `<div class="cards-grid">${cartas.map(c => `<div class="owned-card" onclick="adicionarDoSet('${c.id}')"><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'"><div class="name">${c.name}</div><div class="set">Nº ${c.localId || ''}</div></div>`).join('')}</div>`;
+      } catch (e) { document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     async function adicionarDoSet(tcgId) {
@@ -1024,7 +1010,7 @@
         fecharModal('modal-explorar');
         mostrarConfirmacao(carta);
         document.getElementById('modal-add').classList.add('active');
-      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+      } catch (e) { mostrarToast('Erro.'); }
     }
 
     async function buscarPorIlustrador(nome) {
@@ -1032,9 +1018,8 @@
       try {
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?illustrator=${encodeURIComponent(nome)}&pagination:itemsPerPage=50`);
         const data = await res.json();
-        if (!data || data.length === 0) { document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Nenhuma carta.</div>'; return; }
-        document.getElementById('explorar-content').innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:10px;">Cartas de <strong>${nome}</strong>:</p><div class="cards-grid">${data.map(c => `<div class="owned-card" onclick="adicionarDoSet('${c.id}')"><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}"><div class="name">${c.name}</div><div class="set">Nº ${c.localId || ''}</div></div>`).join('')}</div>`;
-      } catch (e) { console.error(e); document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
+        document.getElementById('explorar-content').innerHTML = `<div class="cards-grid">${data.map(c => `<div class="owned-card" onclick="adicionarDoSet('${c.id}')"><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'"><div class="name">${c.name}</div></div>`).join('')}</div>`;
+      } catch (e) { document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function abrirCompartilhar(id) {
@@ -1042,37 +1027,34 @@
       if (!carta) return;
       const preco = parseFloat(carta.preco) || 0;
       const imgUrl = carta.image ? (carta.image + '/high.webp') : '';
-      const imgFallback = carta.image ? (carta.image + '.webp') : '';
-      const texto = `🃏 ${carta.name}\nSet: ${carta.tcgId || '—'} • Nº ${carta.localId || '—'}\n${preco > 0 ? 'R$ ' + preco.toFixed(2).replace('.', ',') : ''}\n— Coleção de ${usuario}`;
+      const texto = `🃏 ${carta.name}\nSet: ${carta.tcgId || '—'}\n${preco > 0 ? 'R$ ' + preco.toFixed(2) : ''}\n— Coleção de ${usuario}`;
       document.getElementById('share-content').innerHTML = `
-        <div class="share-preview"><img src="${imgUrl}" onerror="this.src='${imgFallback}'"><div style="font-weight:700;font-size:16px;">${carta.name}</div></div>
-        <button class="primary" onclick="compartilharNativo('${carta.id}')">📤 Compartilhar</button>
-        <button class="secondary" onclick="copiarTextoCompartilhar('${carta.id}')">📋 Copiar texto</button>`;
+        <div class="share-preview"><img src="${imgUrl}" onerror="this.src='${carta.image}.webp'"><div style="font-weight:700;">${carta.name}</div></div>
+        <button class="primary" onclick="compartilharNativo()">📤 Compartilhar</button>
+        <button class="secondary" onclick="copiarTextoCompartilhar()">📋 Copiar texto</button>`;
       window._shareTextoAtual = texto;
       document.getElementById('modal-share').classList.add('active');
     }
 
-    async function compartilharNativo(id) {
+    async function compartilharNativo() {
       const texto = window._shareTextoAtual || '';
-      if (navigator.share) {
-        try { await navigator.share({ title: 'Carta Pokémon', text: texto }); fecharModal('modal-share'); }
-        catch (e) { if (e.name !== 'AbortError') copiarTextoCompartilhar(id); }
-      } else copiarTextoCompartilhar(id);
+      if (navigator.share) { try { await navigator.share({ title: 'Carta Pokémon', text: texto }); fecharModal('modal-share'); } catch (e) { if (e.name !== 'AbortError') copiarTextoCompartilhar(); } }
+      else copiarTextoCompartilhar();
     }
 
-    function copiarTextoCompartilhar(id) {
+    function copiarTextoCompartilhar() {
       const texto = window._shareTextoAtual || '';
       if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => { mostrarToast('Copiado!'); fecharModal('modal-share'); }).catch(() => fallbackCopy(texto));
       else fallbackCopy(texto);
     }
 
     function copiarLista() {
-      if (colecao.length === 0) { mostrarToast('Nenhuma carta!'); return; }
+      if (colecao.length === 0) { mostrarToast('Sem cartas!'); return; }
       const ordenada = [...colecao].sort((a, b) => (a.pokemon || a.name || '').localeCompare(b.pokemon || b.name || ''));
       let texto = `📋 Minha Coleção\nUsuário: ${usuario}\nTotal: ${colecao.length}\n`;
-      const valorTotal = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
-      texto += `Valor: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n----\n\n`;
-      ordenada.forEach((c, i) => { texto += `${i + 1}. ${c.name} (${c.tcgId || c.localId || ''})${c.preco > 0 ? ' — R$ ' + parseFloat(c.preco).toFixed(2).replace('.', ',') : ''}\n`; });
+      const v = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
+      texto += `Valor: R$ ${v.toFixed(2)}\n----\n\n`;
+      ordenada.forEach((c, i) => { texto += `${i + 1}. ${c.name} (${c.tcgId || ''})\n`; });
       if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => mostrarToast('Copiado!')).catch(() => fallbackCopy(texto));
       else fallbackCopy(texto);
     }
@@ -1081,7 +1063,7 @@
       const ta = document.createElement('textarea');
       ta.value = texto; ta.style.position = 'fixed'; ta.style.left = '-9999px';
       document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); mostrarToast('Copiado!'); } catch (e) { mostrarToast('Erro.'); }
+      try { document.execCommand('copy'); mostrarToast('Copiado!'); } catch (e) {}
       document.body.removeChild(ta);
     }
 
@@ -1096,13 +1078,6 @@
       const pokemonUnicos = new Set(colecao.map(c => (c.pokemon || '').toLowerCase())).size;
       const valorTotal = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
       const dataInicio = perfil.criadoEm ? new Date(perfil.criadoEm).toLocaleDateString('pt-BR') : 'Hoje';
-      let favHtml = '';
-      if (perfil.favorito) {
-        const favId = perfil.favorito.id || perfil.favorito;
-        const favName = perfil.favorito.name || perfil.favorito;
-        const favSprite = modoShiny ? spriteNormal(favId, true) : spriteNormal(favId, false);
-        favHtml = `<div class="profile-fav"><div class="label">Pokémon favorito</div><img src="${favSprite}" onerror="this.style.display='none'"><div class="name">${favName}</div></div>`;
-      }
       const avatarSrc = perfil.foto || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#eee"/><circle cx="50" cy="40" r="18" fill="#ccc"/><ellipse cx="50" cy="75" rx="28" ry="20" fill="#ccc"/></svg>');
       document.getElementById('perfil-content').innerHTML = `
         <div class="profile-header">
@@ -1112,7 +1087,7 @@
             <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="mudarFoto(event)">
           </div>
           <div class="profile-name">${perfil.nome || usuario}</div>
-          <div class="profile-bio">${perfil.bio || 'Nenhuma bio ainda'}</div>
+          <div class="profile-bio">${perfil.bio || 'Sem bio'}</div>
           <div class="profile-since">Membro desde ${dataInicio}</div>
         </div>
         <div class="profile-stats">
@@ -1120,10 +1095,9 @@
           <div class="profile-stat"><div class="num">${pokemonUnicos}</div><div class="label">Pokémon</div></div>
           <div class="profile-stat"><div class="num">R$ ${valorTotal.toFixed(0)}</div><div class="label">Valor</div></div>
         </div>
-        ${favHtml}
         <div class="profile-edit-section">
-          <label>Nome</label><input type="text" id="edit-nome" value="${perfil.nome || ''}" maxlength="20">
-          <label>Bio</label><input type="text" id="edit-bio" value="${perfil.bio || ''}" maxlength="80">
+          <label>Nome</label><input type="text" id="edit-nome" value="${perfil.nome || ''}">
+          <label>Bio</label><input type="text" id="edit-bio" value="${perfil.bio || ''}">
           <label>Pokémon favorito</label><input type="text" id="edit-favorito" value="${perfil.favorito ? (perfil.favorito.name || '') : ''}">
           <button class="primary" onclick="salvarPerfil()" style="margin-top:16px;">Salvar</button>
         </div>`;
@@ -1131,8 +1105,7 @@
 
     function mudarFoto(event) {
       const file = event.target.files[0];
-      if (!file) return;
-      if (file.size > 1.5 * 1024 * 1024) { mostrarToast('Foto grande!'); return; }
+      if (!file || file.size > 1.5 * 1024 * 1024) { mostrarToast('Foto grande!'); return; }
       const reader = new FileReader();
       reader.onload = function(e) {
         perfil.foto = e.target.result;
@@ -1140,7 +1113,7 @@
         sincronizar();
         document.getElementById('profile-avatar-img').src = perfil.foto;
         atualizarHeaderUser();
-        mostrarToast('Foto atualizada!');
+        mostrarToast('Foto OK!');
       };
       reader.readAsDataURL(file);
     }
@@ -1155,26 +1128,20 @@
       if (favInput) {
         try {
           let favId = null, favName = favInput;
-          if (/^\d+$/.test(favInput)) {
-            favId = parseInt(favInput);
-            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${favId}`);
-            if (res.ok) { const data = await res.json(); favName = data.name; }
-          } else {
-            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${favInput}`);
-            if (res.ok) { const data = await res.json(); favId = data.id; favName = data.name; }
-          }
+          if (/^\d+$/.test(favInput)) { favId = parseInt(favInput); const r = await fetch(`https://pokeapi.co/api/v2/pokemon/${favId}`); if (r.ok) { favName = (await r.json()).name; } }
+          else { const r = await fetch(`https://pokeapi.co/api/v2/pokemon/${favInput}`); if (r.ok) { const d = await r.json(); favId = d.id; favName = d.name; } }
           if (favId) perfil.favorito = { id: favId, name: favName };
-          else { mostrarToast('Não encontrado.'); return; }
+          else { mostrarToast('Não achei.'); return; }
         } catch (e) { mostrarToast('Erro.'); return; }
       } else perfil.favorito = null;
       localStorage.setItem('pokedex_perfil', JSON.stringify(perfil));
       sincronizar();
       atualizarHeaderUser();
       renderizarPerfil();
-      mostrarToast('Perfil salvo! 🎉');
+      mostrarToast('Salvo! 🎉');
     }
 
-    // ===================== AMIGOS (Firebase) =====================
+    // ===== AMIGOS =====
     function abrirAmigos() {
       renderizarAmigos();
       document.getElementById('modal-amigos').classList.add('active');
@@ -1190,9 +1157,7 @@
     };
     let fbDb = null, meuId = null, meuCodigo = null, nuvemEstado = 'off', sincTimer = null;
 
-    function esc(s) {
-      return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 
     function gerarCodigo() {
       const letras = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -1215,11 +1180,8 @@
         sincronizar();
         iniciarHeartbeat();
         ouvirConvitesRecebidos();
-        console.log('✅ Firebase conectado. Código:', meuCodigo);
-      } catch (e) {
-        console.error('❌ Firebase:', e);
-        nuvemEstado = 'erro';
-      }
+        console.log('✅ Firebase OK. Código:', meuCodigo);
+      } catch (e) { console.error('❌', e); nuvemEstado = 'erro'; }
       if (document.getElementById('modal-amigos').classList.contains('active')) renderizarAmigos();
     }
 
@@ -1232,13 +1194,9 @@
           nome: (perfil && perfil.nome) || usuario,
           bio: (perfil && perfil.bio) || '',
           favorito: (perfil && perfil.favorito) || null,
-          cartas: colecao.map(c => ({
-            id: c.id || '', tcgId: c.tcgId || '', name: c.name || '',
-            localId: c.localId || '', image: c.image || '',
-            pokemon: c.pokemon || '', preco: parseFloat(c.preco) || 0
-          })),
+          cartas: colecao.map(c => ({ id: c.id || '', tcgId: c.tcgId || '', name: c.name || '', localId: c.localId || '', image: c.image || '', pokemon: c.pokemon || '', preco: parseFloat(c.preco) || 0 })),
           atualizado: new Date().toISOString()
-        }, { merge: true }).catch(e => console.error('Sync falhou:', e));
+        }, { merge: true }).catch(e => console.error(e));
       }, 800);
     }
 
@@ -1259,10 +1217,9 @@
         </div>`).join('');
       el.innerHTML = `
         <div class="total-value"><div class="label">Seu código</div><div class="value" style="letter-spacing:3px;">${esc(meuCodigo)}</div></div>
-        <button class="primary" onclick="copiarCodigo()">Copiar meu código</button>
-        ${amigos.length ? `<div class="friends-list" style="margin-top:16px;">${lista}</div>` : '<div class="empty-msg" style="padding:20px 10px;">Nenhum amigo ainda.</div>'}
+        <button class="primary" onclick="copiarCodigo()">Copiar</button>
+        ${amigos.length ? `<div style="margin-top:16px;">${lista}</div>` : '<div class="empty-msg" style="padding:20px 10px;">Nenhum amigo.</div>'}
         <div style="margin-top:20px; border-top:1px solid #eee; padding-top:16px;">
-          <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:8px;">Adicionar amigo</label>
           <input type="text" id="novo-amigo-codigo" placeholder="Ex: K7QM2X" maxlength="6" style="text-transform:uppercase;">
           <button class="primary" onclick="adicionarAmigo()">Adicionar</button>
         </div>`;
@@ -1276,18 +1233,18 @@
     async function adicionarAmigo() {
       const input = document.getElementById('novo-amigo-codigo');
       const codigo = (input ? input.value : '').trim().toUpperCase();
-      if (!codigo) { mostrarToast('Digite o código!'); return; }
-      if (codigo === meuCodigo) { mostrarToast('É o seu código 😄'); return; }
-      if (amigos.some(a => a.codigo === codigo)) { mostrarToast('Já está na lista!'); return; }
+      if (!codigo) { mostrarToast('Digite!'); return; }
+      if (codigo === meuCodigo) { mostrarToast('É seu 😄'); return; }
+      if (amigos.some(a => a.codigo === codigo)) { mostrarToast('Já tem!'); return; }
       try {
         const snap = await fbDb.collection('treinadores').where('codigo', '==', codigo).limit(1).get();
-        if (snap.empty) { mostrarToast('Não encontrado.'); return; }
+        if (snap.empty) { mostrarToast('Não achei.'); return; }
         const d = snap.docs[0];
-        amigos.push({ id: d.id, codigo, nome: d.data().nome || 'Treinador', data: new Date().toISOString() });
+        amigos.push({ id: d.id, codigo, nome: d.data().nome || 'Treinador' });
         localStorage.setItem('pokedex_amigos', JSON.stringify(amigos));
         renderizarAmigos();
-        mostrarToast(`${d.data().nome || 'Amigo'} adicionado!`);
-      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+        mostrarToast(`${d.data().nome} adicionado!`);
+      } catch (e) { mostrarToast('Erro.'); }
     }
 
     async function verColecaoAmigo(i) {
@@ -1295,35 +1252,27 @@
       if (!a || !a.id) return;
       try {
         const doc = await fbDb.collection('treinadores').doc(a.id).get();
-        if (!doc.exists) { mostrarToast('Sem coleção.'); return; }
+        if (!doc.exists) { mostrarToast('Vazia.'); return; }
         const t = doc.data();
         const cartas = Array.isArray(t.cartas) ? t.cartas : [];
-        const valor = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
-        document.getElementById('pokemon-modal-title').textContent = 'Coleção de ' + (t.nome || 'Treinador');
-        document.getElementById('pokemon-cards-list').innerHTML = cartas.length === 0
-          ? `<div class="empty-msg">Vazia.</div>`
-          : `<div class="total-value"><div class="label">${cartas.length} carta(s)</div><div class="value">R$ ${valor.toFixed(2).replace('.', ',')}</div></div>
-            <div class="cards-grid">
-              ${cartas.map(c => {
-                const img = /^https:\/\//.test(c.image || '') ? c.image : '';
-                const preco = parseFloat(c.preco) || 0;
-                return `<div class="owned-card"><img src="${esc(img)}/high.webp" data-img="${esc(img)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'"><div class="name">${esc(c.name)}</div><div class="set">${esc(c.tcgId)} • Nº ${esc(c.localId)}</div>${preco > 0 ? `<div class="price">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : ''}</div>`;
-              }).join('')}
-            </div>`;
+        const v = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
+        document.getElementById('pokemon-modal-title').textContent = 'Coleção de ' + t.nome;
+        document.getElementById('pokemon-cards-list').innerHTML = cartas.length === 0 ? '<div class="empty-msg">Vazia.</div>' : `
+          <div class="total-value"><div class="label">${cartas.length} cartas</div><div class="value">R$ ${v.toFixed(2).replace('.', ',')}</div></div>
+          <div class="cards-grid">${cartas.map(c => `<div class="owned-card"><img src="${esc(c.image)}/high.webp" data-img="${esc(c.image)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'"><div class="name">${esc(c.name)}</div><div class="set">${esc(c.tcgId)}</div></div>`).join('')}</div>`;
         document.getElementById('modal-pokemon').classList.add('active');
-      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+      } catch (e) { mostrarToast('Erro.'); }
     }
 
     function removerAmigo(index) {
-      const nome = amigos[index] ? amigos[index].nome : '';
-      if (!confirm(`Remover ${nome}?`)) return;
+      if (!confirm('Remover?')) return;
       amigos.splice(index, 1);
       localStorage.setItem('pokedex_amigos', JSON.stringify(amigos));
       renderizarAmigos();
       mostrarToast('Removido');
     }
 
-    // ===================== BATALHAS: PRESENÇA + CONVITES =====================
+    // ===== PRESENÇA + CONVITES =====
     function iniciarHeartbeat() {
       if (nuvemEstado !== 'ok') return;
       clearInterval(heartbeatTimer);
@@ -1333,19 +1282,11 @@
 
     function atualizarPresenca() {
       if (nuvemEstado !== 'ok' || !meuId) return;
-      fbDb.collection('treinadores').doc(meuId).set({
-        online: true,
-        ultimaVez: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true }).catch(e => console.error('Heartbeat:', e));
+      fbDb.collection('treinadores').doc(meuId).set({ online: true, ultimaVez: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => {});
     }
 
     window.addEventListener('beforeunload', () => {
-      if (nuvemEstado === 'ok' && meuId) {
-        fbDb.collection('treinadores').doc(meuId).set({
-          online: false,
-          ultimaVez: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
-      }
+      if (nuvemEstado === 'ok' && meuId) fbDb.collection('treinadores').doc(meuId).set({ online: false, ultimaVez: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
     });
 
     function amigoEstaOnline(dados) {
@@ -1359,7 +1300,7 @@
       document.getElementById('modal-batalhas').classList.add('active');
       const el = document.getElementById('batalhas-content');
       el.innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
-      if (nuvemEstado !== 'ok') { el.innerHTML = '<div class="empty-msg">Firebase não conectado.</div>'; return; }
+      if (nuvemEstado !== 'ok') { el.innerHTML = '<div class="empty-msg">Firebase off.</div>'; return; }
       if (amigos.length === 0) { el.innerHTML = '<div class="empty-msg">Adicione amigos primeiro.</div>'; return; }
       try {
         const resultados = await Promise.all(amigos.map(async a => {
@@ -1367,22 +1308,15 @@
           const doc = await fbDb.collection('treinadores').doc(a.id).get();
           return { ...a, dados: doc.exists ? doc.data() : null };
         }));
-        el.innerHTML = `
-          <p style="font-size:13px;color:#777;margin-bottom:12px;">Escolhe um amigo online:</p>
+        el.innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:12px;">Escolhe um online:</p>
           ${resultados.map((a, i) => {
             const online = amigoEstaOnline(a.dados);
-            return `
-              <div class="friend-item ${online ? 'desafio' : ''}">
-                <div>
-                  <div class="friend-name"><span class="friend-status ${online ? 'online' : ''}"></span>${esc(a.nome)}</div>
-                  <div class="friend-date">${online ? '🟢 Online' : '⚫ Offline'}</div>
-                </div>
-                ${online
-                  ? `<button onclick="desafiarAmigo(${i})" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;">⚔️ Desafiar</button>`
-                  : `<button disabled style="background:#ccc;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:not-allowed;">Offline</button>`}
-              </div>`;
+            return `<div class="friend-item">
+              <div><div class="friend-name"><span class="friend-status ${online ? 'online' : ''}"></span>${esc(a.nome)}</div><div class="friend-date">${online ? '🟢 Online' : '⚫ Offline'}</div></div>
+              ${online ? `<button onclick="desafiarAmigo(${i})" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;">⚔️ Desafiar</button>` : `<button disabled style="background:#ccc;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;">Offline</button>`}
+            </div>`;
           }).join('')}`;
-      } catch (e) { console.error(e); el.innerHTML = '<div class="empty-msg">Erro.</div>'; }
+      } catch (e) { el.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     async function desafiarAmigo(index) {
@@ -1390,27 +1324,23 @@
       if (!amigo || !amigo.id) return;
       try {
         const convite = {
-          de: meuId,
-          deNome: (perfil && perfil.nome) || usuario,
-          para: amigo.id,
-          paraNome: amigo.nome,
+          de: meuId, deNome: (perfil && perfil.nome) || usuario,
+          para: amigo.id, paraNome: amigo.nome,
           status: 'pendente',
           criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
           expiraEm: Date.now() + 120000
         };
         const ref = await fbDb.collection('convites').add(convite);
         conviteAtual = { id: ref.id, ...convite };
-        const el = document.getElementById('batalhas-content');
-        el.innerHTML = `
+        document.getElementById('batalhas-content').innerHTML = `
           <div class="aguardando-info">
             <div class="pulse"></div>
-            <p style="font-weight:700;font-size:16px;color:#222;margin-bottom:6px;">Convite enviado!</p>
+            <p style="font-weight:700;font-size:16px;margin-bottom:6px;">Convite enviado!</p>
             <p style="font-size:14px;">Aguardando <strong>${esc(amigo.nome)}</strong>...</p>
-            <p style="font-size:12px;color:#999;margin-top:14px;">Expira em 2 minutos</p>
             <button class="secondary" onclick="cancelarDesafio()" style="margin-top:20px;">Cancelar</button>
           </div>`;
         ouvirRespostaConvite(ref.id);
-      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+      } catch (e) { mostrarToast('Erro.'); }
     }
 
     function ouvirRespostaConvite(conviteId) {
@@ -1420,10 +1350,10 @@
         const d = doc.data();
         if (d.status === 'aceito') {
           if (listenerConvites) { listenerConvites(); listenerConvites = null; }
-          mostrarToast('🎉 Aceito! Iniciando batalha...');
+          mostrarToast('🎉 Aceito!');
           fecharModal('modal-batalhas');
+          // === PARTE B: iniciarBatalha está na PARTE B ===
           if (typeof iniciarBatalha === 'function') iniciarBatalha(conviteId, d);
-          else mostrarToast('(PARTE 2 vem aí)');
         } else if (d.status === 'recusado') {
           if (listenerConvites) { listenerConvites(); listenerConvites = null; }
           mostrarToast('😢 Recusado');
@@ -1433,32 +1363,24 @@
     }
 
     async function cancelarDesafio() {
-      if (conviteAtual && conviteAtual.id) {
-        try { await fbDb.collection('convites').doc(conviteAtual.id).delete(); } catch (e) {}
-        if (listenerConvites) { listenerConvites(); listenerConvites = null; }
-      }
+      if (conviteAtual && conviteAtual.id) { try { await fbDb.collection('convites').doc(conviteAtual.id).delete(); } catch (e) {} if (listenerConvites) { listenerConvites(); listenerConvites = null; } }
       conviteAtual = null;
       abrirBatalhas();
     }
 
     function ouvirConvitesRecebidos() {
       if (nuvemEstado !== 'ok' || !meuId) return;
-      fbDb.collection('convites')
-        .where('para', '==', meuId)
-        .where('status', '==', 'pendente')
-        .onSnapshot(snap => {
-          const novos = [];
-          snap.forEach(doc => {
-            const d = doc.data();
-            if (d.expiraEm && Date.now() > d.expiraEm) { doc.ref.delete().catch(() => {}); return; }
-            novos.push({ id: doc.id, ...d });
-          });
-          convitesPendentes = novos;
-          atualizarSino();
-          if (novos.length > 0 && !document.getElementById('popup-convite').classList.contains('active')) {
-            mostrarPopupConvite(novos[0]);
-          }
-        }, e => console.error('Listener:', e));
+      fbDb.collection('convites').where('para', '==', meuId).where('status', '==', 'pendente').onSnapshot(snap => {
+        const novos = [];
+        snap.forEach(doc => {
+          const d = doc.data();
+          if (d.expiraEm && Date.now() > d.expiraEm) { doc.ref.delete().catch(() => {}); return; }
+          novos.push({ id: doc.id, ...d });
+        });
+        convitesPendentes = novos;
+        atualizarSino();
+        if (novos.length > 0 && !document.getElementById('popup-convite').classList.contains('active')) mostrarPopupConvite(novos[0]);
+      }, e => console.error(e));
     }
 
     function atualizarSino() {
@@ -1470,16 +1392,12 @@
 
     function mostrarPopupConvite(convite) {
       conviteAtual = convite;
-      document.getElementById('popup-quem').innerHTML = `<strong>${esc(convite.deNome)}</strong> te desafiou pra uma batalha!`;
+      document.getElementById('popup-quem').innerHTML = `<strong>${esc(convite.deNome)}</strong> te desafiou!`;
       document.getElementById('popup-convite').classList.add('active');
       popupSegundos = 120;
       clearInterval(popupTimer);
       atualizarPopupTimer();
-      popupTimer = setInterval(() => {
-        popupSegundos--;
-        atualizarPopupTimer();
-        if (popupSegundos <= 0) { clearInterval(popupTimer); recusarConvite(true); }
-      }, 1000);
+      popupTimer = setInterval(() => { popupSegundos--; atualizarPopupTimer(); if (popupSegundos <= 0) { clearInterval(popupTimer); recusarConvite(true); } }, 1000);
     }
 
     function atualizarPopupTimer() {
@@ -1495,17 +1413,17 @@
       try {
         await fbDb.collection('convites').doc(conviteAtual.id).update({ status: 'aceito' });
         document.getElementById('popup-convite').classList.remove('active');
-        mostrarToast('🎉 Você aceitou!');
+        mostrarToast('🎉 Aceitou!');
+        // === PARTE B: iniciarBatalha está na PARTE B ===
         if (typeof iniciarBatalha === 'function') iniciarBatalha(conviteAtual.id, { ...conviteAtual, status: 'aceito' });
-        else mostrarToast('(PARTE 2 vem aí)');
-      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+      } catch (e) { mostrarToast('Erro.'); }
       conviteAtual = null;
     }
 
     async function recusarConvite(porTimeout = false) {
       if (!conviteAtual) return;
       clearInterval(popupTimer);
-      try { await fbDb.collection('convites').doc(conviteAtual.id).update({ status: 'recusado' }); } catch (e) { console.error(e); }
+      try { await fbDb.collection('convites').doc(conviteAtual.id).update({ status: 'recusado' }); } catch (e) {}
       document.getElementById('popup-convite').classList.remove('active');
       if (porTimeout) mostrarToast('⏰ Expirou');
       conviteAtual = null;
@@ -1514,9 +1432,9 @@
     function abrirNotificacoes() {
       const el = document.getElementById('notificacoes-content');
       document.getElementById('modal-notificacoes').classList.add('active');
-      if (convitesPendentes.length === 0) { el.innerHTML = '<div class="empty-msg">Nenhuma notificação.</div>'; return; }
+      if (convitesPendentes.length === 0) { el.innerHTML = '<div class="empty-msg">Nenhuma.</div>'; return; }
       el.innerHTML = convitesPendentes.map(c => `
-        <div class="friend-item desafio">
+        <div class="friend-item">
           <div><div class="friend-name">⚔️ ${esc(c.deNome)}</div><div class="friend-date">Te desafiou</div></div>
           <button onclick="verConvite('${c.id}')" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;">Ver</button>
         </div>`).join('');
@@ -1539,17 +1457,686 @@
     }
 
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) overlay.classList.remove('active');
-      });
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('active'); });
     });
 
-    (function carregarCacheTipos() {
+    (function carregarCacheTipos() { try { const c = localStorage.getItem('pokedex_tipos_cache'); if (c) tiposCache = JSON.parse(c); } catch (e) {} })();
+
+        // =====================================================================
+    // === BATALHA: TELA, TURNOS, ATAQUES, CONDIÇÕES ===
+    // =====================================================================
+    let batalhaAtual = null;
+    let listenerBatalha = null;
+    let batalhaTimer = null;
+    let segundosTurno = 300;
+    let timeSelecionado = [];
+    let batalhaSaindo = false;
+
+    // ===== INICIAR BATALHA (chamado pelo convite aceito) =====
+    async function iniciarBatalha(conviteId, convite) {
       try {
-        const cache = localStorage.getItem('pokedex_tipos_cache');
-        if (cache) tiposCache = JSON.parse(cache);
-      } catch (e) {}
-    })();
+        const souDesafiante = convite.de === meuId;
+        const idAmigo = souDesafiante ? convite.para : convite.de;
+        const nomeAmigo = souDesafiante ? convite.paraNome : convite.deNome;
+
+        // Cria batalha no Firestore
+        const ref = await fbDb.collection('batalhas').add({
+          jogadorA: convite.de,
+          jogadorANome: convite.deNome,
+          jogadorB: convite.para,
+          jogadorBNome: convite.paraNome,
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+          status: 'escolhendo-time',
+          timeA: null,
+          timeB: null,
+          estadoA: null,
+          estadoB: null,
+          turno: null,
+          log: [{ tipo: 'sistema', txt: '⚔️ Batalha criada. Escolham seus times!' }],
+          vencedor: null,
+          conviteId: conviteId
+        });
+
+        batalhaAtual = {
+          id: ref.id,
+          _souA: souDesafiante,
+          _idAmigo: idAmigo,
+          _nomeAmigo: nomeAmigo,
+          status: 'escolhendo-time'
+        };
+
+        document.getElementById('tela-batalha').classList.add('active');
+        renderizarEscolhaTime();
+        ouvirBatalha(ref.id);
+      } catch (e) {
+        console.error(e);
+        mostrarToast('Erro ao iniciar batalha.');
+      }
+    }
+
+    // ===== LISTENER DA BATALHA =====
+    function ouvirBatalha(batalhaId) {
+      if (listenerBatalha) listenerBatalha();
+      listenerBatalha = fbDb.collection('batalhas').doc(batalhaId).onSnapshot(doc => {
+        if (!doc.exists) return;
+        const d = doc.data();
+        batalhaAtual = { ...batalhaAtual, ...d, id: batalhaId };
+
+        if (d.status === 'escolhendo-time') {
+          const jaEscolhi = (batalhaAtual._souA && d.timeA) || (!batalhaAtual._souA && d.timeB);
+          const tela = document.getElementById('batalha-corpo');
+          if (jaEscolhi) {
+            document.getElementById('batalha-turno').textContent = 'Escolhendo times';
+            document.getElementById('batalha-timer').textContent = '—';
+            tela.innerHTML = `
+              <div class="aguardando-info" style="padding-top:80px;">
+                <div class="pulse"></div>
+                <p style="font-weight:700;font-size:16px;color:white;margin-bottom:6px;">Time confirmado!</p>
+                <p style="font-size:14px;color:#aaa;">Aguardando <strong>${esc(batalhaAtual._nomeAmigo)}</strong> escolher o time dele...</p>
+              </div>`;
+          } else if (!tela.querySelector('.escolha-time')) {
+            renderizarEscolhaTime();
+          }
+        } else if (d.status === 'em-andamento') {
+          renderizarBatalha();
+        } else if (d.status === 'finalizada') {
+          mostrarResultadoBatalha();
+        }
+      }, e => console.error('Listener:', e));
+    }
+
+    // ===== ESCOLHA DE TIME =====
+    function renderizarEscolhaTime() {
+      timeSelecionado = [];
+      document.getElementById('batalha-turno').textContent = 'Escolha seu time';
+      document.getElementById('batalha-timer').textContent = '—';
+      document.getElementById('batalha-timer').classList.remove('urgente');
+
+      const container = document.getElementById('batalha-corpo');
+
+      if (colecao.length === 0) {
+        container.innerHTML = `
+          <div class="escolha-time" style="text-align:center;padding-top:60px;">
+            <h2>Sem cartas</h2>
+            <p>Você não tem cartas pra batalhar.</p>
+            <button class="btn-cancelar-time" onclick="sairBatalha()" style="margin-top:20px;padding:14px 24px;border-radius:12px;border:none;font-weight:800;cursor:pointer;">Voltar</button>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="escolha-time">
+          <h2>Escolha seu time <span class="escolha-contador" id="contador-time">0/5</span></h2>
+          <p>Escolha de 1 a 5 cartas. A <strong>1ª escolhida será a ativa</strong>.</p>
+          <div class="escolha-grid" id="escolha-grid">
+            ${colecao.map((c, i) => `
+              <div class="escolha-card" data-idx="${i}" onclick="toggleCartaTime(${i})">
+                <img src="${c.image}/low.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}">
+                <div class="nome-c">${c.name}</div>
+                <div class="num-c">Nº ${c.localId || ''}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="escolha-acoes">
+          <button class="btn-cancelar-time" onclick="sairBatalha()">Cancelar</button>
+          <button class="btn-confirmar-time" id="btn-confirmar-time" onclick="confirmarTime()" disabled>Confirmar time</button>
+        </div>`;
+    }
+
+    function toggleCartaTime(idx) {
+      const el = document.querySelector(`.escolha-card[data-idx="${idx}"]`);
+      if (!el) return;
+      const pos = timeSelecionado.indexOf(idx);
+      if (pos >= 0) { timeSelecionado.splice(pos, 1); el.classList.remove('selecionada'); }
+      else {
+        if (timeSelecionado.length >= 5) { mostrarToast('Máximo 5 cartas'); return; }
+        timeSelecionado.push(idx);
+        el.classList.add('selecionada');
+      }
+      document.getElementById('contador-time').textContent = `${timeSelecionado.length}/5`;
+      document.getElementById('btn-confirmar-time').disabled = timeSelecionado.length === 0;
+    }
+
+    async function confirmarTime() {
+      if (timeSelecionado.length === 0 || !batalhaAtual) return;
+      const cartasTime = timeSelecionado.map(i => colecao[i]);
+      document.getElementById('batalha-corpo').innerHTML = '<div class="loading" style="color:white;padding-top:80px;"><div class="spinner"></div>Carregando dados das cartas...</div>';
+
+      try {
+        const cartasCompletas = await Promise.all(cartasTime.map(async c => {
+          try {
+            const url = c.tcgId ? `https://api.tcgdex.net/v2/pt-br/cards/${c.tcgId}` : `https://api.tcgdex.net/v2/pt-br/cards?localId=${c.localId}&pagination:itemsPerPage=1`;
+            const res = await fetch(url);
+            let dados = await res.json();
+            if (Array.isArray(dados)) dados = dados[0];
+            const hp = parseInt(dados.hp) || 100;
+            return {
+              tcgId: c.tcgId,
+              nome: dados.name || c.name,
+              hp: hp,
+              hpMax: hp,
+              tipos: dados.types || [],
+              ataques: (dados.attacks || []).map(a => ({
+                nome: a.name,
+                dano: parseInt(a.damage) || 0,
+                danoStr: a.damage || '',
+                custo: a.cost || [],
+                efeito: a.effect || ''
+              })),
+              fraquezas: dados.weaknesses || [],
+              resistencias: dados.resistances || [],
+              image: c.image,
+              condicoes: {},
+              defesaAtiva: false
+            };
+          } catch (e) {
+            return { tcgId: c.tcgId, nome: c.name, hp: 100, hpMax: 100, tipos: [], ataques: [], fraquezas: [], resistencias: [], image: c.image, condicoes: {}, defesaAtiva: false };
+          }
+        }));
+
+        const campoTime = batalhaAtual._souA ? 'timeA' : 'timeB';
+        const campoEstado = batalhaAtual._souA ? 'estadoA' : 'estadoB';
+
+        await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+          [campoTime]: cartasCompletas.map(c => ({ nome: c.nome, image: c.image })),
+          [campoEstado]: {
+            cartas: cartasCompletas,
+            ativa: 0,
+            acoes: { recuar: 5, curar: {}, defender: false }
+          }
+        });
+
+        // Verifica se os dois já confirmaram
+        const doc = await fbDb.collection('batalhas').doc(batalhaAtual.id).get();
+        const d = doc.data();
+        if (d.timeA && d.timeB) {
+          await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+            status: 'em-andamento',
+            turno: 'A',
+            turnoIniciadoEm: Date.now(),
+            log: [{ tipo: 'sistema', txt: `⚔️ Batalha começou! Vez de ${d.jogadorANome}` }]
+          });
+        }
+      } catch (e) {
+        console.error(e);
+        mostrarToast('Erro ao confirmar time.');
+      }
+    }
+
+    // ===== RENDERIZAR BATALHA =====
+    function renderizarBatalha() {
+      if (!batalhaAtual || batalhaAtual.status !== 'em-andamento') return;
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const estadoAmigo = souA ? batalhaAtual.estadoB : batalhaAtual.estadoA;
+      if (!estadoMeu || !estadoAmigo) return;
+
+      const turno = batalhaAtual.turno;
+      const minhaVez = (turno === 'A' && souA) || (turno === 'B' && !souA);
+
+      // Inicia timer do turno
+      const tempoRestante = Math.max(0, Math.floor((300000 - (Date.now() - (batalhaAtual.turnoIniciadoEm || Date.now()))) / 1000));
+      iniciarTimerTurno(tempoRestante);
+
+      document.getElementById('batalha-turno').textContent = minhaVez ? 'Sua vez!' : 'Vez do ' + batalhaAtual._nomeAmigo;
+      document.getElementById('batalha-turno').className = 'batalha-turno' + (minhaVez ? '' : ' amigo');
+
+      const container = document.getElementById('batalha-corpo');
+      container.innerHTML = `
+        <div class="time-lado">
+          <div class="time-titulo amigo">👤 ${esc(batalhaAtual._nomeAmigo)}</div>
+          <div class="time-cartas">
+            ${estadoAmigo.cartas.map((c, i) => renderizarCartaBatalha(c, i, estadoAmigo.ativa, minhaVez && !batalhaAtual._alvoEscolhido, true)).join('')}
+          </div>
+        </div>
+
+        <div class="batalha-log">
+          ${(batalhaAtual.log || []).slice(-15).map(l => `<p class="log-${l.tipo}">${esc(l.txt)}</p>`).join('')}
+        </div>
+
+        <div class="time-lado">
+          <div class="time-titulo">👤 Você</div>
+          <div class="time-cartas">
+            ${estadoMeu.cartas.map((c, i) => renderizarCartaBatalha(c, i, estadoMeu.ativa, false, false)).join('')}
+          </div>
+        </div>
+      `;
+
+      if (minhaVez) renderizarAcoes(estadoMeu);
+      else {
+        const acoes = document.querySelector('.batalha-acoes');
+        if (acoes) acoes.remove();
+      }
+    }
+
+    function renderizarCartaBatalha(carta, idx, ativa, atacavel, ehAmigo) {
+      const pct = Math.max(0, (carta.hp / carta.hpMax) * 100);
+      const classe = pct > 50 ? '' : pct > 25 ? 'medio' : 'baixo';
+      const isAtiva = idx === ativa;
+      const nocauteada = carta.hp <= 0;
+      const podeAtacar = atacavel && ehAmigo && !nocauteada;
+
+      const condicoes = Object.keys(carta.condicoes || {}).filter(k => carta.condicoes[k]);
+      const condTags = condicoes.map(c => {
+        const emoji = { envenenado: '☠️', queimado: '🔥', adormecido: '💤', paralisado: '⚡' }[c] || '';
+        return `<span class="cond-tag ${c}">${emoji} ${c}</span>`;
+      }).join('');
+
+      const defesaTag = carta.defesaAtiva ? `<span class="cond-tag" style="background:#eab308;color:#000;">🛡️</span>` : '';
+
+      return `
+        <div class="carta-batalha ${isAtiva ? 'ativa' : ''} ${nocauteada ? 'nocauteada' : ''} ${podeAtacar ? 'atacavel' : ''}"
+             ${podeAtacar ? `onclick="escolherAlvo(${idx})"` : ''}>
+          <img src="${carta.image}/low.webp" onerror="this.src='${carta.image}.webp'">
+          <div class="carta-nome-b">${esc(carta.nome)}</div>
+          <div class="hp-bar">
+            <div class="hp-fill ${classe}" style="width:${pct}%"></div>
+            <div class="hp-txt">${carta.hp}/${carta.hpMax}</div>
+          </div>
+          <div class="condicoes">${condTags}${defesaTag}</div>
+        </div>`;
+    }
+
+    function renderizarAcoes(estadoMeu) {
+      const existente = document.querySelector('.batalha-acoes');
+      if (existente) existente.remove();
+
+      const ativa = estadoMeu.cartas[estadoMeu.ativa];
+      if (!ativa || ativa.hp <= 0) return;
+
+      const acoes = estadoMeu.acoes || { recuar: 5, curar: {}, defender: false };
+
+      const div = document.createElement('div');
+      div.className = 'batalha-acoes';
+      div.innerHTML = `
+        <div class="acoes-titulo">Carta ativa: ${esc(ativa.nome)} • HP ${ativa.hp}/${ativa.hpMax}</div>
+        <div class="acoes-grid">
+          <button class="acao-btn atacar" onclick="acaoAtacar()"><span class="emoji">⚔️</span>Atacar</button>
+          <button class="acao-btn recuar" onclick="acaoRecuar()" ${acoes.recuar <= 0 ? 'disabled' : ''}><span class="emoji">🔄</span>Recuar (${acoes.recuar})</button>
+          <button class="acao-btn curar" onclick="acaoCurar()" ${(acoes.curar[estadoMeu.ativa]) ? 'disabled' : ''}><span class="emoji">💊</span>Curar</button>
+          <button class="acao-btn defender" onclick="acaoDefender()" ${ativa.defesaAtiva ? 'disabled' : ''}><span class="emoji">🛡️</span>Defender</button>
+        </div>
+      `;
+      document.getElementById('tela-batalha').appendChild(div);
+    }
+
+    // ===== TIMER DO TURNO =====
+    function iniciarTimerTurno(segundos) {
+      clearInterval(batalhaTimer);
+      segundosTurno = segundos;
+      atualizarTimerTurno();
+      batalhaTimer = setInterval(() => {
+        segundosTurno--;
+        atualizarTimerTurno();
+        if (segundosTurno <= 0) {
+          clearInterval(batalhaTimer);
+          if (!batalhaSaindo) timeoutTurno();
+        }
+      }, 1000);
+    }
+
+    function atualizarTimerTurno() {
+      const min = Math.floor(segundosTurno / 60);
+      const seg = segundosTurno % 60;
+      const el = document.getElementById('batalha-timer');
+      if (!el) return;
+      el.textContent = `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
+      el.classList.toggle('urgente', segundosTurno <= 30);
+    }
+
+    async function timeoutTurno() {
+      if (!batalhaAtual) return;
+      // Quem não jogou no tempo perde
+      const souA = batalhaAtual._souA;
+      const vezDeA = batalhaAtual.turno === 'A';
+      const euPerdi = (vezDeA && souA) || (!vezDeA && !souA);
+      await finalizarBatalha(euPerdi ? 'perdedor-timeout' : 'vencedor-timeout');
+    }
+
+    // ===== AÇÕES DO TURNO =====
+    async function acaoAtacar() {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const estadoAmigo = souA ? batalhaAtual.estadoB : batalhaAtual.estadoA;
+      const ativa = estadoMeu.cartas[estadoMeu.ativa];
+
+      if (!ativa.ataques || ativa.ataques.length === 0) {
+        mostrarToast('Esta carta não tem ataques.');
+        return;
+      }
+
+      // Renderiza lista de ataques
+      const acoes = document.querySelector('.batalha-acoes');
+      if (!acoes) return;
+      acoes.innerHTML = `
+        <div class="acoes-titulo">Escolha um ataque de ${esc(ativa.nome)}</div>
+        <div class="ataques-lista">
+          ${ativa.ataques.map((a, i) => `
+            <button class="ataque-btn" onclick="usarAtaque(${i})">
+              <span class="nome-atk">${esc(a.nome)}</span>
+              <span class="dano-atk">${a.danoStr || a.dano || '—'}</span>
+            </button>
+          `).join('')}
+        </div>
+        <button class="secondary" onclick="cancelarAtaque()" style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Voltar</button>
+      `;
+    }
+
+    function cancelarAtaque() {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      renderizarAcoes(estadoMeu);
+    }
+
+    let ataqueEscolhido = null;
+
+    function usarAtaque(idx) {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const ativa = estadoMeu.cartas[estadoMeu.ativa];
+      ataqueEscolhido = ativa.ataques[idx];
+
+      // Agora precisa escolher o alvo
+      mostrarToast('Agora escolha o alvo!');
+      batalhaAtual._alvoEscolhido = false;
+      renderizarBatalha();
+      // Mostra aviso
+      const acoes = document.querySelector('.batalha-acoes');
+      if (acoes) {
+        acoes.innerHTML = `
+          <div class="acoes-titulo" style="color:#fbbf24;">🎯 Toque numa carta do oponente pra atacar!</div>
+          <button class="secondary" onclick="cancelarAtaque()" style="width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Cancelar</button>
+        `;
+      }
+    }
+
+    async function escolherAlvo(idx) {
+      if (!ataqueEscolhido) { mostrarToast('Escolha um ataque primeiro.'); return; }
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const estadoAmigo = souA ? batalhaAtual.estadoB : batalhaAtual.estadoA;
+      const ativa = estadoMeu.cartas[estadoMeu.ativa];
+      const alvo = estadoAmigo.cartas[idx];
+
+      // Calcula dano
+      const danoFinal = calcularDano(ativa, ataqueEscolhido, alvo);
+
+      // Aplica dano
+      estadoAmigo.cartas[idx].hp = Math.max(0, alvo.hp - danoFinal);
+
+      // Aplica defesa ativa (reduz)
+      if (alvo.defesaAtiva) {
+        estadoAmigo.cartas[idx].defesaAtiva = false;
+      }
+
+      // Aplica efeito do ataque (condições)
+      const efeito = (ataqueEscolhido.efeito || '').toLowerCase();
+      if (efeito.includes('envenenad') || efeito.includes('poison')) estadoAmigo.cartas[idx].condicoes.envenenado = true;
+      if (efeito.includes('queimad') || efeito.includes('burn')) estadoAmigo.cartas[idx].condicoes.queimado = true;
+      if (efeito.includes('adormecid') || efeito.includes('asleep')) estadoAmigo.cartas[idx].condicoes.adormecido = true;
+      if (efeito.includes('paralisad') || efeito.includes('paralyz')) estadoAmigo.cartas[idx].condicoes.paralisado = true;
+
+      // Log
+      const logAtual = batalhaAtual.log || [];
+      logAtual.push({
+        tipo: 'dano',
+        txt: `${ativa.nome} usou ${ataqueEscolhido.nome} em ${alvo.nome}: ${danoFinal} de dano!`
+      });
+
+      // Verifica se o alvo foi nocauteado
+      if (estadoAmigo.cartas[idx].hp <= 0) {
+        logAtual.push({ tipo: 'destaque', txt: `💀 ${alvo.nome} foi nocauteado!` });
+        // Verifica se o amigo ainda tem cartas vivas
+        const temVivas = estadoAmigo.cartas.some(c => c.hp > 0);
+        if (!temVivas) {
+          await finalizarBatalha('vitoria');
+          return;
+        }
+        // Troca automática pra próxima viva
+        const proxIdx = estadoAmigo.cartas.findIndex(c => c.hp > 0);
+        if (proxIdx >= 0) estadoAmigo.ativa = proxIdx;
+      }
+
+      // Salva estado e passa o turno
+      const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
+      const campoEstadoAmigo = souA ? 'estadoB' : 'estadoA';
+
+      ataqueEscolhido = null;
+      batalhaAtual._alvoEscolhido = true;
+
+      // Aplica condições especiais no INÍCIO do próximo turno do amigo (fica salvo)
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+        [campoEstadoMeu]: estadoMeu,
+        [campoEstadoAmigo]: estadoAmigo,
+        turno: souA ? 'B' : 'A',
+        turnoIniciadoEm: Date.now(),
+        log: logAtual
+      });
+    }
+
+    function calcularDano(atacante, ataque, defensor) {
+      let dano = ataque.dano || 0;
+      // Se não tem dano, usa 0 (efeito)
+      // Aplica Fraqueza: dobra
+      const tiposAtaque = (ataque.custo || []).concat(atacante.tipos || []);
+      const tipoPrincipal = (atacante.tipos && atacante.tipos[0]) || '';
+      if (defensor.fraquezas) {
+        for (const f of defensor.fraquezas) {
+          if (f.type && tipoPrincipal && f.type.toLowerCase() === tipoPrincipal.toLowerCase()) {
+            const valor = f.value || '×2';
+            if (valor.includes('×2') || valor.includes('x2')) dano *= 2;
+            break;
+          }
+        }
+      }
+      // Resistência: -30
+      if (defensor.resistencias) {
+        for (const r of defensor.resistencias) {
+          if (r.type && tipoPrincipal && r.type.toLowerCase() === tipoPrincipal.toLowerCase()) {
+            dano -= 30;
+            break;
+          }
+        }
+      }
+      // Defesa: reduz 1/3
+      if (defensor.defesaAtiva) {
+        dano = Math.floor(dano * (2/3));
+      }
+      return Math.max(0, dano);
+    }
+
+    // ===== AÇÃO: RECUAR =====
+    async function acaoRecuar() {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const acoes = estadoMeu.acoes || {};
+      if ((acoes.recuar || 0) <= 0) { mostrarToast('Sem recuos!'); return; }
+
+      // Lista cartas vivas pra escolher
+      const vivas = estadoMeu.cartas.map((c, i) => ({ c, i })).filter(x => x.c.hp > 0 && x.i !== estadoMeu.ativa);
+      if (vivas.length === 0) { mostrarToast('Só tem uma carta viva.'); return; }
+
+      const acoesEl = document.querySelector('.batalha-acoes');
+      acoesEl.innerHTML = `
+        <div class="acoes-titulo">Escolha a carta pra entrar</div>
+        <div class="ataques-lista">
+          ${vivas.map(x => `<button class="ataque-btn" onclick="confirmarRecuar(${x.i})"><span class="nome-atk">${esc(x.c.nome)}</span><span class="dano-atk">${x.c.hp}/${x.c.hpMax}</span></button>`).join('')}
+        </div>
+        <button class="secondary" onclick="cancelarAtaque()" style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.15);color:white;">Voltar</button>
+      `;
+    }
+
+    async function confirmarRecuar(novoIdx) {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
+      const campoEstadoAmigo = souA ? 'estadoB' : 'estadoA';
+
+      estadoMeu.acoes.recuar = (estadoMeu.acoes.recuar || 0) - 1;
+      // Limpa condições da carta que saiu
+      estadoMeu.cartas[estadoMeu.ativa].condicoes = {};
+      estadoMeu.ativa = novoIdx;
+
+      const logAtual = batalhaAtual.log || [];
+      logAtual.push({ tipo: 'sistema', txt: `${usuario} recuou. ${estadoMeu.cartas[novoIdx].nome} entrou em campo!` });
+
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+        [campoEstadoMeu]: estadoMeu,
+        turno: souA ? 'B' : 'A',
+        turnoIniciadoEm: Date.now(),
+        log: logAtual
+      });
+    }
+
+    // ===== AÇÃO: CURAR =====
+    async function acaoCurar() {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const acoes = estadoMeu.acoes || {};
+      acoes.curar = acoes.curar || {};
+      if (acoes.curar[estadoMeu.ativa]) { mostrarToast('Já curou essa carta.'); return; }
+
+      const ativa = estadoMeu.cartas[estadoMeu.ativa];
+      ativa.hp = Math.min(ativa.hpMax, ativa.hp + 20);
+      acoes.curar[estadoMeu.ativa] = true;
+      estadoMeu.acoes = acoes;
+
+      const logAtual = batalhaAtual.log || [];
+      logAtual.push({ tipo: 'cura', txt: `💊 ${usuario} curou ${ativa.nome} (+20 HP)` });
+
+      const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+        [campoEstadoMeu]: estadoMeu,
+        turno: souA ? 'B' : 'A',
+        turnoIniciadoEm: Date.now(),
+        log: logAtual
+      });
+    }
+
+    // ===== AÇÃO: DEFENDER =====
+    async function acaoDefender() {
+      const souA = batalhaAtual._souA;
+      const estadoMeu = souA ? batalhaAtual.estadoA : batalhaAtual.estadoB;
+      const ativa = estadoMeu.cartas[estadoMeu.ativa];
+      ativa.defesaAtiva = true;
+
+      const logAtual = batalhaAtual.log || [];
+      logAtual.push({ tipo: 'sistema', txt: `🛡️ ${usuario} defendeu! Próximo dano reduzido em 1/3.` });
+
+      const campoEstadoMeu = souA ? 'estadoA' : 'estadoB';
+      await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+        [campoEstadoMeu]: estadoMeu,
+        turno: souA ? 'B' : 'A',
+        turnoIniciadoEm: Date.now(),
+        log: logAtual
+      });
+    }
+
+    // ===== FINALIZAR BATALHA =====
+    async function finalizarBatalha(motivo) {
+      if (!batalhaAtual) return;
+      batalhaSaindo = true;
+      clearInterval(batalhaTimer);
+
+      const souA = batalhaAtual._souA;
+      const euSou = souA ? 'A' : 'B';
+      let vencedor = null;
+      let texto = '';
+
+      if (motivo === 'vitoria') {
+        vencedor = euSou;
+        texto = `${usuario} venceu!`;
+      } else if (motivo === 'perdedor-timeout') {
+        vencedor = souA ? 'B' : 'A';
+        texto = `${usuario} perdeu por tempo`;
+      } else if (motivo === 'vencedor-timeout') {
+        vencedor = euSou;
+        texto = `${usuario} venceu (oponente demorou)`;
+      }
+
+      const logAtual = batalhaAtual.log || [];
+      logAtual.push({ tipo: 'sistema', txt: `🏆 ${texto}` });
+
+      try {
+        await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
+          status: 'finalizada',
+          vencedor: vencedor,
+          log: logAtual,
+          finalizadaEm: Date.now()
+        });
+
+        // Registra vitória no perfil do vencedor (Firestore)
+        const idVencedor = vencedor === 'A' ? batalhaAtual.jogadorA : batalhaAtual.jogadorB;
+        const docV = await fbDb.collection('treinadores').doc(idVencedor).get();
+        if (docV.exists) {
+          const d = docV.data();
+          const vitorias = (d.vitorias || 0) + 1;
+          await fbDb.collection('treinadores').doc(idVencedor).update({ vitorias });
+        } else {
+          await fbDb.collection('treinadores').doc(idVencedor).set({ vitorias: 1 }, { merge: true });
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    // ===== RESULTADO =====
+    function mostrarResultadoBatalha() {
+      clearInterval(batalhaTimer);
+      if (!batalhaAtual) return;
+
+      const souA = batalhaAtual._souA;
+      const euSou = souA ? 'A' : 'B';
+      const venci = batalhaAtual.vencedor === euSou;
+      const empate = !batalhaAtual.vencedor;
+
+      const container = document.getElementById('batalha-corpo');
+      const classe = empate ? 'empate' : (venci ? 'vitoria' : 'derrota');
+      const emoji = empate ? '🤝' : (venci ? '🏆' : '💀');
+      const titulo = empate ? 'Empate!' : (venci ? 'Você venceu!' : 'Você perdeu');
+
+      document.getElementById('batalha-turno').textContent = 'Finalizada';
+      document.getElementById('batalha-timer').textContent = '—';
+      document.getElementById('batalha-timer').classList.remove('urgente');
+
+      const acoesExist = document.querySelector('.batalha-acoes');
+      if (acoesExist) acoesExist.remove();
+
+      container.innerHTML = `
+        <div class="batalha-resultado ${classe}">
+          <div class="emoji-grande">${emoji}</div>
+          <h2>${titulo}</h2>
+          <p>${venci ? 'Vitória registrada! 🎉' : 'Boa sorte na próxima!'}</p>
+          <button onclick="sairBatalha()">Voltar</button>
+        </div>
+      `;
+    }
+
+    // ===== SAIR DA BATALHA =====
+    async function sairBatalha() {
+      batalhaSaindo = true;
+      clearInterval(batalhaTimer);
+      if (listenerBatalha) { listenerBatalha(); listenerBatalha = null; }
+
+      // Se a batalha ainda tá rolando, marca como derrota por desistência
+      if (batalhaAtual && batalhaAtual.status === 'em-andamento') {
+        await finalizarBatalha('perdedor-timeout');
+      }
+
+      document.getElementById('tela-batalha').classList.remove('active');
+      document.getElementById('batalha-corpo').innerHTML = '';
+      batalhaAtual = null;
+      ataqueEscolhido = null;
+      batalhaSaindo = false;
+    }
+
+    // Aplica condições especiais no início de cada turno
+    // Chamado quando o turno muda
+    function aplicarCondicoesTurno() {
+      // Vai ser chamado indiretamente pelo listener quando o turno muda
+      // Aplica dano de envenenado/queimado na carta ativa do jogador que vai jogar agora
+    }
+
+    // =====================================================================
 
     iniciarNuvem();
   </script>
