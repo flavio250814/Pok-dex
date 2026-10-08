@@ -53,6 +53,8 @@
     body.dark #popup-convite .popup-box { background: #1e1e1e; color: #eee; }
     body.dark .popup-sub { color: #aaa; }
     body.dark .popup-btn.recusar { background: #2a2a2a; color: #ccc; }
+    body.dark .atualiza-progresso { background: #2a2a2a; border-color: #333; color: #ccc; }
+    body.dark .atualiza-progresso .barra { background: #333; }
 
     #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(160deg, #ff1a1a 0%, #b30000 100%); }
     .login-box { background: white; color: #222; padding: 36px 28px; border-radius: 24px; width: 100%; max-width: 360px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); text-align: center; }
@@ -284,6 +286,16 @@
     .batalha-resultado.empate h2 { color: #fbbf24; }
     .batalha-resultado p { font-size: 16px; color: #aaa; margin-bottom: 24px; line-height: 1.6; }
     .batalha-resultado button { padding: 16px 32px; background: linear-gradient(135deg, #e60000, #cc0000); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; }
+
+    .btn-atualizar { width: 100%; padding: 14px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none; border-radius: 14px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-atualizar:active { transform: scale(0.97); }
+    .btn-atualizar:disabled { background: #ccc; cursor: not-allowed; }
+    .atualiza-progresso { background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; padding: 14px; margin-top: 10px; font-size: 13px; color: #555; }
+    .atualiza-progresso .barra { height: 8px; background: #eee; border-radius: 10px; overflow: hidden; margin-top: 8px; }
+    .atualiza-progresso .barra-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #1d4ed8); transition: width 0.3s; border-radius: 10px; }
+    .batalha-carregando { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; color: white; text-align: center; }
+    .batalha-carregando .spinner { border-color: rgba(255,255,255,0.3); border-top-color: #fff; }
+    .batalha-carregando p { margin-top: 10px; font-size: 14px; color: #aaa; }
 
     @media (min-width: 600px) {
       #pokedex { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 20px 24px; max-width: 900px; margin: 0 auto; }
@@ -523,6 +535,14 @@
     let listenerConvites = null;
     let popupTimer = null;
     let popupSegundos = 120;
+
+    let batalhaAtual = null;
+    let listenerBatalha = null;
+    let batalhaTimer = null;
+    let segundosTurno = 300;
+    let timeSelecionado = [];
+    let batalhaSaindo = false;
+    let ataqueEscolhido = null;
 
     function spriteAnimado(id) { return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`; }
     function spriteNormal(id, shiny) { return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${shiny ? 'shiny/' : ''}${id}.png`; }
@@ -811,12 +831,62 @@
       setTimeout(() => { const p = document.getElementById('card-price-input'); if (p) p.focus(); }, 200);
     }
 
-    function confirmarCarta(carta) {
+    // ===== BUSCAR DADOS COMPLETOS DA CARTA =====
+    async function buscarDadosCompletos(tcgId) {
+      try {
+        const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards/${tcgId}`);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const d = await res.json();
+        return {
+          hp: parseInt(d.hp) || 100,
+          tipos: d.types || [],
+          ataques: (d.attacks || []).map(a => ({
+            nome: a.name || 'Ataque',
+            dano: parseInt(a.damage) || 0,
+            danoStr: a.damage || '',
+            custo: a.cost || [],
+            efeito: a.effect || ''
+          })),
+          fraquezas: d.weaknesses || [],
+          resistencias: d.resistances || []
+        };
+      } catch (e) {
+        console.warn('Não consegui buscar dados de', tcgId, e.message);
+        return {
+          hp: 100,
+          tipos: [],
+          ataques: [{ nome: 'Investida', dano: 20, danoStr: '20', custo: ['Colorless'], efeito: '' }],
+          fraquezas: [],
+          resistencias: []
+        };
+      }
+    }
+
+    async function confirmarCarta(carta) {
       let pokemonName = carta.name.toLowerCase().replace(/\s+ex$/i, '').replace(/\s+v$/i, '').replace(/\s+vmax$/i, '').replace(/\s+vstar$/i, '').replace(/\s+gx$/i, '').trim();
       const p = document.getElementById('card-price-input');
       let preco = 0;
       if (p && p.value) preco = parseFloat(p.value.replace(',', '.')) || 0;
-      colecao.push({ id: carta.id + '_' + Date.now(), tcgId: carta.id, name: carta.name, localId: carta.localId, image: carta.image, pokemon: pokemonName, preco: preco, addedAt: new Date().toISOString() });
+
+      mostrarToast('Buscando dados da carta...');
+      const dados = await buscarDadosCompletos(carta.id);
+
+      colecao.push({
+        id: carta.id + '_' + Date.now(),
+        tcgId: carta.id,
+        name: carta.name,
+        localId: carta.localId,
+        image: carta.image,
+        pokemon: pokemonName,
+        preco: preco,
+        hp: dados.hp,
+        tipos: dados.tipos,
+        ataques: dados.ataques,
+        fraquezas: dados.fraquezas,
+        resistencias: dados.resistencias,
+        addedAt: new Date().toISOString()
+      });
+
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
       fecharModal('modal-add');
@@ -846,6 +916,15 @@
       document.getElementById('detalhes-titulo').textContent = carta.name;
       document.getElementById('detalhes-content').innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
       document.getElementById('modal-detalhes').classList.add('active');
+      // Se já tem dados salvos, usa eles; senão busca
+      if (carta.hp && carta.ataques) {
+        renderizarDetalhes(carta, {
+          image: carta.image, name: carta.name, hp: carta.hp, types: carta.tipos,
+          attacks: (carta.ataques || []).map(a => ({ name: a.nome, damage: a.danoStr, effect: a.efeito })),
+          weaknesses: carta.fraquezas, resistances: carta.resistencias
+        });
+        return;
+      }
       try {
         const url = carta.tcgId ? `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}` : `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
         const res = await fetch(url);
@@ -868,7 +947,7 @@
         ${dados.types ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
       </div>`;
       let ataquesHtml = '';
-      if (dados.attacks && dados.attacks.length > 0) ataquesHtml = `<div class="detalhes-ataques"><h3>⚔️ Ataques</h3>${dados.attacks.map(a => `<div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}</div>${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}</div>`).join('')}</div>`;
+      if (dados.attacks && dados.attacks.length > 0) ataquesHtml = `<div class="detalhes-ataques"><h3>⚔️ Ataques</h3>${dados.attacks.map(a => `<div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name || a.nome}</span>${a.damage || a.danoStr ? `<span class="ataque-dano">${a.damage || a.danoStr}</span>` : ''}</div>${a.effect || a.efeito ? `<div class="ataque-efeito">${a.effect || a.efeito}</div>` : ''}</div>`).join('')}</div>`;
       const precoHtml = preco > 0 ? `<div class="total-value" style="margin-top:16px;"><div class="label">Você pagou</div><div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div></div>` : '';
       document.getElementById('detalhes-content').innerHTML = `${imgHtml}${infoHtml}${ataquesHtml}${precoHtml}<button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>`;
     }
@@ -1024,6 +1103,7 @@
       const pokemonUnicos = new Set(colecao.map(c => (c.pokemon || '').toLowerCase())).size;
       const valorTotal = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
       const dataInicio = perfil.criadoEm ? new Date(perfil.criadoEm).toLocaleDateString('pt-BR') : 'Hoje';
+      const semDados = colecao.filter(c => !c.hp || !c.ataques).length;
       const avatarSrc = perfil.foto || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#eee"/><circle cx="50" cy="40" r="18" fill="#ccc"/><ellipse cx="50" cy="75" rx="28" ry="20" fill="#ccc"/></svg>');
       document.getElementById('perfil-content').innerHTML = `
         <div class="profile-header">
@@ -1042,7 +1122,42 @@
           <label>Bio</label><input type="text" id="edit-bio" value="${perfil.bio || ''}">
           <label>Pokémon favorito</label><input type="text" id="edit-favorito" value="${perfil.favorito ? (perfil.favorito.name || '') : ''}">
           <button class="primary" onclick="salvarPerfil()" style="margin-top:16px;">Salvar</button>
+          ${semDados > 0 ? `
+            <label style="margin-top:20px;">Dados de batalha</label>
+            <p style="font-size:12px;color:#888;margin-bottom:8px;">Você tem <strong>${semDados}</strong> carta(s) sem dados de batalha (HP, ataques). Clique abaixo pra atualizar.</p>
+            <button class="btn-atualizar" id="btn-atualizar-cartas" onclick="atualizarCartasAntigas()">🔄 Atualizar dados das cartas</button>
+            <div id="atualiza-progresso" style="display:none;"></div>
+          ` : `<p style="font-size:12px;color:#22c55e;margin-top:16px;">✅ Todas as cartas têm dados de batalha</p>`}
         </div>`;
+    }
+
+    async function atualizarCartasAntigas() {
+      const semDados = colecao.filter(c => !c.hp || !c.ataques);
+      if (semDados.length === 0) { mostrarToast('Tudo em dia!'); return; }
+      const btn = document.getElementById('btn-atualizar-cartas');
+      if (btn) btn.disabled = true;
+      const progressoDiv = document.getElementById('atualiza-progresso');
+      if (progressoDiv) progressoDiv.style.display = 'block';
+
+      let feitas = 0;
+      for (const carta of colecao) {
+        if (carta.hp && carta.ataques) continue;
+        if (progressoDiv) {
+          progressoDiv.innerHTML = `<strong>Atualizando ${feitas + 1} de ${semDados.length}...</strong><br>${carta.name}<div class="barra"><div class="barra-fill" style="width:${(feitas / semDados.length) * 100}%"></div></div>`;
+        }
+        const dados = await buscarDadosCompletos(carta.tcgId);
+        carta.hp = dados.hp;
+        carta.tipos = dados.tipos;
+        carta.ataques = dados.ataques;
+        carta.fraquezas = dados.fraquezas;
+        carta.resistencias = dados.resistencias;
+        feitas++;
+      }
+      localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
+      sincronizar();
+      if (progressoDiv) progressoDiv.innerHTML = `<strong style="color:#22c55e;">✅ ${feitas} carta(s) atualizada(s)!</strong>`;
+      mostrarToast('Todas atualizadas! 🎉');
+      setTimeout(() => renderizarPerfil(), 1500);
     }
 
     function mudarFoto(event) {
@@ -1132,7 +1247,14 @@
           nome: (perfil && perfil.nome) || usuario,
           bio: (perfil && perfil.bio) || '',
           favorito: (perfil && perfil.favorito) || null,
-          cartas: colecao.map(c => ({ id: c.id || '', tcgId: c.tcgId || '', name: c.name || '', localId: c.localId || '', image: c.image || '', pokemon: c.pokemon || '', preco: parseFloat(c.preco) || 0 })),
+          cartas: colecao.map(c => ({
+            id: c.id || '', tcgId: c.tcgId || '', name: c.name || '',
+            localId: c.localId || '', image: c.image || '',
+            pokemon: c.pokemon || '', preco: parseFloat(c.preco) || 0,
+            hp: c.hp || null, tipos: c.tipos || [],
+            ataques: c.ataques || [], fraquezas: c.fraquezas || [],
+            resistencias: c.resistencias || []
+          })),
           atualizado: new Date().toISOString()
         }, { merge: true }).catch(e => console.error(e));
       }, 800);
@@ -1351,21 +1473,11 @@
       mostrarPopupConvite(c);
     }
 
-    // ==================== BATALHA: TELA, TURNOS, ATAQUES ====================
-    let batalhaAtual = null;
-    let listenerBatalha = null;
-    let batalhaTimer = null;
-    let segundosTurno = 300;
-    let timeSelecionado = [];
-    let batalhaSaindo = false;
-    let ataqueEscolhido = null;
-
     async function iniciarBatalha(conviteId, convite) {
       try {
         const souDesafiante = convite.de === meuId;
         const idAmigo = souDesafiante ? convite.para : convite.de;
         const nomeAmigo = souDesafiante ? convite.paraNome : convite.deNome;
-
         const ref = await fbDb.collection('batalhas').add({
           jogadorA: convite.de, jogadorANome: convite.deNome,
           jogadorB: convite.para, jogadorBNome: convite.paraNome,
@@ -1377,9 +1489,7 @@
           vencedor: null,
           conviteId: conviteId
         });
-
         localStorage.setItem('pokedex_batalha_atual', ref.id);
-
         batalhaAtual = { id: ref.id, _souA: souDesafiante, _idAmigo: idAmigo, _nomeAmigo: nomeAmigo, status: 'escolhendo-time' };
         document.getElementById('tela-batalha').classList.add('active');
         renderizarEscolhaTime();
@@ -1393,7 +1503,6 @@
         if (!doc.exists) return;
         const d = doc.data();
         batalhaAtual = { ...batalhaAtual, ...d, id: batalhaId };
-
         if (d.status === 'escolhendo-time') {
           const jaEscolhi = (batalhaAtual._souA && d.timeA) || (!batalhaAtual._souA && d.timeB);
           const tela = document.getElementById('batalha-corpo');
@@ -1401,14 +1510,9 @@
             document.getElementById('batalha-turno').textContent = 'Escolhendo times';
             document.getElementById('batalha-timer').textContent = '—';
             tela.innerHTML = `<div class="aguardando-info" style="padding-top:80px;"><div class="pulse"></div><p style="font-weight:700;font-size:16px;color:white;margin-bottom:6px;">Time confirmado!</p><p style="font-size:14px;color:#aaa;">Aguardando <strong>${esc(batalhaAtual._nomeAmigo)}</strong> escolher o time dele...</p></div>`;
-          } else if (!tela.querySelector('.escolha-time')) {
-            renderizarEscolhaTime();
-          }
-        } else if (d.status === 'em-andamento') {
-          renderizarBatalha();
-        } else if (d.status === 'finalizada') {
-          mostrarResultadoBatalha();
-        }
+          } else if (!tela.querySelector('.escolha-time')) { renderizarEscolhaTime(); }
+        } else if (d.status === 'em-andamento') { renderizarBatalha(); }
+        else if (d.status === 'finalizada') { mostrarResultadoBatalha(); }
       }, e => console.error('Listener:', e));
     }
 
@@ -1448,24 +1552,29 @@
     async function confirmarTime() {
       if (timeSelecionado.length === 0 || !batalhaAtual) return;
       const cartasTime = timeSelecionado.map(i => colecao[i]);
-      document.getElementById('batalha-corpo').innerHTML = '<div class="loading" style="color:white;padding-top:80px;"><div class="spinner"></div>Carregando...</div>';
+      document.getElementById('batalha-corpo').innerHTML = '<div class="batalha-carregando"><div class="spinner"></div><p>Carregando dados do time...</p></div>';
+
+      // Usa os dados já salvos (sem fetch!)
+      const cartasCompletas = cartasTime.map(c => {
+        const hp = parseInt(c.hp) || 100;
+        return {
+          tcgId: c.tcgId,
+          nome: c.name,
+          hp: hp,
+          hpMax: hp,
+          tipos: c.tipos || [],
+          ataques: c.ataques && c.ataques.length > 0
+            ? c.ataques
+            : [{ nome: 'Investida', dano: 20, danoStr: '20', custo: ['Colorless'], efeito: '' }],
+          fraquezas: c.fraquezas || [],
+          resistencias: c.resistencias || [],
+          image: c.image,
+          condicoes: {},
+          defesaAtiva: false
+        };
+      });
+
       try {
-        const cartasCompletas = await Promise.all(cartasTime.map(async c => {
-          try {
-           const url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${c.localId}&pagination:itemsPerPage=50`;
-          const res = await fetch(url);
-let dados = await res.json();
-if (Array.isArray(dados)) {
-  // pega a carta cujo id bate com o tcgId, ou a primeira
-  const encontrada = dados.find(x => x.id === c.tcgId) || dados[0];
-  dados = encontrada;
-}
-const hp = parseInt(dados.hp) || 100;
-            return { tcgId: c.tcgId, nome: dados.name || c.name, hp: hp, hpMax: hp, tipos: dados.types || [], ataques: (dados.attacks || []).map(a => ({ nome: a.name, dano: parseInt(a.damage) || 0, danoStr: a.damage || '', custo: a.cost || [], efeito: a.effect || '' })), fraquezas: dados.weaknesses || [], resistencias: dados.resistances || [], image: c.image, condicoes: {}, defesaAtiva: false };
-          } catch (e) {
-            return { tcgId: c.tcgId, nome: c.name, hp: 100, hpMax: 100, tipos: [], ataques: [], fraquezas: [], resistencias: [], image: c.image, condicoes: {}, defesaAtiva: false };
-          }
-        }));
         const campoTime = batalhaAtual._souA ? 'timeA' : 'timeB';
         const campoEstado = batalhaAtual._souA ? 'estadoA' : 'estadoB';
         await fbDb.collection('batalhas').doc(batalhaAtual.id).update({
@@ -1767,17 +1876,11 @@ const hp = parseInt(dados.hp) || 100;
             if (jaEscolhi) {
               document.getElementById('batalha-corpo').innerHTML = `<div class="aguardando-info" style="padding-top:80px;"><div class="pulse"></div><p style="font-weight:700;font-size:16px;color:white;margin-bottom:6px;">Time confirmado!</p><p style="font-size:14px;color:#aaa;">Aguardando <strong>${esc(nomeAmigo)}</strong>...</p></div>`;
               document.getElementById('batalha-turno').textContent = 'Escolhendo times';
-            } else {
-              renderizarEscolhaTime();
-            }
-          } else {
-            renderizarBatalha();
-          }
+            } else { renderizarEscolhaTime(); }
+          } else { renderizarBatalha(); }
           ouvirBatalha(idBatalha);
           mostrarToast('⚔️ Voltando pra batalha...');
-        } else if (d.status === 'finalizada') {
-          localStorage.removeItem('pokedex_batalha_atual');
-        }
+        } else if (d.status === 'finalizada') { localStorage.removeItem('pokedex_batalha_atual'); }
       } catch (e) { console.error('Erro ao recuperar batalha:', e); }
     }
 
