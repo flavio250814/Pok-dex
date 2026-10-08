@@ -1452,11 +1452,15 @@
       try {
         const cartasCompletas = await Promise.all(cartasTime.map(async c => {
           try {
-            const url = c.tcgId ? `https://api.tcgdex.net/v2/pt-br/cards/${c.tcgId}` : `https://api.tcgdex.net/v2/pt-br/cards?localId=${c.localId}&pagination:itemsPerPage=1`;
-            const res = await fetch(url);
-            let dados = await res.json();
-            if (Array.isArray(dados)) dados = dados[0];
-            const hp = parseInt(dados.hp) || 100;
+           const url = `https://api.tcgdex.net/v2/pt-br/cards?localId=${c.localId}&pagination:itemsPerPage=50`;
+          const res = await fetch(url);
+let dados = await res.json();
+if (Array.isArray(dados)) {
+  // pega a carta cujo id bate com o tcgId, ou a primeira
+  const encontrada = dados.find(x => x.id === c.tcgId) || dados[0];
+  dados = encontrada;
+}
+const hp = parseInt(dados.hp) || 100;
             return { tcgId: c.tcgId, nome: dados.name || c.name, hp: hp, hpMax: hp, tipos: dados.types || [], ataques: (dados.attacks || []).map(a => ({ nome: a.name, dano: parseInt(a.damage) || 0, danoStr: a.damage || '', custo: a.cost || [], efeito: a.effect || '' })), fraquezas: dados.weaknesses || [], resistencias: dados.resistances || [], image: c.image, condicoes: {}, defesaAtiva: false };
           } catch (e) {
             return { tcgId: c.tcgId, nome: c.name, hp: 100, hpMax: 100, tipos: [], ataques: [], fraquezas: [], resistencias: [], image: c.image, condicoes: {}, defesaAtiva: false };
