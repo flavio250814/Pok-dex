@@ -58,6 +58,9 @@
     body.dark .set-card .set-nome { color: #eee; }
     body.dark .filtros-avancados { background: #2a2a2a; }
     body.dark .serie-grupo { background: #1e1e1e; border-color: #2a2a2a; }
+    body.dark #popup-convite .popup-box { background: #1e1e1e; color: #eee; }
+    body.dark .popup-sub { color: #aaa; }
+    body.dark .popup-btn.recusar { background: #2a2a2a; color: #ccc; }
 
     #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(160deg, #ff1a1a 0%, #b30000 100%); }
     .login-box { background: white; color: #222; padding: 36px 28px; border-radius: 24px; width: 100%; max-width: 360px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); text-align: center; }
@@ -70,15 +73,37 @@
     .login-box button:active { transform: scale(0.97); }
     header { background: linear-gradient(135deg, #e60000, #cc0000); color: white; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(230,0,0,0.3); }
     header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
-    header .user-info { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    header .user-info { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     header .user-info:active { background: rgba(255,255,255,0.35); }
     header .user-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #fff; }
-    header .header-actions { display: flex; align-items: center; gap: 6px; }
+    header .header-actions { display: flex; align-items: center; gap: 5px; }
     header .friends-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
     header .friends-btn:active { background: rgba(255,255,255,0.35); }
-    header .theme-btn, header .explore-btn, header .shiny-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    header .theme-btn:active, header .explore-btn:active, header .shiny-btn:active { background: rgba(255,255,255,0.35); }
+    header .theme-btn, header .explore-btn, header .shiny-btn, header .battle-btn, header .sino-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; }
+    header .theme-btn:active, header .explore-btn:active, header .shiny-btn:active, header .battle-btn:active, header .sino-btn:active { background: rgba(255,255,255,0.35); }
     header .shiny-btn.ativo { background: linear-gradient(135deg, #ffd700, #ff8c00); box-shadow: 0 0 12px rgba(255,215,0,0.6); }
+    header .sino-btn .bolinha { position: absolute; top: -4px; right: -4px; background: #ff0000; color: white; font-size: 10px; font-weight: 800; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; padding: 0 4px; }
+    header .sino-btn .bolinha.oculto { display: none; }
+
+    .friend-status { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ccc; margin-right: 6px; }
+    .friend-status.online { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+    .friend-item.desafio .friend-name { color: #e60000; }
+
+    #popup-convite { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 500; opacity: 0; visibility: hidden; transition: all 0.3s; backdrop-filter: blur(4px); }
+    #popup-convite.active { opacity: 1; visibility: visible; }
+    #popup-convite .popup-box { background: white; border-radius: 24px; padding: 28px 24px; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.4); transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+    #popup-convite.active .popup-box { transform: scale(1); }
+    .popup-emoji { font-size: 56px; margin-bottom: 8px; }
+    .popup-titulo { font-size: 22px; font-weight: 800; color: #e60000; margin-bottom: 6px; }
+    .popup-sub { font-size: 14px; color: #777; margin-bottom: 20px; line-height: 1.5; }
+    .popup-timer { font-size: 13px; color: #999; margin-bottom: 16px; font-weight: 600; }
+    .popup-btn { width: 100%; padding: 15px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 8px; transition: transform 0.15s; }
+    .popup-btn:active { transform: scale(0.97); }
+    .popup-btn.aceitar { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; box-shadow: 0 4px 14px rgba(34,197,94,0.4); }
+    .popup-btn.recusar { background: #f5f5f5; color: #555; }
+    .aguardando-info { text-align: center; padding: 30px 20px; color: #777; }
+    .aguardando-info .pulse { display: inline-block; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #ff1a1a, #cc0000); animation: pulse 1.5s ease-in-out infinite; margin-bottom: 16px; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230,0,0,0.5); } 50% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(230,0,0,0); } }
 
     .friends-list { margin-top: 8px; }
     .friend-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #fafafa; border: 2px solid #f0f0f0; border-radius: 14px; margin-bottom: 8px; }
@@ -252,6 +277,11 @@
         Pokédex
       </h1>
       <div class="header-actions">
+        <button class="battle-btn" onclick="abrirBatalhas()" title="Batalhas">⚔️</button>
+        <button class="sino-btn" id="sino-btn" onclick="abrirNotificacoes()" title="Notificações">
+          🔔
+          <span class="bolinha oculto" id="sino-bolinha">0</span>
+        </button>
         <button class="shiny-btn" id="shiny-btn" onclick="toggleShiny()" title="Alternar shiny">✨</button>
         <button class="theme-btn" id="theme-btn" onclick="toggleTema()" title="Alternar tema">🌙</button>
         <button class="explore-btn" onclick="abrirExplorar()" title="Explorar sets">🧭</button>
@@ -402,6 +432,31 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="modal-batalhas">
+    <div class="modal">
+      <div class="modal-header"><h2>⚔️ Batalhas</h2><button class="modal-close" onclick="fecharModal('modal-batalhas')">×</button></div>
+      <div id="batalhas-content"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-notificacoes">
+    <div class="modal">
+      <div class="modal-header"><h2>🔔 Notificações</h2><button class="modal-close" onclick="fecharModal('modal-notificacoes')">×</button></div>
+      <div id="notificacoes-content"></div>
+    </div>
+  </div>
+
+  <div id="popup-convite">
+    <div class="popup-box">
+      <div class="popup-emoji">⚔️</div>
+      <div class="popup-titulo">Desafio de Batalha!</div>
+      <div class="popup-sub" id="popup-quem">Alguém te desafiou</div>
+      <div class="popup-timer" id="popup-timer">Expira em 2:00</div>
+      <button class="popup-btn aceitar" onclick="aceitarConvite()">✅ Aceitar</button>
+      <button class="popup-btn recusar" onclick="recusarConvite()">❌ Recusar</button>
+    </div>
+  </div>
+
   <div id="toast"></div>
 
   <script>
@@ -422,7 +477,14 @@
     let setsCache = null, seriesCache = null, ilustradoresCache = null;
     let filtrosAvancadosCache = { sets: null, raridades: null, categorias: null, estagios: null };
 
-    // URLs de sprites com fallback
+    // Convites/batalhas
+    let heartbeatTimer = null;
+    let convitesPendentes = [];
+    let conviteAtual = null;
+    let listenerConvites = null;
+    let popupTimer = null;
+    let popupSegundos = 120;
+
     function spriteAnimado(id) {
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
     }
@@ -446,12 +508,8 @@
       aplicarTemaSalvo();
       aplicarShinySalvo();
       if (usuario) { mostrarApp(); } else { document.getElementById('username-input').focus(); }
-      document.getElementById('username-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') fazerLogin();
-      });
-      document.getElementById('card-search-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') buscarCarta();
-      });
+      document.getElementById('username-input').addEventListener('keypress', function(e) { if (e.key === 'Enter') fazerLogin(); });
+      document.getElementById('card-search-input').addEventListener('keypress', function(e) { if (e.key === 'Enter') buscarCarta(); });
     };
 
     function aplicarShinySalvo() {
@@ -488,16 +546,17 @@
       carregarPokemon();
       atualizarStats();
       sincronizar();
+      if (nuvemEstado === 'ok') {
+        iniciarHeartbeat();
+        ouvirConvitesRecebidos();
+      }
     }
 
     function atualizarHeaderUser() {
       const el = document.getElementById('user-display');
       const nome = (perfil && perfil.nome) ? perfil.nome : usuario;
-      if (perfil && perfil.foto) {
-        el.innerHTML = `<img class="user-avatar" src="${perfil.foto}" alt=""> ${nome}`;
-      } else {
-        el.innerHTML = `👤 ${nome}`;
-      }
+      if (perfil && perfil.foto) el.innerHTML = `<img class="user-avatar" src="${perfil.foto}" alt=""> ${nome}`;
+      else el.innerHTML = `👤 ${nome}`;
     }
 
     function aplicarTemaSalvo() {
@@ -523,9 +582,7 @@
         const data = await res.json();
         todosPokemon = data.results.map((p, i) => ({ id: i + 1, name: p.name }));
         aplicarFiltros();
-      } catch (err) {
-        document.getElementById('pokedex').innerHTML = '<div class="empty-msg">Erro ao carregar. Tenta de novo mais tarde.</div>';
-      }
+      } catch (err) { document.getElementById('pokedex').innerHTML = '<div class="empty-msg">Erro ao carregar.</div>'; }
     }
 
     function setFiltro(tipo) {
@@ -539,7 +596,7 @@
       filtroTipoAtual = tipo;
       if (!tipo) { aplicarFiltros(); return; }
       if (tiposCache[tipo]) { aplicarFiltros(); return; }
-      document.getElementById('pokedex').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Buscando tipo ' + tipo + '...</div>';
+      document.getElementById('pokedex').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Buscando tipo...</div>';
       try {
         const res = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
         const data = await res.json();
@@ -549,8 +606,7 @@
       } catch (e) {
         console.error(e);
         mostrarToast('Erro ao buscar tipo.');
-        filtroTipoAtual = '';
-        document.getElementById('filtro-tipo').value = '';
+        filtroTipoAtual = ''; document.getElementById('filtro-tipo').value = '';
         aplicarFiltros();
       }
     }
@@ -596,11 +652,8 @@
     function renderizarPokedex() {
       const container = document.getElementById('pokedex');
       if (pokemonFiltrados.length === 0) {
-        if (filtroAtual === 'tenho') {
-          container.innerHTML = `<div class="empty-msg" style="grid-column:1/-1">Você ainda não tem nenhuma carta.<br>Clique no <strong>+</strong> pra adicionar a primeira!</div>`;
-        } else {
-          container.innerHTML = '<div class="empty-msg" style="grid-column:1/-1">Nenhum Pokémon encontrado.</div>';
-        }
+        if (filtroAtual === 'tenho') container.innerHTML = `<div class="empty-msg" style="grid-column:1/-1">Você ainda não tem nenhuma carta.<br>Clique no <strong>+</strong> pra adicionar!</div>`;
+        else container.innerHTML = '<div class="empty-msg" style="grid-column:1/-1">Nenhum Pokémon encontrado.</div>';
         return;
       }
       container.innerHTML = pokemonFiltrados.map(p => {
@@ -608,7 +661,6 @@
         const gif = spriteAnimado(p.id);
         const normal = spriteNormal(p.id, modoShiny);
         const gen9 = spriteGen9(p.id);
-        // Fallback em cascata: gif -> normal -> gen9 -> 0.png
         return `
           <div class="poke-card ${qtd > 0 ? 'has-cards' : ''}" onclick="abrirPokemon('${p.name}', ${p.id})">
             ${qtd > 0 ? `<div class="badge">${qtd}</div>` : ''}
@@ -617,8 +669,7 @@
                  alt="${p.name}" loading="lazy">
             <div class="name">${p.name}</div>
             <div class="number">#${String(p.id).padStart(3, '0')}</div>
-          </div>
-        `;
+          </div>`;
       }).join('');
     }
 
@@ -650,8 +701,7 @@
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/sets');
           const sets = await res.json();
           filtrosAvancadosCache.sets = sets;
-          document.getElementById('filtro-set').innerHTML = '<option value="">Todos os sets</option>' +
-            sets.map(s => `<option value="${s.id}">${s.name} (${s.cardCount?.total || '?'})</option>`).join('');
+          document.getElementById('filtro-set').innerHTML = '<option value="">Todos os sets</option>' + sets.map(s => `<option value="${s.id}">${s.name} (${s.cardCount?.total || '?'})</option>`).join('');
         } catch (e) { console.error(e); }
       }
       if (!filtrosAvancadosCache.raridades) {
@@ -659,8 +709,7 @@
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/rarities');
           const raridades = await res.json();
           filtrosAvancadosCache.raridades = raridades;
-          document.getElementById('filtro-raridade').innerHTML = '<option value="">Todas as raridades</option>' +
-            raridades.map(r => `<option value="${r}">${r}</option>`).join('');
+          document.getElementById('filtro-raridade').innerHTML = '<option value="">Todas as raridades</option>' + raridades.map(r => `<option value="${r}">${r}</option>`).join('');
         } catch (e) { console.error(e); }
       }
       if (!filtrosAvancadosCache.categorias) {
@@ -668,8 +717,7 @@
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/categories');
           const cats = await res.json();
           filtrosAvancadosCache.categorias = cats;
-          document.getElementById('filtro-categoria').innerHTML = '<option value="">Todas as categorias</option>' +
-            cats.map(c => `<option value="${c}">${c}</option>`).join('');
+          document.getElementById('filtro-categoria').innerHTML = '<option value="">Todas as categorias</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
         } catch (e) { console.error(e); }
       }
       if (!filtrosAvancadosCache.estagios) {
@@ -677,16 +725,13 @@
           const res = await fetch('https://api.tcgdex.net/v2/pt-br/stages');
           const estagios = await res.json();
           filtrosAvancadosCache.estagios = estagios;
-          document.getElementById('filtro-estagio').innerHTML = '<option value="">Todos os estágios</option>' +
-            estagios.map(e => `<option value="${e}">${e}</option>`).join('');
+          document.getElementById('filtro-estagio').innerHTML = '<option value="">Todos os estágios</option>' + estagios.map(e => `<option value="${e}">${e}</option>`).join('');
         } catch (e) { console.error(e); }
       }
     }
 
     function limparFiltrosAvancados() {
-      ['filtro-set', 'filtro-raridade', 'filtro-categoria', 'filtro-estagio', 'filtro-tipo-carta'].forEach(id => {
-        document.getElementById(id).value = '';
-      });
+      ['filtro-set', 'filtro-raridade', 'filtro-categoria', 'filtro-estagio', 'filtro-tipo-carta'].forEach(id => { document.getElementById(id).value = ''; });
       mostrarToast('Filtros limpos');
     }
 
@@ -699,10 +744,7 @@
         stage: document.getElementById('filtro-estagio').value,
         type: document.getElementById('filtro-tipo-carta').value
       };
-      if (!termo && !filtros.set && !filtros.rarity && !filtros.category && !filtros.stage && !filtros.type) {
-        mostrarToast('Digite algo ou escolha um filtro!');
-        return;
-      }
+      if (!termo && !filtros.set && !filtros.rarity && !filtros.category && !filtros.stage && !filtros.type) { mostrarToast('Digite algo ou escolha um filtro!'); return; }
       await executarBuscaCarta(termo, filtros);
     }
 
@@ -728,10 +770,7 @@
         }
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?${params.toString()}`);
         const data = await res.json();
-        if (!data || data.length === 0) {
-          resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número/nome ou filtros diferentes.</div>';
-          return;
-        }
+        if (!data || data.length === 0) { resultsDiv.innerHTML = '<div class="empty-msg">Nenhuma carta encontrada.<br>Tenta outro número/nome ou filtros diferentes.</div>'; return; }
         if (data.length === 1) { mostrarConfirmacao(data[0]); resultsDiv.innerHTML = ''; return; }
         resultsDiv.innerHTML = `
           <p style="font-size:13px;color:#777;margin:12px 0 8px;">Encontrei <strong>${data.length}</strong> cartas. Escolhe:</p>
@@ -739,18 +778,10 @@
             ${data.map(c => `
               <div class="result-item" onclick='mostrarConfirmacao(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
                 <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
-                <div class="info">
-                  <div class="name">${c.name}</div>
-                  <div class="set">${c.id || ''} • Nº ${c.localId || ''}</div>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } catch (err) {
-        console.error(err);
-        resultsDiv.innerHTML = '<div class="empty-msg">Erro na busca.</div>';
-      }
+                <div class="info"><div class="name">${c.name}</div><div class="set">${c.id || ''} • Nº ${c.localId || ''}</div></div>
+              </div>`).join('')}
+          </div>`;
+      } catch (err) { console.error(err); resultsDiv.innerHTML = '<div class="empty-msg">Erro na busca.</div>'; }
     }
 
     function mostrarConfirmacao(carta) {
@@ -806,22 +837,20 @@
       } else {
         const valorTotal = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         listDiv.innerHTML = `
-          <div class="total-value"><div class="label">Valor total destas cartas</div><div class="value">R$ ${valorTotal.toFixed(2).replace('.', ',')}</div></div>
+          <div class="total-value"><div class="label">Valor total</div><div class="value">R$ ${valorTotal.toFixed(2).replace('.', ',')}</div></div>
           <p style="font-size:14px;color:#777;margin-bottom:12px;">Você tem <strong>${cartas.length}</strong> carta(s) de ${nome}:</p>
           <div class="cards-grid">
             ${cartas.map((c) => `
               <div class="owned-card" onclick="verDetalhesCarta('${c.id}')">
-                <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')" title="Apagar">×</button>
-                <button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')" title="Compartilhar">📤</button>
+                <button class="delete-btn" onclick="event.stopPropagation(); apagarCarta('${c.id}')">×</button>
+                <button class="share-btn" onclick="event.stopPropagation(); abrirCompartilhar('${c.id}')">📤</button>
                 <img src="${c.image}/high.webp" onerror="this.src='${c.image}.webp'" alt="${c.name}">
                 <div class="name">${c.name}</div>
                 <div class="set">${c.tcgId || c.id} • Nº ${c.localId || ''}</div>
                 ${c.preco > 0 ? `<div class="price">R$ ${parseFloat(c.preco).toFixed(2).replace('.', ',')}</div>` : '<div class="price" style="color:#ccc">Sem preço</div>'}
-              </div>
-            `).join('')}
+              </div>`).join('')}
           </div>
-          <button class="danger" style="margin-top:20px;" onclick="removerPokemon('${nome}')">🗑️ Remover todas as cartas deste Pokémon</button>
-        `;
+          <button class="danger" style="margin-top:20px;" onclick="removerPokemon('${nome}')">🗑️ Remover todas</button>`;
       }
       document.getElementById('modal-pokemon').classList.add('active');
     }
@@ -833,61 +862,41 @@
       document.getElementById('detalhes-content').innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
       document.getElementById('modal-detalhes').classList.add('active');
       try {
-        let url = carta.tcgId
-          ? `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}`
-          : `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
+        let url = carta.tcgId ? `https://api.tcgdex.net/v2/pt-br/cards/${carta.tcgId}` : `https://api.tcgdex.net/v2/pt-br/cards?localId=${carta.localId}&pagination:itemsPerPage=1`;
         const res = await fetch(url);
         let dados = await res.json();
         if (Array.isArray(dados)) dados = dados[0];
         renderizarDetalhes(carta, dados);
-      } catch (e) {
-        console.error(e);
-        document.getElementById('detalhes-content').innerHTML = '<div class="empty-msg">Não consegui carregar os detalhes.</div>';
-      }
+      } catch (e) { console.error(e); document.getElementById('detalhes-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function renderizarDetalhes(cartaLocal, dados) {
       const preco = parseFloat(cartaLocal.preco) || 0;
       const imgHtml = dados.image ? `<div class="detalhes-img"><img src="${dados.image}/high.webp" onerror="this.src='${dados.image}.webp'"></div>` : '';
-      const infoHtml = `
-        <div class="detalhes-grid">
-          ${dados.hp ? `<div class="detalhes-item"><div class="label">HP</div><div class="value">${dados.hp}</div></div>` : ''}
-          ${dados.rarity ? `<div class="detalhes-item"><div class="label">Raridade</div><div class="value">${dados.rarity}</div></div>` : ''}
-          ${dados.category ? `<div class="detalhes-item"><div class="label">Categoria</div><div class="value">${dados.category}</div></div>` : ''}
-          ${dados.stage ? `<div class="detalhes-item"><div class="label">Estágio</div><div class="value">${dados.stage}</div></div>` : ''}
-          ${dados.illustrator ? `<div class="detalhes-item"><div class="label">Ilustrador</div><div class="value">${dados.illustrator}</div></div>` : ''}
-          ${dados.set ? `<div class="detalhes-item"><div class="label">Set</div><div class="value">${dados.set.name || ''}</div></div>` : ''}
-          ${dados.types && dados.types.length ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
-          ${dados.regulationMark ? `<div class="detalhes-item"><div class="label">Regulação</div><div class="value">${dados.regulationMark}</div></div>` : ''}
-        </div>`;
+      const infoHtml = `<div class="detalhes-grid">
+        ${dados.hp ? `<div class="detalhes-item"><div class="label">HP</div><div class="value">${dados.hp}</div></div>` : ''}
+        ${dados.rarity ? `<div class="detalhes-item"><div class="label">Raridade</div><div class="value">${dados.rarity}</div></div>` : ''}
+        ${dados.category ? `<div class="detalhes-item"><div class="label">Categoria</div><div class="value">${dados.category}</div></div>` : ''}
+        ${dados.stage ? `<div class="detalhes-item"><div class="label">Estágio</div><div class="value">${dados.stage}</div></div>` : ''}
+        ${dados.illustrator ? `<div class="detalhes-item"><div class="label">Ilustrador</div><div class="value">${dados.illustrator}</div></div>` : ''}
+        ${dados.set ? `<div class="detalhes-item"><div class="label">Set</div><div class="value">${dados.set.name || ''}</div></div>` : ''}
+        ${dados.types && dados.types.length ? `<div class="detalhes-item"><div class="label">Tipos</div><div class="value">${dados.types.join(', ')}</div></div>` : ''}
+        ${dados.regulationMark ? `<div class="detalhes-item"><div class="label">Regulação</div><div class="value">${dados.regulationMark}</div></div>` : ''}
+      </div>`;
       let ataquesHtml = '';
       if (dados.attacks && dados.attacks.length > 0) {
         ataquesHtml = `<div class="detalhes-ataques"><h3>⚔️ Ataques</h3>${dados.attacks.map(a => `
-          <div class="ataque-item">
-            <div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}</div>
-            ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
-            ${a.cost ? `<div class="ataque-custo">Custo: ${a.cost.join(' + ')}</div>` : ''}
-          </div>`).join('')}</div>`;
+          <div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.damage ? `<span class="ataque-dano">${a.damage}</span>` : ''}</div>${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}${a.cost ? `<div class="ataque-custo">Custo: ${a.cost.join(' + ')}</div>` : ''}</div>`).join('')}</div>`;
       }
       let abilitiesHtml = '';
       if (dados.abilities && dados.abilities.length > 0) {
-        abilitiesHtml = `<div class="detalhes-ataques"><h3>✨ Habilidades</h3>${dados.abilities.map(a => `
-          <div class="ataque-item">
-            <div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.type ? `<span class="ataque-dano" style="font-size:12px;color:#888;">${a.type}</span>` : ''}</div>
-            ${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}
-          </div>`).join('')}</div>`;
+        abilitiesHtml = `<div class="detalhes-ataques"><h3>✨ Habilidades</h3>${dados.abilities.map(a => `<div class="ataque-item"><div class="ataque-header"><span class="ataque-nome">${a.name}</span>${a.type ? `<span class="ataque-dano" style="font-size:12px;color:#888;">${a.type}</span>` : ''}</div>${a.effect ? `<div class="ataque-efeito">${a.effect}</div>` : ''}</div>`).join('')}</div>`;
       }
       let variantesHtml = '';
       if (dados.variants) {
         const v = dados.variants;
-        const tags = [
-          { nome: 'Normal', ativo: v.normal }, { nome: 'Holo', ativo: v.holo },
-          { nome: 'Reverse', ativo: v.reverse }, { nome: '1ª Edição', ativo: v.firstEdition },
-          { nome: 'Jumbo', ativo: v.jumbo },
-        ].filter(t => t.ativo);
-        if (tags.length > 0) {
-          variantesHtml = `<div class="detalhes-ataques"><h3>🎨 Variantes</h3><div class="variantes-lista">${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}</div></div>`;
-        }
+        const tags = [{ nome: 'Normal', ativo: v.normal }, { nome: 'Holo', ativo: v.holo }, { nome: 'Reverse', ativo: v.reverse }, { nome: '1ª Edição', ativo: v.firstEdition }, { nome: 'Jumbo', ativo: v.jumbo }].filter(t => t.ativo);
+        if (tags.length > 0) variantesHtml = `<div class="detalhes-ataques"><h3>🎨 Variantes</h3><div class="variantes-lista">${tags.map(t => `<span class="variante-tag">${t.nome}</span>`).join('')}</div></div>`;
       }
       let combateHtml = '';
       if (dados.weaknesses || dados.resistances || dados.retreat !== undefined) {
@@ -897,14 +906,12 @@
           ${dados.retreat !== undefined ? `<div class="detalhes-item"><div class="label">Retreat</div><div class="value">${dados.retreat}</div></div>` : ''}
         </div>`;
       }
-      const precoHtml = preco > 0
-        ? `<div class="total-value" style="margin-top:16px;"><div class="label">Você pagou</div><div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div></div>`
-        : `<div class="total-value" style="margin-top:16px;"><div class="label">Preço não cadastrado</div><div class="value" style="font-size:14px;color:#aaa;">—</div></div>`;
+      const precoHtml = preco > 0 ? `<div class="total-value" style="margin-top:16px;"><div class="label">Você pagou</div><div class="value">R$ ${preco.toFixed(2).replace('.', ',')}</div></div>` : '';
       document.getElementById('detalhes-content').innerHTML = `${imgHtml}${infoHtml}${ataquesHtml}${abilitiesHtml}${combateHtml}${variantesHtml}${precoHtml}<button class="btn-detalhes" onclick="fecharModal('modal-detalhes')">Fechar</button>`;
     }
 
     function apagarCarta(id) {
-      if (!confirm('Tem certeza que quer apagar esta carta?')) return;
+      if (!confirm('Apagar esta carta?')) return;
       colecao = colecao.filter(c => c.id !== id);
       localStorage.setItem('pokedex_colecao', JSON.stringify(colecao));
       sincronizar();
@@ -954,14 +961,14 @@
           if (!ilustradoresCache) { const res = await fetch('https://api.tcgdex.net/v2/pt-br/illustrators'); ilustradoresCache = await res.json(); }
           renderizarIlustradores(ilustradoresCache);
         }
-      } catch (e) { console.error(e); content.innerHTML = '<div class="empty-msg">Erro ao carregar.</div>'; }
+      } catch (e) { console.error(e); content.innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     function renderizarSets(sets) {
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? sets.filter(s => (s.name || '').toLowerCase().includes(busca)) : sets;
-      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum set encontrado.</div>'; return; }
+      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum set.</div>'; return; }
       content.innerHTML = filtrados.map(s => `
         <div class="set-card" onclick="abrirCartasDoSet('${s.id}', '${(s.name || '').replace(/'/g, "&#39;")}')">
           ${s.logo ? `<img class="set-logo" src="${s.logo}.webp" onerror="this.src='${s.logo}.png';this.onerror=null" alt="${s.name}">` : '<div class="set-logo" style="background:#eee;border-radius:8px;"></div>'}
@@ -973,15 +980,12 @@
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtradas = busca ? series.filter(s => (s.name || '').toLowerCase().includes(busca)) : series;
-      if (filtradas.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhuma série encontrada.</div>'; return; }
+      if (filtradas.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhuma série.</div>'; return; }
       content.innerHTML = filtradas.map(s => `
         <div class="serie-grupo">
           <h3>${s.name || s.id}</h3>
           <div style="font-size:12px;color:#888;margin-bottom:8px;">${(s.sets || []).length} sets</div>
-          ${(s.sets || []).map(set => `
-            <div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')">
-              <div class="set-info"><div class="set-nome">${set.name || set.id}</div><div class="set-meta">${set.cardCount?.total || '?'} cartas</div></div>
-            </div>`).join('')}
+          ${(s.sets || []).map(set => `<div class="set-card" onclick="abrirCartasDoSet('${set.id}', '${(set.name || '').replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">${set.name || set.id}</div><div class="set-meta">${set.cardCount?.total || '?'} cartas</div></div></div>`).join('')}
         </div>`).join('');
     }
 
@@ -989,14 +993,8 @@
       const content = document.getElementById('explorar-content');
       const busca = document.getElementById('explorar-busca').value.toLowerCase().trim();
       const filtrados = busca ? ilustradores.filter(i => i.toLowerCase().includes(busca)) : ilustradores;
-      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum ilustrador encontrado.</div>'; return; }
-      content.innerHTML = `
-        <p style="font-size:13px;color:#777;margin-bottom:10px;">${filtrados.length} ilustrador(es):</p>
-        ${filtrados.slice(0, 200).map(i => `
-          <div class="set-card" onclick="buscarPorIlustrador('${i.replace(/'/g, "&#39;")}')">
-            <div class="set-info"><div class="set-nome">🎨 ${i}</div></div>
-          </div>`).join('')}
-        ${filtrados.length > 200 ? '<p style="text-align:center;color:#999;font-size:12px;">Mostrando 200. Refine a busca.</p>' : ''}`;
+      if (filtrados.length === 0) { content.innerHTML = '<div class="empty-msg">Nenhum ilustrador.</div>'; return; }
+      content.innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:10px;">${filtrados.length} ilustrador(es):</p>${filtrados.slice(0, 200).map(i => `<div class="set-card" onclick="buscarPorIlustrador('${i.replace(/'/g, "&#39;")}')"><div class="set-info"><div class="set-nome">🎨 ${i}</div></div></div>`).join('')}`;
     }
 
     function filtrarExplorar() {
@@ -1013,18 +1011,9 @@
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/sets/${setId}`);
         const set = await res.json();
         const cartas = set.cards || [];
-        if (cartas.length === 0) { document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Esse set não tem cartas.</div>'; return; }
-        document.getElementById('set-cartas-content').innerHTML = `
-          <p style="font-size:13px;color:#777;margin-bottom:10px;">${cartas.length} carta(s). Toque pra adicionar:</p>
-          <div class="cards-grid">
-            ${cartas.map(c => `
-              <div class="owned-card" onclick="adicionarDoSet('${c.id}')">
-                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
-                <div class="name">${c.name}</div>
-                <div class="set">Nº ${c.localId || ''}</div>
-              </div>`).join('')}
-          </div>`;
-      } catch (e) { console.error(e); document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro ao carregar.</div>'; }
+        if (cartas.length === 0) { document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Sem cartas.</div>'; return; }
+        document.getElementById('set-cartas-content').innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:10px;">${cartas.length} carta(s):</p><div class="cards-grid">${cartas.map(c => `<div class="owned-card" onclick="adicionarDoSet('${c.id}')"><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}"><div class="name">${c.name}</div><div class="set">Nº ${c.localId || ''}</div></div>`).join('')}</div>`;
+      } catch (e) { console.error(e); document.getElementById('set-cartas-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
     async function adicionarDoSet(tcgId) {
@@ -1035,7 +1024,7 @@
         fecharModal('modal-explorar');
         mostrarConfirmacao(carta);
         document.getElementById('modal-add').classList.add('active');
-      } catch (e) { console.error(e); mostrarToast('Erro ao abrir a carta.'); }
+      } catch (e) { console.error(e); mostrarToast('Erro.'); }
     }
 
     async function buscarPorIlustrador(nome) {
@@ -1044,16 +1033,7 @@
         const res = await fetch(`https://api.tcgdex.net/v2/pt-br/cards?illustrator=${encodeURIComponent(nome)}&pagination:itemsPerPage=50`);
         const data = await res.json();
         if (!data || data.length === 0) { document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Nenhuma carta.</div>'; return; }
-        document.getElementById('explorar-content').innerHTML = `
-          <p style="font-size:13px;color:#777;margin-bottom:10px;">Cartas de <strong>${nome}</strong>:</p>
-          <div class="cards-grid">
-            ${data.map(c => `
-              <div class="owned-card" onclick="adicionarDoSet('${c.id}')">
-                <img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}">
-                <div class="name">${c.name}</div>
-                <div class="set">Nº ${c.localId || ''}</div>
-              </div>`).join('')}
-          </div>`;
+        document.getElementById('explorar-content').innerHTML = `<p style="font-size:13px;color:#777;margin-bottom:10px;">Cartas de <strong>${nome}</strong>:</p><div class="cards-grid">${data.map(c => `<div class="owned-card" onclick="adicionarDoSet('${c.id}')"><img src="${c.image || ''}/low.webp" onerror="this.src='${c.image || ''}.webp'" alt="${c.name}"><div class="name">${c.name}</div><div class="set">Nº ${c.localId || ''}</div></div>`).join('')}</div>`;
       } catch (e) { console.error(e); document.getElementById('explorar-content').innerHTML = '<div class="empty-msg">Erro.</div>'; }
     }
 
@@ -1063,66 +1043,37 @@
       const preco = parseFloat(carta.preco) || 0;
       const imgUrl = carta.image ? (carta.image + '/high.webp') : '';
       const imgFallback = carta.image ? (carta.image + '.webp') : '';
-      const texto = `🃏 Olha essa carta da minha coleção!\n${carta.name}\nSet: ${carta.tcgId || '—'} • Nº ${carta.localId || '—'}\n${preco > 0 ? 'Valor: R$ ' + preco.toFixed(2).replace('.', ',') : ''}\n— Coleção de ${usuario}`;
+      const texto = `🃏 ${carta.name}\nSet: ${carta.tcgId || '—'} • Nº ${carta.localId || '—'}\n${preco > 0 ? 'R$ ' + preco.toFixed(2).replace('.', ',') : ''}\n— Coleção de ${usuario}`;
       document.getElementById('share-content').innerHTML = `
-        <div class="share-preview">
-          <img src="${imgUrl}" onerror="this.src='${imgFallback}'" alt="${carta.name}">
-          <div style="font-weight:700;font-size:16px;">${carta.name}</div>
-          ${preco > 0 ? `<div style="color:#e60000;font-weight:700;margin-top:6px;">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : ''}
-        </div>
+        <div class="share-preview"><img src="${imgUrl}" onerror="this.src='${imgFallback}'"><div style="font-weight:700;font-size:16px;">${carta.name}</div></div>
         <button class="primary" onclick="compartilharNativo('${carta.id}')">📤 Compartilhar</button>
-        <button class="secondary" onclick="copiarTextoCompartilhar('${carta.id}')">📋 Copiar texto</button>
-        ${carta.image ? `<button class="secondary" onclick="copiarLinkImagem('${carta.id}')">🔗 Copiar link</button>` : ''}`;
+        <button class="secondary" onclick="copiarTextoCompartilhar('${carta.id}')">📋 Copiar texto</button>`;
       window._shareTextoAtual = texto;
       document.getElementById('modal-share').classList.add('active');
     }
 
     async function compartilharNativo(id) {
       const texto = window._shareTextoAtual || '';
-      const carta = colecao.find(c => c.id === id);
-      if (!carta) return;
       if (navigator.share) {
-        try {
-          const dados = { title: 'Minha carta Pokémon', text: texto };
-          if (carta.image) {
-            try {
-              const resp = await fetch(carta.image + '/high.webp');
-              const blob = await resp.blob();
-              const file = new File([blob], 'carta.png', { type: blob.type });
-              if (navigator.canShare && navigator.canShare({ files: [file] })) dados.files = [file];
-            } catch (e) {}
-          }
-          await navigator.share(dados);
-          fecharModal('modal-share');
-        } catch (e) { if (e.name !== 'AbortError') copiarTextoCompartilhar(id); }
+        try { await navigator.share({ title: 'Carta Pokémon', text: texto }); fecharModal('modal-share'); }
+        catch (e) { if (e.name !== 'AbortError') copiarTextoCompartilhar(id); }
       } else copiarTextoCompartilhar(id);
     }
 
     function copiarTextoCompartilhar(id) {
       const texto = window._shareTextoAtual || '';
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(texto).then(() => { mostrarToast('Copiado! 📋'); fecharModal('modal-share'); }).catch(() => fallbackCopy(texto));
-      } else fallbackCopy(texto);
-    }
-
-    function copiarLinkImagem(id) {
-      const carta = colecao.find(c => c.id === id);
-      if (!carta || !carta.image) return;
-      const link = carta.image + '/high.webp';
-      if (navigator.clipboard) navigator.clipboard.writeText(link).then(() => mostrarToast('Link copiado!')).catch(() => fallbackCopy(link));
-      else fallbackCopy(link);
+      if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => { mostrarToast('Copiado!'); fecharModal('modal-share'); }).catch(() => fallbackCopy(texto));
+      else fallbackCopy(texto);
     }
 
     function copiarLista() {
-      if (colecao.length === 0) { mostrarToast('Nenhuma carta ainda!'); return; }
+      if (colecao.length === 0) { mostrarToast('Nenhuma carta!'); return; }
       const ordenada = [...colecao].sort((a, b) => (a.pokemon || a.name || '').localeCompare(b.pokemon || b.name || ''));
       let texto = `📋 Minha Coleção\nUsuário: ${usuario}\nTotal: ${colecao.length}\n`;
       const valorTotal = colecao.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
       texto += `Valor: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n----\n\n`;
-      ordenada.forEach((c, i) => {
-        texto += `${i + 1}. ${c.name} (${c.tcgId || c.localId || ''})${c.preco > 0 ? ' — R$ ' + parseFloat(c.preco).toFixed(2).replace('.', ',') : ''}\n`;
-      });
-      if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => mostrarToast('Copiado! 📋')).catch(() => fallbackCopy(texto));
+      ordenada.forEach((c, i) => { texto += `${i + 1}. ${c.name} (${c.tcgId || c.localId || ''})${c.preco > 0 ? ' — R$ ' + parseFloat(c.preco).toFixed(2).replace('.', ',') : ''}\n`; });
+      if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => mostrarToast('Copiado!')).catch(() => fallbackCopy(texto));
       else fallbackCopy(texto);
     }
 
@@ -1130,7 +1081,7 @@
       const ta = document.createElement('textarea');
       ta.value = texto; ta.style.position = 'fixed'; ta.style.left = '-9999px';
       document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); mostrarToast('Copiado!'); } catch (e) { mostrarToast('Erro ao copiar'); }
+      try { document.execCommand('copy'); mostrarToast('Copiado!'); } catch (e) { mostrarToast('Erro.'); }
       document.body.removeChild(ta);
     }
 
@@ -1151,15 +1102,13 @@
         const favName = perfil.favorito.name || perfil.favorito;
         const favSprite = modoShiny ? spriteNormal(favId, true) : spriteNormal(favId, false);
         favHtml = `<div class="profile-fav"><div class="label">Pokémon favorito</div><img src="${favSprite}" onerror="this.style.display='none'"><div class="name">${favName}</div></div>`;
-      } else {
-        favHtml = `<div class="profile-fav"><div class="label">Pokémon favorito</div><div class="name" style="color:#aaa;font-size:14px;">Nenhum</div></div>`;
       }
       const avatarSrc = perfil.foto || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#eee"/><circle cx="50" cy="40" r="18" fill="#ccc"/><ellipse cx="50" cy="75" rx="28" ry="20" fill="#ccc"/></svg>');
       document.getElementById('perfil-content').innerHTML = `
         <div class="profile-header">
           <div class="profile-avatar-wrap">
-            <img class="profile-avatar" id="profile-avatar-img" src="${avatarSrc}" alt="Foto">
-            <label class="profile-avatar-edit" for="avatar-input" title="Mudar foto">📷</label>
+            <img class="profile-avatar" id="profile-avatar-img" src="${avatarSrc}">
+            <label class="profile-avatar-edit" for="avatar-input">📷</label>
             <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="mudarFoto(event)">
           </div>
           <div class="profile-name">${perfil.nome || usuario}</div>
@@ -1173,12 +1122,9 @@
         </div>
         ${favHtml}
         <div class="profile-edit-section">
-          <label>Nome do perfil</label>
-          <input type="text" id="edit-nome" value="${perfil.nome || ''}" maxlength="20">
-          <label>Bio</label>
-          <input type="text" id="edit-bio" value="${perfil.bio || ''}" maxlength="80">
-          <label>Pokémon favorito (nome ou número)</label>
-          <input type="text" id="edit-favorito" value="${perfil.favorito ? (perfil.favorito.name || '') : ''}">
+          <label>Nome</label><input type="text" id="edit-nome" value="${perfil.nome || ''}" maxlength="20">
+          <label>Bio</label><input type="text" id="edit-bio" value="${perfil.bio || ''}" maxlength="80">
+          <label>Pokémon favorito</label><input type="text" id="edit-favorito" value="${perfil.favorito ? (perfil.favorito.name || '') : ''}">
           <button class="primary" onclick="salvarPerfil()" style="margin-top:16px;">Salvar</button>
         </div>`;
     }
@@ -1186,7 +1132,7 @@
     function mudarFoto(event) {
       const file = event.target.files[0];
       if (!file) return;
-      if (file.size > 1.5 * 1024 * 1024) { mostrarToast('Foto muito grande!'); return; }
+      if (file.size > 1.5 * 1024 * 1024) { mostrarToast('Foto grande!'); return; }
       const reader = new FileReader();
       reader.onload = function(e) {
         perfil.foto = e.target.result;
@@ -1205,8 +1151,7 @@
       const favInput = document.getElementById('edit-favorito').value.trim().toLowerCase();
       if (!novoNome) { mostrarToast('Nome vazio!'); return; }
       perfil.nome = novoNome; perfil.bio = novaBio;
-      usuario = novoNome;
-      localStorage.setItem('pokedex_user', usuario);
+      usuario = novoNome; localStorage.setItem('pokedex_user', usuario);
       if (favInput) {
         try {
           let favId = null, favName = favInput;
@@ -1219,8 +1164,8 @@
             if (res.ok) { const data = await res.json(); favId = data.id; favName = data.name; }
           }
           if (favId) perfil.favorito = { id: favId, name: favName };
-          else { mostrarToast('Pokémon não encontrado.'); return; }
-        } catch (e) { mostrarToast('Erro ao buscar favorito.'); return; }
+          else { mostrarToast('Não encontrado.'); return; }
+        } catch (e) { mostrarToast('Erro.'); return; }
       } else perfil.favorito = null;
       localStorage.setItem('pokedex_perfil', JSON.stringify(perfil));
       sincronizar();
@@ -1246,8 +1191,7 @@
     let fbDb = null, meuId = null, meuCodigo = null, nuvemEstado = 'off', sincTimer = null;
 
     function esc(s) {
-      return String(s == null ? '' : s).replace(/[&<>"']/g, ch =>
-        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+      return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     }
 
     function gerarCodigo() {
@@ -1266,12 +1210,11 @@
         meuId = cred.user.uid;
         fbDb = firebase.firestore();
         meuCodigo = localStorage.getItem('pokedex_codigo');
-        if (!meuCodigo) {
-          meuCodigo = gerarCodigo();
-          localStorage.setItem('pokedex_codigo', meuCodigo);
-        }
+        if (!meuCodigo) { meuCodigo = gerarCodigo(); localStorage.setItem('pokedex_codigo', meuCodigo); }
         nuvemEstado = 'ok';
         sincronizar();
+        iniciarHeartbeat();
+        ouvirConvitesRecebidos();
         console.log('✅ Firebase conectado. Código:', meuCodigo);
       } catch (e) {
         console.error('❌ Firebase:', e);
@@ -1295,7 +1238,7 @@
             pokemon: c.pokemon || '', preco: parseFloat(c.preco) || 0
           })),
           atualizado: new Date().toISOString()
-        }).catch(e => console.error('Sync falhou:', e));
+        }, { merge: true }).catch(e => console.error('Sync falhou:', e));
       }, 800);
     }
 
@@ -1304,7 +1247,7 @@
       const msg = t => { el.innerHTML = `<div class="empty-msg" style="padding:20px 10px;">${t}</div>`; };
       if (nuvemEstado === 'off') return msg('Firebase não configurado.');
       if (nuvemEstado === 'conectando') return msg('Conectando…');
-      if (nuvemEstado === 'erro') return msg('Erro ao conectar. Confere as regras do Firestore e o login anônimo.');
+      if (nuvemEstado === 'erro') return msg('Erro ao conectar.');
       const btnStyle = 'background:#e60000;color:#fff;border:none;border-radius:20px;padding:7px 14px;font-weight:700;font-size:13px;cursor:pointer;';
       const lista = amigos.map((a, i) => `
         <div class="friend-item">
@@ -1315,18 +1258,18 @@
           </div>
         </div>`).join('');
       el.innerHTML = `
-        <div class="total-value"><div class="label">Seu código de amigo</div><div class="value" style="letter-spacing:3px;">${esc(meuCodigo)}</div></div>
+        <div class="total-value"><div class="label">Seu código</div><div class="value" style="letter-spacing:3px;">${esc(meuCodigo)}</div></div>
         <button class="primary" onclick="copiarCodigo()">Copiar meu código</button>
         ${amigos.length ? `<div class="friends-list" style="margin-top:16px;">${lista}</div>` : '<div class="empty-msg" style="padding:20px 10px;">Nenhum amigo ainda.</div>'}
         <div style="margin-top:20px; border-top:1px solid #eee; padding-top:16px;">
-          <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:8px;">Adicionar amigo pelo código</label>
+          <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:8px;">Adicionar amigo</label>
           <input type="text" id="novo-amigo-codigo" placeholder="Ex: K7QM2X" maxlength="6" style="text-transform:uppercase;">
-          <button class="primary" onclick="adicionarAmigo()">Adicionar amigo</button>
+          <button class="primary" onclick="adicionarAmigo()">Adicionar</button>
         </div>`;
     }
 
     function copiarCodigo() {
-      if (navigator.clipboard) navigator.clipboard.writeText(meuCodigo).then(() => mostrarToast('Código copiado!'), () => fallbackCopy(meuCodigo));
+      if (navigator.clipboard) navigator.clipboard.writeText(meuCodigo).then(() => mostrarToast('Copiado!'), () => fallbackCopy(meuCodigo));
       else fallbackCopy(meuCodigo);
     }
 
@@ -1334,17 +1277,17 @@
       const input = document.getElementById('novo-amigo-codigo');
       const codigo = (input ? input.value : '').trim().toUpperCase();
       if (!codigo) { mostrarToast('Digite o código!'); return; }
-      if (codigo === meuCodigo) { mostrarToast('É o seu próprio código 😄'); return; }
+      if (codigo === meuCodigo) { mostrarToast('É o seu código 😄'); return; }
       if (amigos.some(a => a.codigo === codigo)) { mostrarToast('Já está na lista!'); return; }
       try {
         const snap = await fbDb.collection('treinadores').where('codigo', '==', codigo).limit(1).get();
-        if (snap.empty) { mostrarToast('Código não encontrado.'); return; }
+        if (snap.empty) { mostrarToast('Não encontrado.'); return; }
         const d = snap.docs[0];
         amigos.push({ id: d.id, codigo, nome: d.data().nome || 'Treinador', data: new Date().toISOString() });
         localStorage.setItem('pokedex_amigos', JSON.stringify(amigos));
         renderizarAmigos();
-        mostrarToast(`${d.data().nome || 'Amigo'} adicionado! 👥`);
-      } catch (e) { console.error(e); mostrarToast('Erro. Tenta de novo.'); }
+        mostrarToast(`${d.data().nome || 'Amigo'} adicionado!`);
+      } catch (e) { console.error(e); mostrarToast('Erro.'); }
     }
 
     async function verColecaoAmigo(i) {
@@ -1352,28 +1295,23 @@
       if (!a || !a.id) return;
       try {
         const doc = await fbDb.collection('treinadores').doc(a.id).get();
-        if (!doc.exists) { mostrarToast('Coleção não publicada.'); return; }
+        if (!doc.exists) { mostrarToast('Sem coleção.'); return; }
         const t = doc.data();
         const cartas = Array.isArray(t.cartas) ? t.cartas : [];
         const valor = cartas.reduce((acc, c) => acc + (parseFloat(c.preco) || 0), 0);
         document.getElementById('pokemon-modal-title').textContent = 'Coleção de ' + (t.nome || 'Treinador');
         document.getElementById('pokemon-cards-list').innerHTML = cartas.length === 0
-          ? `<div class="empty-msg">${esc(t.nome)} ainda não tem cartas.</div>`
+          ? `<div class="empty-msg">Vazia.</div>`
           : `<div class="total-value"><div class="label">${cartas.length} carta(s)</div><div class="value">R$ ${valor.toFixed(2).replace('.', ',')}</div></div>
             <div class="cards-grid">
               ${cartas.map(c => {
                 const img = /^https:\/\//.test(c.image || '') ? c.image : '';
                 const preco = parseFloat(c.preco) || 0;
-                return `<div class="owned-card">
-                  <img src="${esc(img)}/high.webp" data-img="${esc(img)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'">
-                  <div class="name">${esc(c.name)}</div>
-                  <div class="set">${esc(c.tcgId)} • Nº ${esc(c.localId)}</div>
-                  ${preco > 0 ? `<div class="price">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : ''}
-                </div>`;
+                return `<div class="owned-card"><img src="${esc(img)}/high.webp" data-img="${esc(img)}" onerror="this.onerror=null;this.src=this.dataset.img+'.webp'"><div class="name">${esc(c.name)}</div><div class="set">${esc(c.tcgId)} • Nº ${esc(c.localId)}</div>${preco > 0 ? `<div class="price">R$ ${preco.toFixed(2).replace('.', ',')}</div>` : ''}</div>`;
               }).join('')}
             </div>`;
         document.getElementById('modal-pokemon').classList.add('active');
-      } catch (e) { console.error(e); mostrarToast('Erro ao carregar.'); }
+      } catch (e) { console.error(e); mostrarToast('Erro.'); }
     }
 
     function removerAmigo(index) {
@@ -1383,6 +1321,212 @@
       localStorage.setItem('pokedex_amigos', JSON.stringify(amigos));
       renderizarAmigos();
       mostrarToast('Removido');
+    }
+
+    // ===================== BATALHAS: PRESENÇA + CONVITES =====================
+    function iniciarHeartbeat() {
+      if (nuvemEstado !== 'ok') return;
+      clearInterval(heartbeatTimer);
+      atualizarPresenca();
+      heartbeatTimer = setInterval(atualizarPresenca, 30000);
+    }
+
+    function atualizarPresenca() {
+      if (nuvemEstado !== 'ok' || !meuId) return;
+      fbDb.collection('treinadores').doc(meuId).set({
+        online: true,
+        ultimaVez: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true }).catch(e => console.error('Heartbeat:', e));
+    }
+
+    window.addEventListener('beforeunload', () => {
+      if (nuvemEstado === 'ok' && meuId) {
+        fbDb.collection('treinadores').doc(meuId).set({
+          online: false,
+          ultimaVez: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+      }
+    });
+
+    function amigoEstaOnline(dados) {
+      if (!dados || !dados.ultimaVez) return false;
+      const agora = Date.now();
+      const ultima = dados.ultimaVez.toDate ? dados.ultimaVez.toDate().getTime() : new Date(dados.ultimaVez).getTime();
+      return (agora - ultima) < 60000 && dados.online === true;
+    }
+
+    async function abrirBatalhas() {
+      document.getElementById('modal-batalhas').classList.add('active');
+      const el = document.getElementById('batalhas-content');
+      el.innerHTML = '<div class="loading"><div class="spinner"></div>Carregando...</div>';
+      if (nuvemEstado !== 'ok') { el.innerHTML = '<div class="empty-msg">Firebase não conectado.</div>'; return; }
+      if (amigos.length === 0) { el.innerHTML = '<div class="empty-msg">Adicione amigos primeiro.</div>'; return; }
+      try {
+        const resultados = await Promise.all(amigos.map(async a => {
+          if (!a.id) return { ...a, dados: null };
+          const doc = await fbDb.collection('treinadores').doc(a.id).get();
+          return { ...a, dados: doc.exists ? doc.data() : null };
+        }));
+        el.innerHTML = `
+          <p style="font-size:13px;color:#777;margin-bottom:12px;">Escolhe um amigo online:</p>
+          ${resultados.map((a, i) => {
+            const online = amigoEstaOnline(a.dados);
+            return `
+              <div class="friend-item ${online ? 'desafio' : ''}">
+                <div>
+                  <div class="friend-name"><span class="friend-status ${online ? 'online' : ''}"></span>${esc(a.nome)}</div>
+                  <div class="friend-date">${online ? '🟢 Online' : '⚫ Offline'}</div>
+                </div>
+                ${online
+                  ? `<button onclick="desafiarAmigo(${i})" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;">⚔️ Desafiar</button>`
+                  : `<button disabled style="background:#ccc;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:13px;cursor:not-allowed;">Offline</button>`}
+              </div>`;
+          }).join('')}`;
+      } catch (e) { console.error(e); el.innerHTML = '<div class="empty-msg">Erro.</div>'; }
+    }
+
+    async function desafiarAmigo(index) {
+      const amigo = amigos[index];
+      if (!amigo || !amigo.id) return;
+      try {
+        const convite = {
+          de: meuId,
+          deNome: (perfil && perfil.nome) || usuario,
+          para: amigo.id,
+          paraNome: amigo.nome,
+          status: 'pendente',
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+          expiraEm: Date.now() + 120000
+        };
+        const ref = await fbDb.collection('convites').add(convite);
+        conviteAtual = { id: ref.id, ...convite };
+        const el = document.getElementById('batalhas-content');
+        el.innerHTML = `
+          <div class="aguardando-info">
+            <div class="pulse"></div>
+            <p style="font-weight:700;font-size:16px;color:#222;margin-bottom:6px;">Convite enviado!</p>
+            <p style="font-size:14px;">Aguardando <strong>${esc(amigo.nome)}</strong>...</p>
+            <p style="font-size:12px;color:#999;margin-top:14px;">Expira em 2 minutos</p>
+            <button class="secondary" onclick="cancelarDesafio()" style="margin-top:20px;">Cancelar</button>
+          </div>`;
+        ouvirRespostaConvite(ref.id);
+      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+    }
+
+    function ouvirRespostaConvite(conviteId) {
+      if (listenerConvites) listenerConvites();
+      listenerConvites = fbDb.collection('convites').doc(conviteId).onSnapshot(doc => {
+        if (!doc.exists) return;
+        const d = doc.data();
+        if (d.status === 'aceito') {
+          if (listenerConvites) { listenerConvites(); listenerConvites = null; }
+          mostrarToast('🎉 Aceito! Iniciando batalha...');
+          fecharModal('modal-batalhas');
+          if (typeof iniciarBatalha === 'function') iniciarBatalha(conviteId, d);
+          else mostrarToast('(PARTE 2 vem aí)');
+        } else if (d.status === 'recusado') {
+          if (listenerConvites) { listenerConvites(); listenerConvites = null; }
+          mostrarToast('😢 Recusado');
+          abrirBatalhas();
+        }
+      });
+    }
+
+    async function cancelarDesafio() {
+      if (conviteAtual && conviteAtual.id) {
+        try { await fbDb.collection('convites').doc(conviteAtual.id).delete(); } catch (e) {}
+        if (listenerConvites) { listenerConvites(); listenerConvites = null; }
+      }
+      conviteAtual = null;
+      abrirBatalhas();
+    }
+
+    function ouvirConvitesRecebidos() {
+      if (nuvemEstado !== 'ok' || !meuId) return;
+      fbDb.collection('convites')
+        .where('para', '==', meuId)
+        .where('status', '==', 'pendente')
+        .onSnapshot(snap => {
+          const novos = [];
+          snap.forEach(doc => {
+            const d = doc.data();
+            if (d.expiraEm && Date.now() > d.expiraEm) { doc.ref.delete().catch(() => {}); return; }
+            novos.push({ id: doc.id, ...d });
+          });
+          convitesPendentes = novos;
+          atualizarSino();
+          if (novos.length > 0 && !document.getElementById('popup-convite').classList.contains('active')) {
+            mostrarPopupConvite(novos[0]);
+          }
+        }, e => console.error('Listener:', e));
+    }
+
+    function atualizarSino() {
+      const bolinha = document.getElementById('sino-bolinha');
+      if (!bolinha) return;
+      if (convitesPendentes.length === 0) bolinha.classList.add('oculto');
+      else { bolinha.classList.remove('oculto'); bolinha.textContent = convitesPendentes.length; }
+    }
+
+    function mostrarPopupConvite(convite) {
+      conviteAtual = convite;
+      document.getElementById('popup-quem').innerHTML = `<strong>${esc(convite.deNome)}</strong> te desafiou pra uma batalha!`;
+      document.getElementById('popup-convite').classList.add('active');
+      popupSegundos = 120;
+      clearInterval(popupTimer);
+      atualizarPopupTimer();
+      popupTimer = setInterval(() => {
+        popupSegundos--;
+        atualizarPopupTimer();
+        if (popupSegundos <= 0) { clearInterval(popupTimer); recusarConvite(true); }
+      }, 1000);
+    }
+
+    function atualizarPopupTimer() {
+      const min = Math.floor(popupSegundos / 60);
+      const seg = popupSegundos % 60;
+      const el = document.getElementById('popup-timer');
+      if (el) el.textContent = `Expira em ${min}:${String(seg).padStart(2, '0')}`;
+    }
+
+    async function aceitarConvite() {
+      if (!conviteAtual) return;
+      clearInterval(popupTimer);
+      try {
+        await fbDb.collection('convites').doc(conviteAtual.id).update({ status: 'aceito' });
+        document.getElementById('popup-convite').classList.remove('active');
+        mostrarToast('🎉 Você aceitou!');
+        if (typeof iniciarBatalha === 'function') iniciarBatalha(conviteAtual.id, { ...conviteAtual, status: 'aceito' });
+        else mostrarToast('(PARTE 2 vem aí)');
+      } catch (e) { console.error(e); mostrarToast('Erro.'); }
+      conviteAtual = null;
+    }
+
+    async function recusarConvite(porTimeout = false) {
+      if (!conviteAtual) return;
+      clearInterval(popupTimer);
+      try { await fbDb.collection('convites').doc(conviteAtual.id).update({ status: 'recusado' }); } catch (e) { console.error(e); }
+      document.getElementById('popup-convite').classList.remove('active');
+      if (porTimeout) mostrarToast('⏰ Expirou');
+      conviteAtual = null;
+    }
+
+    function abrirNotificacoes() {
+      const el = document.getElementById('notificacoes-content');
+      document.getElementById('modal-notificacoes').classList.add('active');
+      if (convitesPendentes.length === 0) { el.innerHTML = '<div class="empty-msg">Nenhuma notificação.</div>'; return; }
+      el.innerHTML = convitesPendentes.map(c => `
+        <div class="friend-item desafio">
+          <div><div class="friend-name">⚔️ ${esc(c.deNome)}</div><div class="friend-date">Te desafiou</div></div>
+          <button onclick="verConvite('${c.id}')" style="background:#e60000;color:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;">Ver</button>
+        </div>`).join('');
+    }
+
+    function verConvite(id) {
+      const c = convitesPendentes.find(x => x.id === id);
+      if (!c) return;
+      fecharModal('modal-notificacoes');
+      mostrarPopupConvite(c);
     }
 
     function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
